@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     template: `%s | ${company.name}`,
   },
   description:
-    "Expert Lightning Protection System design, Earthing Audits, Power Quality Studies & Electrical Safety Solutions for Industrial & Commercial facilities across India.",
-  keywords: ["lightning protection", "earthing audit", "grounding system", "power quality", "surge protection", "IS IEC 62305", "Erode", "Tamil Nadu"],
+    "Founded in 2017, Aadithya delivers expert Lightning Protection, Earthing Systems & Surge Protection Solutions for Industrial & Commercial facilities across India. Backed by 18+ years of industry experience.",
+  keywords: ["lightning protection", "earthing system", "surge protection", "grounding system", "power quality", "IS IEC 62305", "IEEE 80", "Erode", "Tamil Nadu", "electrical safety"],
   authors: [{ name: company.founderName }],
   creator: company.name,
   openGraph: {

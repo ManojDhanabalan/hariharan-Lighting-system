@@ -5,11 +5,11 @@ export const company = {
   phone: "+91 73737 66689",
   email: "info@aadithya.in",
   location: "Erode, Tamil Nadu, India",
-  established: "2010",
+  established: "2017",
   stats: {
     projectsCompleted: "500+",
     clientRetention: "92%",
-    yearsExperience: "15+",
+    yearsExperience: "18+",
     statesServed: "12+",
   },
   values: [
@@ -17,6 +17,25 @@ export const company = {
     { title: "Dependability", description: "You can count on us to deliver — on time, every time." },
     { title: "Innovation", description: "We implement cutting-edge, standards-compliant solutions." },
     { title: "Safety First", description: "Human and equipment safety is non-negotiable in every project." },
+  ],
+  vision: [
+    "To be a leading provider of innovative and reliable lightning protection, earthing, and surge protection solutions, ensuring safety and trust across every industry we serve.",
+    "To become a globally recognized leader in electrical safety solutions by delivering advanced, sustainable, and high-performance protection systems.",
+    "To create a safer world by protecting lives, infrastructure, and technology through dependable and cutting-edge protection solutions.",
+    "To lead in electrical protection solutions with innovation, quality, and trust.",
+  ],
+  mission: [
+    "To deliver high-quality lightning protection, earthing, and surge protection solutions that ensure safety, reliability, and long-term performance for our clients.",
+    "To provide customized and cost-effective protection systems that safeguard people, property, and equipment while exceeding customer expectations.",
+    "To leverage our industry experience and technical expertise to design and implement advanced electrical protection systems that meet the highest safety standards.",
+    "To continuously innovate and improve our solutions, delivering sustainable and efficient protection systems for a safer future.",
+  ],
+  customers: [
+    { name: "Mountford School",  sector: "Education" },
+    { name: "Ramraj Cotton",     sector: "Textile & Apparel" },
+    { name: "ACC Cement",        sector: "Construction & Manufacturing" },
+    { name: "SKM Egg Product",   sector: "Food & Agriculture" },
+    { name: "Triveni Cars",      sector: "Automotive" },
   ],
   industries: [
     "Manufacturing Plants", "Oil & Gas", "Solar & Wind Farms",

@@ -8,7 +8,7 @@ import { company } from "@/data/company";
 const BADGES = [
   { icon: <Shield className="w-4 h-4" />, text: "IS/IEC 62305 Compliant" },
   { icon: <Zap className="w-4 h-4" />,   text: "IEEE 80 Certified" },
-  { icon: <Award className="w-4 h-4" />, text: "15+ Years Experience" },
+  { icon: <Award className="w-4 h-4" />, text: "18+ Years Experience" },
 ];
 
 const QUICK_STATS = [
@@ -74,8 +74,8 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.72 }}
           className="text-text-secondary text-lg md:text-xl font-body leading-relaxed max-w-2xl mb-12"
         >
-          Expert Lightning Protection, Earthing Audits &amp; Power Quality Solutions for Industrial &amp;
-          Commercial Facilities across India — compliant with IS, IEEE &amp; IEC standards.
+          Expert Lightning Protection, Earthing &amp; Surge Protection Solutions for Industrial &amp;
+          Commercial Facilities across India. Trusted since 2017 — compliant with IS, IEEE &amp; IEC standards.
         </motion.p>
 
         {/* CTAs */}

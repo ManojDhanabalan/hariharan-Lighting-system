@@ -9,8 +9,8 @@ import IndustriesSection from "@/components/home/IndustriesSection";
 import CTABanner         from "@/components/shared/CTABanner";
 
 export const metadata: Metadata = {
-  title: "Aadithya | Lightning Protection & Earthing Safety Experts",
-  description: "Expert Lightning Protection, Earthing Audits & Power Quality Solutions for Industrial & Commercial Facilities across India since 2010.",
+  title: "Aadithya | Lightning Protection, Earthing & Surge Protection Experts",
+  description: "Founded in 2017, Aadithya delivers trusted Lightning Protection, Earthing Systems & Surge Protection Solutions across India. 18+ years of industry experience.",
   alternates: { canonical: "/" },
 };
 

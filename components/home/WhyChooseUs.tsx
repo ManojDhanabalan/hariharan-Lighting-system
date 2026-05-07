@@ -9,7 +9,7 @@ const REASONS = [
   { icon: Clock,      title: "Dependability",             desc: "You can count on us to deliver on time, every time. We respect your operational schedules and commitments.", color: "bg-violet-50 border-violet-100 text-violet-600" },
   { icon: Lightbulb,  title: "Innovation",                desc: "We implement cutting-edge, technically superior solutions rather than just standard legacy practices.", color: "bg-amber-50 border-amber-100 text-amber-600" },
   { icon: HardHat,    title: "Safety First",              desc: "Human and equipment safety is non-negotiable in every project we undertake. Zero compromises.", color: "bg-red-50 border-red-100 text-red-600" },
-  { icon: ShieldCheck,title: "Deep Expertise",            desc: "Over 15 years of hands-on engineering experience in complex industrial and commercial environments.", color: "bg-teal-50 border-teal-100 text-teal-600" },
+  { icon: ShieldCheck,title: "Deep Expertise",            desc: "Over 18 years of hands-on engineering experience in complex industrial and commercial environments.", color: "bg-teal-50 border-teal-100 text-teal-600" },
   { icon: FileCheck,  title: "Standards Compliance",      desc: "Strict adherence to IS, IEEE, IEC, and latest CEA regulations ensuring full compliance and peace of mind.", color: "bg-green-50 border-green-100 text-green-600" },
 ];
 
