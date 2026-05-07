@@ -5,7 +5,7 @@ import IndustriesSection from "@/components/home/IndustriesSection";
 import CTABanner         from "@/components/shared/CTABanner";
 import SectionHeader     from "@/components/shared/SectionHeader";
 import { company }       from "@/data/company";
-import { CheckCircle2, Target, Eye, Star, Building2 } from "lucide-react";
+import { CheckCircle2, Target, Eye, Building2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About Us",
