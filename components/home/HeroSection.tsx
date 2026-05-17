@@ -2,151 +2,141 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Shield, Award, Zap, Phone } from "lucide-react";
+import { ArrowRight, Shield, CheckCircle2 } from "lucide-react";
 import { company } from "@/data/company";
 
-const BADGES = [
-  { icon: <Shield className="w-4 h-4" />, text: "IS/IEC 62305 Compliant" },
-  { icon: <Zap className="w-4 h-4" />,   text: "IEEE 80 Certified" },
-  { icon: <Award className="w-4 h-4" />, text: "18+ Years Experience" },
-];
-
 const QUICK_STATS = [
-  { value: company.stats.projectsCompleted, label: "Projects" },
+  { value: company.stats.projectsCompleted, label: "Projects Completed" },
   { value: company.stats.clientRetention,   label: "Client Retention" },
   { value: company.stats.statesServed,      label: "States Served" },
 ];
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-screen flex flex-col items-center justify-center pt-28 pb-20 overflow-hidden bg-white">
-      {/* Animated gradient blobs */}
-      <div className="absolute top-10 left-[10%] w-[500px] h-[500px] bg-blue-100/80 rounded-full blur-[100px] animate-blob" />
-      <div className="absolute top-32 right-[10%] w-[450px] h-[450px] bg-violet-100/70 rounded-full blur-[100px] animate-blob animation-delay-2000" />
-      <div className="absolute bottom-10 left-[30%] w-[500px] h-[500px] bg-amber-100/60 rounded-full blur-[100px] animate-blob animation-delay-4000" />
+    <section className="relative w-full min-h-[92vh] flex items-center bg-slate-950 overflow-hidden pt-32 pb-24">
+      {/* Premium ambient high-tech grid overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
-      {/* Subtle grid */}
-      <div className="absolute inset-0 bg-grid opacity-60 z-0" />
-
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent z-0" />
-
-      <div className="container mx-auto px-4 lg:px-8 z-10 flex flex-col items-center text-center">
-
-        {/* Overline pill */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-volt text-xs font-display font-bold uppercase tracking-[0.2em] mb-10"
-        >
-          <Zap className="w-3.5 h-3.5" fill="currentColor" />
-          Lightning Protection &amp; Earthing Safety Experts
-        </motion.div>
-
-        {/* Headline */}
-        <h1 className="font-display font-extrabold text-5xl md:text-7xl lg:text-[90px] text-slate-900 uppercase tracking-tight leading-[0.95] mb-8 max-w-5xl">
-          {(["Protecting", "What", "Matters"] as const).map((word, i) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.15 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-block mr-4 md:mr-6"
-            >
-              {word}
-            </motion.span>
-          ))}
-          <motion.span
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.51, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-block text-gradient-volt"
-          >
-            Most
-          </motion.span>
-        </h1>
-
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.72 }}
-          className="text-text-secondary text-lg md:text-xl font-body leading-relaxed max-w-2xl mb-12"
-        >
-          Expert Lightning Protection, Earthing &amp; Surge Protection Solutions for Industrial &amp;
-          Commercial Facilities across India. Trusted since 2017 — compliant with IS, IEEE &amp; IEC standards.
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.88 }}
-          className="flex flex-col sm:flex-row items-center gap-4 mb-16"
-        >
-          <Link href="/contact"
-            className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-volt hover:bg-volt-dark text-white font-display font-bold text-base uppercase tracking-wide rounded-2xl transition-all shadow-volt-btn hover:shadow-volt-strong hover:-translate-y-1">
-            Get a Free Consultation
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <Link href="/services"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-slate-200 text-text-primary hover:border-volt hover:text-volt font-display font-bold text-base uppercase tracking-wide rounded-2xl transition-all hover:-translate-y-1 shadow-sm">
-            Explore Services
-          </Link>
-        </motion.div>
-
-        {/* Quick stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.0 }}
-          className="flex items-center gap-8 mb-10 flex-wrap justify-center"
-        >
-          {QUICK_STATS.map((s, i) => (
-            <div key={s.label} className="flex items-center gap-3">
-              {i > 0 && <div className="w-px h-8 bg-slate-200" />}
-              <div className="text-center">
-                <div className="font-display font-extrabold text-2xl text-volt">{s.value}</div>
-                <div className="text-xs text-text-dim uppercase tracking-wider font-body">{s.label}</div>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Trust badges */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.15 }}
-          className="flex flex-wrap items-center justify-center gap-3"
-        >
-          {BADGES.map((b) => (
-            <div key={b.text} className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-full text-xs text-text-secondary shadow-sm">
-              <span className="text-volt">{b.icon}</span>
-              {b.text}
-            </div>
-          ))}
-          <a href={`tel:${company.phone.replace(/[^0-9+]/g,"")}`}
-            className="flex items-center gap-2 px-4 py-2.5 bg-green-50 border border-green-200 rounded-full text-xs text-green-700 font-display font-semibold shadow-sm hover:bg-green-100 transition-colors">
-            <Phone className="w-3.5 h-3.5" />
-            Call Now: {company.phone}
-          </a>
-        </motion.div>
+      {/* Stunning luxury-tier ambient glowing blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-[#7B2D3E]/15 rounded-full blur-[150px]" />
+        <div className="absolute top-1/4 right-0 w-[550px] h-[550px] bg-[#D97706]/8 rounded-full blur-[130px]" />
+        <div className="absolute -bottom-20 left-1/3 w-[500px] h-[500px] bg-[#5C1F2E]/10 rounded-full blur-[140px]" />
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-text-dim text-xs uppercase tracking-widest z-10"
-      >
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.4, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-slate-200 rounded-full flex items-start justify-center pt-1.5">
-          <div className="w-1 h-2 bg-volt rounded-full" />
-        </motion.div>
-      </motion.div>
+      <div className="container mx-auto px-4 lg:px-8 z-10 relative">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          {/* Left column - Content */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 flex flex-col items-start text-left"
+          >
+            {/* Ultra-premium interactive glass badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md mb-6 hover:border-[#D97706]/40 hover:bg-white/[0.05] transition-all duration-300 group cursor-default"
+            >
+              <div className="w-2 h-2 rounded-full bg-[#D97706] mr-2.5 animate-pulse group-hover:scale-125 transition-transform" />
+              <span className="text-slate-300 text-[10.5px] font-display font-extrabold tracking-[0.25em] uppercase">
+                Lightning Protection & Earthing Safety Experts
+              </span>
+            </motion.div>
+
+            {/* Title with Outfit/Fraunces dynamic styling */}
+            <h1 className="font-display font-extrabold text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-[1.08] mb-6">
+              Protecting
+              <span className="block mt-2">What Matters</span>
+              <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-[#7B2D3E] filter drop-shadow-sm">
+                Most
+              </span>
+            </h1>
+
+            {/* Subtitle - elegant layout with high-readability color */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.35 }}
+              className="text-slate-300 text-lg md:text-xl font-body leading-relaxed mb-8 max-w-xl"
+            >
+              Advanced, standards-compliant engineering solutions for industrial and commercial facilities across India. Engineered for lifetime safety and absolute resilience.
+            </motion.p>
+
+            {/* Premium action buttons with interactive feedback */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto mb-4"
+            >
+              <Link href="/contact"
+                className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-gradient-to-r from-[#7B2D3E] to-[#9B3D52] hover:from-[#9B3D52] hover:to-[#7B2D3E] text-white font-display font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-[#7B2D3E]/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-[#7B2D3E]/35">
+                <span className="relative z-10 flex items-center gap-2">
+                  Get a Free Consultation
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+              <Link href="/services"
+                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 font-display font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-md">
+                Explore Services
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          {/* Right column - Luxury Glassmorphic Stats Card */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden lg:flex lg:col-span-5 flex-col items-center justify-center relative"
+          >
+            <div className="relative w-full max-w-md">
+              {/* Golden-amber glowing backlight */}
+              <div className="absolute inset-0 bg-[#D97706]/10 rounded-3xl blur-[32px] transform translate-y-4" />
+              
+              {/* Main glass card with custom border highlights */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.45 }}
+                className="relative z-10 bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-3xl p-8 shadow-2xl shadow-black/40"
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#7B2D3E] to-[#5C1F2E] flex items-center justify-center shadow-lg shadow-[#7B2D3E]/30">
+                    <Shield className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-white font-display font-bold text-lg">Trusted Engineering</div>
+                    <div className="text-slate-400 text-sm">Established in {company.established}</div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  {QUICK_STATS.map((s, idx) => (
+                    <div key={s.label} className={`bg-white/[0.02] rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors ${idx === 2 ? 'col-span-2' : ''}`}>
+                      <div className="font-display font-extrabold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-[#D97706] to-[#F59E0B]">{s.value}</div>
+                      <div className="text-[10px] text-slate-400 uppercase tracking-widest font-body mt-1">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  {["IS/IEC 62305 Compliant", "IEEE 80 Certified", "18+ Years Experience"].map((item) => (
+                    <div key={item} className="flex items-center gap-3 text-sm text-slate-300 font-medium">
+                      <CheckCircle2 className="w-4 h-4 text-[#D97706] flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

@@ -11,7 +11,7 @@ export default function ServicesPreview() {
   return (
     <section className="py-24 bg-bg-secondary relative overflow-hidden">
       <div className="section-divider absolute top-0 left-0 right-0" />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50/80 rounded-full blur-[120px]" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-maroon-50/80 rounded-full blur-[120px]" />
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 mb-14">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

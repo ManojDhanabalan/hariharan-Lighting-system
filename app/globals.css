@@ -7,15 +7,17 @@
   --bg-secondary:   #F8FAFC;
   --bg-card:        #FFFFFF;
   --bg-elevated:    #F1F5F9;
-  --accent-volt:    #2563EB;
-  --accent-glow:    #3B82F6;
+  --accent-volt:    #7B2D3E;   /* dark maroon */
+  --accent-glow:    #5C1F2E;   /* deeper maroon */
+  --accent-light:   #9B3D52;   /* medium maroon */
+  --accent-muted:   #FDF2F4;   /* very light maroon bg */
   --accent-amber:   #F59E0B;
   --text-primary:   #0F172A;
   --text-secondary: #475569;
   --text-dim:       #94A3B8;
   --border:         #E2E8F0;
   --border-subtle:  #F1F5F9;
-  --border-glow:    rgba(37, 99, 235, 0.25);
+  --border-glow:    rgba(123, 45, 62, 0.25);
 }
 
 @layer base {
@@ -40,7 +42,7 @@
 @layer utilities {
   /* Gradient text */
   .text-gradient-volt {
-    background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+    background: linear-gradient(135deg, #7B2D3E 0%, #5C1F2E 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -70,12 +72,12 @@
   }
   .card-hover:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.10), 0 0 0 1px rgba(37,99,235,0.12);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.10), 0 0 0 1px rgba(123,45,62,0.12);
   }
   /* Dividers */
   .section-divider {
     height: 1px;
-    background: linear-gradient(to right, transparent, rgba(37,99,235,0.15), transparent);
+    background: linear-gradient(to right, transparent, rgba(123,45,62,0.15), transparent);
   }
   /* Input */
   .input-field {
@@ -91,7 +93,7 @@
   .input-field:focus {
     outline: none;
     border-color: var(--accent-volt);
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    box-shadow: 0 0 0 3px rgba(123,45,62,0.12);
   }
 }
 
@@ -137,7 +139,7 @@
   100% { background-position:  200% 0; }
 }
 .animate-shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(37,99,235,0.06) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(123,45,62,0.06) 50%, transparent 100%);
   background-size: 200% 100%;
   animation: shimmer 3s linear infinite;
 }
@@ -152,7 +154,7 @@
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  background: linear-gradient(135deg, #7B2D3E, #5C1F2E);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;

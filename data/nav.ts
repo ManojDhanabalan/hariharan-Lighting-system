@@ -7,13 +7,11 @@ export const navLinks = [
     children: [
       { label: "Earthing Audit", href: "/services/earthing-audit" },
       { label: "LPS Adequacy Audit", href: "/services/lps-adequacy-audit" },
-      { label: "Power Quality Studies", href: "/services/power-quality" },
-      { label: "Power System Studies", href: "/services/power-system-studies" },
     ],
   },
   {
     label: "Solutions",
-    href: "/solutions",
+    href: "#",
     children: [
       { label: "Earthing System", href: "/solutions/earthing-system" },
       { label: "Lightning System", href: "/solutions/lightning-system" },

@@ -2,7 +2,18 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Activity, ShieldCheck, BarChart2, GitBranch, Zap, Layers, PenTool, ShieldAlert, LucideIcon } from "lucide-react";
+
+const IconMap: Record<string, LucideIcon> = {
+  Activity,
+  ShieldCheck,
+  BarChart2,
+  GitBranch,
+  Zap,
+  Layers,
+  PenTool,
+  ShieldAlert,
+};
 
 interface SolutionCardProps {
   title: string;
@@ -14,6 +25,8 @@ interface SolutionCardProps {
 }
 
 export default function SolutionCard({ title, subtitle, icon, shortDesc, href, index = 0 }: SolutionCardProps) {
+  const IconComponent = IconMap[icon] || Zap;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -25,8 +38,8 @@ export default function SolutionCard({ title, subtitle, icon, shortDesc, href, i
       {/* Top gradient bar */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-volt-gradient rounded-t-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
 
-      <div className="mb-5 w-14 h-14 rounded-2xl bg-amber-50 border border-amber-100 group-hover:bg-amber-100 flex items-center justify-center text-2xl transition-colors duration-300">
-        {icon}
+      <div className="mb-5 w-14 h-14 rounded-2xl bg-amber-50 border border-amber-100 group-hover:bg-amber-100 flex items-center justify-center text-amber-500 transition-colors duration-300">
+        <IconComponent className="w-6 h-6" />
       </div>
 
       <h3 className="font-display font-bold text-xl text-slate-900 mb-1.5 group-hover:text-volt transition-colors duration-300">

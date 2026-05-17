@@ -2,7 +2,7 @@ export const solutions = [
   {
     id: "earthing-system",
     slug: "earthing-system",
-    icon: "🔩",
+    icon: "Layers",
     title: "Earthing System",
     subtitle: "Maintenance-Free Grounding Solutions",
     shortDesc: "Cost-effective and technically superior grounding products for all soil types and application environments.",
@@ -11,7 +11,7 @@ export const solutions = [
     goodGroundingImportance: [
       "Human / Life Safety",
       "Limiting damage to electrical equipment in case of fault or lightning strike",
-      "Correct operation of electricity supply networks and ensuring good power quality",
+      "Correct operation of electricity supply networks.",
     ],
     productCategories: [
       { name: "Earth Electrodes", desc: "UL-listed electrodes type-tested as per IEC 62561-7, IS 3043-2018 & IEEE 80." },
@@ -38,7 +38,7 @@ export const solutions = [
   {
     id: "lightning-system",
     slug: "lightning-system",
-    icon: "⚡",
+    icon: "Zap",
     title: "Lightning System",
     subtitle: "Complete Lightning Protection System (LPS)",
     shortDesc: "End-to-end lightning protection from risk assessment to design, supply, installation, and commissioning as per IS/IEC 62305.",
@@ -70,7 +70,7 @@ export const solutions = [
   {
     id: "ground-design",
     slug: "ground-design",
-    icon: "📐",
+    icon: "PenTool",
     title: "Ground Design",
     subtitle: "Earthing & Grounding System Design",
     shortDesc: "Expert grounding system design services for new and existing installations — compliant with national and international standards.",
@@ -101,7 +101,7 @@ export const solutions = [
   {
     id: "surge-protection",
     slug: "surge-protection",
-    icon: "🛡️",
+    icon: "ShieldAlert",
     title: "Surge Protection System",
     subtitle: "SPD Design, Supply & Installation",
     shortDesc: "Comprehensive surge protection device (SPD) solutions to safeguard electrical and electronic equipment from transient overvoltages.",

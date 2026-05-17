@@ -18,7 +18,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const BASE_URL = "https://aadithya.in";
+const BASE_URL = "https://aadithya.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   description:
     "Founded in 2017, Aadithya delivers expert Lightning Protection, Earthing Systems & Surge Protection Solutions for Industrial & Commercial facilities across India. Backed by 18+ years of industry experience.",
-  keywords: ["lightning protection", "earthing system", "surge protection", "grounding system", "power quality", "IS IEC 62305", "IEEE 80", "Erode", "Tamil Nadu", "electrical safety"],
+  keywords: ["lightning protection", "earthing system", "surge protection", "IS IEC 62305", "IEEE 80", "Erode", "Tamil Nadu"],
   authors: [{ name: company.founderName }],
   creator: company.name,
   openGraph: {
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     url: BASE_URL,
     siteName: company.name,
     title: `${company.name} | Lightning Protection & Earthing Safety Experts`,
-    description: "Expert Lightning Protection, Earthing Audits & Power Quality Solutions for Industrial & Commercial Facilities across India.",
+    description: "Expert Lightning Protection & Earthing Audits for Industrial & Commercial Facilities across India.",
   },
   robots: { index: true, follow: true },
 };
@@ -56,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               description: company.tagline,
               telephone: company.phone,
               email: company.email,
-              address: { "@type": "PostalAddress", addressLocality: "Erode", addressRegion: "Tamil Nadu", addressCountry: "IN" },
+              address: { "@type": "PostalAddress", streetAddress: "68A/7, Indgra Nagar, Allampalayam", addressLocality: "Pallipalayam", addressRegion: "Tamil Nadu", postalCode: "638008", addressCountry: "IN" },
               foundingDate: company.established,
               founder: { "@type": "Person", name: company.founderName },
               areaServed: "India",
