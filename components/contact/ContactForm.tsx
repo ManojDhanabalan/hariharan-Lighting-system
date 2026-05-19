@@ -17,12 +17,28 @@ export default function ContactForm() {
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    await new Promise(r => setTimeout(r, 1600));
-    console.log(data);
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    reset();
-    setTimeout(() => setIsSuccess(false), 6000);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      setIsSuccess(true);
+      reset();
+      setTimeout(() => setIsSuccess(false), 6000);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -96,16 +112,15 @@ export default function ContactForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
             <div>
               <label className={`block text-xs font-display font-bold uppercase tracking-[0.12em] mb-2 transition-colors ${focusedField === "phone" ? "text-maroon-700" : "text-slate-500"}`}>
-                Phone <span className="text-red-500">*</span>
+                Phone
               </label>
               <input
-                {...register("phone", { required: "Phone is required" })}
+                {...register("phone")}
                 onFocus={() => setFocusedField("phone")}
                 onBlur={() => setFocusedField(null)}
                 placeholder="+91 98765 43210"
-                className={`w-full px-4 py-3.5 bg-slate-50 border rounded-xl text-slate-900 placeholder-slate-400 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-maroon-600/20 focus:bg-white ${errors.phone ? "border-red-300 focus:ring-red-500/20" : "border-slate-200 focus:border-maroon-600"}`}
+                className={`w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-maroon-600/20 focus:bg-white focus:border-maroon-600`}
               />
-              {errors.phone && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-red-500" />{errors.phone.message}</p>}
             </div>
             <div>
               <label className={`block text-xs font-display font-bold uppercase tracking-[0.12em] mb-2 transition-colors ${focusedField === "company" ? "text-maroon-700" : "text-slate-500"}`}>
@@ -139,18 +154,17 @@ export default function ContactForm() {
 
           {/* Message */}
           <div className="mb-8">
-            <label className={`block text-xs font-display font-bold uppercase tracking-[0.12em] mb-2 transition-colors ${focusedField === "message" ? "text-maroon-700" : "text-slate-500"}`}>
-              Your Message <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              {...register("message", { required: "Message is required" })}
-              onFocus={() => setFocusedField("message")}
-              onBlur={() => setFocusedField(null)}
-              rows={5}
-              placeholder="Describe your project or query..."
-              className={`w-full px-4 py-3.5 bg-slate-50 border rounded-xl text-slate-900 placeholder-slate-400 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-maroon-600/20 focus:bg-white resize-none ${errors.message ? "border-red-300 focus:ring-red-500/20" : "border-slate-200 focus:border-maroon-600"}`}
-            />
-            {errors.message && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-red-500" />{errors.message.message}</p>}
+              <label className={`block text-xs font-display font-bold uppercase tracking-[0.12em] mb-2 transition-colors ${focusedField === "message" ? "text-maroon-700" : "text-slate-500"}`}>
+                Your Message
+              </label>
+              <textarea
+                {...register("message")}
+                onFocus={() => setFocusedField("message")}
+                onBlur={() => setFocusedField(null)}
+                rows={5}
+                placeholder="Describe your project or query..."
+                className={`w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-maroon-600/20 focus:bg-white resize-none focus:border-maroon-600`}
+              />
           </div>
 
           {/* Submit button */}
