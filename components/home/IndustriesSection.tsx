@@ -20,9 +20,10 @@ const INDUSTRIES = [
 
 export default function IndustriesSection() {
   return (
-    <section className="py-24 lg:py-32 bg-slate-50 relative overflow-hidden">
-      {/* Premium ambient background layout using maroon accent */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(123,45,62,0.03),transparent)] pointer-events-none" />
+    <section className="py-24 lg:py-32 bg-gradient-to-b from-slate-50 via-indigo-50 to-cyan-50 relative overflow-hidden">
+      {/* Vibrant ambient background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(99,102,241,0.08),transparent)] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-bl from-cyan-300/20 to-transparent rounded-full blur-[120px]" />
       
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16 text-center max-w-3xl mx-auto">
@@ -46,23 +47,23 @@ export default function IndustriesSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.04 }}
                 whileHover={{ y: -5 }}
-                className="group relative bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:border-[#7B2D3E]/20 transition-all duration-500 text-center"
+                className="group relative bg-white rounded-2xl p-6 border-2 border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500 text-center overflow-hidden"
               >
-                {/* Hover gradient using elegant maroon and gold tint */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#7B2D3E]/5 to-[#D97706]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Vibrant hover gradient */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-400/10 via-cyan-400/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 {/* Icon */}
-                <div className="relative w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mx-auto mb-4 group-hover:bg-[#FAF6F6] transition-colors duration-500">
-                  <Icon className="w-5.5 h-5.5 text-slate-500 group-hover:text-[#7B2D3E] transition-colors duration-500" />
+                <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-100 to-cyan-100 flex items-center justify-center mx-auto mb-4 group-hover:from-indigo-200 group-hover:to-cyan-200 transition-all duration-500">
+                  <Icon className="w-5.5 h-5.5 text-indigo-600 group-hover:text-cyan-700 transition-colors duration-500" />
                 </div>
 
                 {/* Name */}
-                <h3 className="relative font-display font-semibold text-sm text-slate-700 group-hover:text-slate-900 transition-colors">
+                <h3 className="relative font-display font-semibold text-sm text-slate-700 group-hover:text-indigo-900 transition-colors">
                   {ind.name}
                 </h3>
 
                 {/* Bottom accent */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-[#7B2D3E] group-hover:w-12 transition-all duration-500 rounded-full" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-indigo-500 to-cyan-500 group-hover:w-12 transition-all duration-500 rounded-full" />
               </motion.div>
             );
           })}
@@ -74,16 +75,16 @@ export default function IndustriesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.35 }}
-          className="mt-16 grid grid-cols-3 gap-6 p-8 bg-white rounded-3xl border border-slate-100 shadow-sm"
+          className="mt-16 grid grid-cols-3 gap-6 p-8 bg-gradient-to-r from-indigo-50 via-cyan-50 to-blue-50 rounded-3xl border-2 border-cyan-200 shadow-lg"
         >
           {[
-            { value: "10+", label: "Industries Served", gradient: "from-[#7B2D3E] to-[#5C1F2E]" },
-            { value: "12+", label: "States Covered", gradient: "from-[#D97706] to-[#B45309]" },
-            { value: "500+", label: "Projects Delivered", gradient: "from-[#9B3D52] to-[#7B2D3E]" },
+            { value: "10+", label: "Industries Served", gradient: "from-rose-500 to-red-600" },
+            { value: "12+", label: "States Covered", gradient: "from-amber-500 to-orange-600" },
+            { value: "500+", label: "Projects Delivered", gradient: "from-cyan-500 to-blue-600" },
           ].map((s) => (
             <div key={s.label} className="text-center">
               <div className={`font-display font-extrabold text-2xl lg:text-3xl text-transparent bg-clip-text bg-gradient-to-r ${s.gradient} mb-1`}>{s.value}</div>
-              <div className="text-xs text-slate-500 uppercase tracking-wider font-display">{s.label}</div>
+              <div className="text-xs text-slate-600 uppercase tracking-wider font-display font-semibold">{s.label}</div>
             </div>
           ))}
         </motion.div>

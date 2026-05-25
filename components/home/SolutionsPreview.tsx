@@ -15,9 +15,10 @@ const iconMap: Record<string, React.ElementType> = {
 
 export default function SolutionsPreview() {
   return (
-    <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
-      {/* Premium ambient radial overlay using maroon accent */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(123,45,62,0.04),transparent)] pointer-events-none" />
+    <section className="py-24 lg:py-32 bg-gradient-to-b from-white via-cyan-50 to-blue-50 relative overflow-hidden">
+      {/* Vibrant ambient radial overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(34,197,234,0.08),transparent)] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-gradient-to-br from-blue-300/25 to-transparent rounded-full blur-[120px]" />
       
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Section header */}
@@ -36,18 +37,18 @@ export default function SolutionsPreview() {
             const Icon = iconMap[solution.icon] || Zap;
             const isEven = i % 2 === 0;
             
-            // Elegantly tailored industrial engineering colors that go perfectly together
+            // Vibrant, professional color gradients
             const gradients = [
-              "from-[#7B2D3E] to-[#5C1F2E]", // Dark Maroon
-              "from-[#D97706] to-[#B45309]", // Golden Amber
-              "from-[#9B3D52] to-[#7B2D3E]", // Medium Crimson
-              "from-[#5C1F2E] to-[#3D1220]", // Deeper Maroon
+              "from-amber-500 to-rose-600", // Warm vibrant
+              "from-cyan-500 to-blue-600", // Cool vibrant
+              "from-violet-500 to-purple-600", // Purple vibrant
+              "from-green-500 to-emerald-600", // Green vibrant
             ];
             const bgGradients = [
-              "from-[#FAF6F6] to-white",
-              "from-[#FFFBEB] to-white",
-              "from-[#FCF5F6] to-white",
-              "from-[#F9F1F3] to-white",
+              "from-amber-50 to-white",
+              "from-cyan-50 to-white",
+              "from-violet-50 to-white",
+              "from-green-50 to-white",
             ];
 
             return (
@@ -82,7 +83,7 @@ export default function SolutionsPreview() {
                     </p>
 
                     <Link href={`/solutions/${solution.slug}`}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white font-display font-bold text-sm uppercase tracking-wider rounded-xl hover:bg-[#7B2D3E] transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow-md">
+                      className={`inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${gradients[i]} text-white font-display font-bold text-sm uppercase tracking-wider rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-[1.05] shadow-md`}>
                       View Solution
                       <ArrowUpRight className="w-4 h-4 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
                     </Link>

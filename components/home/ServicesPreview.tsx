@@ -9,9 +9,10 @@ import { ArrowRight } from "lucide-react";
 
 export default function ServicesPreview() {
   return (
-    <section className="py-24 bg-bg-secondary relative overflow-hidden">
+    <section className="py-24 bg-gradient-to-b from-slate-50 via-blue-50 to-purple-50 relative overflow-hidden">
       <div className="section-divider absolute top-0 left-0 right-0" />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-maroon-50/80 rounded-full blur-[120px]" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-cyan-300/25 via-blue-300/15 to-transparent rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-rose-300/20 to-transparent rounded-full blur-[100px]" />
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 mb-14">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

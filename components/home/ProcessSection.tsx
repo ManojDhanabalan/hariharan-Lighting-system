@@ -14,20 +14,22 @@ const STEPS = [
 ];
 
 const colorMap: Record<string, { bg: string; ring: string; text: string; line: string }> = {
-  maroon:     { bg: "bg-[#7B2D3E]", ring: "ring-[#7B2D3E]/30", text: "text-[#7B2D3E]", line: "bg-[#7B2D3E]/20" },
-  gold:       { bg: "bg-[#D97706]", ring: "ring-[#D97706]/30", text: "text-[#D97706]", line: "bg-[#D97706]/20" },
-  crimson:    { bg: "bg-[#9B3D52]", ring: "ring-[#9B3D52]/30", text: "text-[#9B3D52]", line: "bg-[#9B3D52]/20" },
-  maroonDark: { bg: "bg-[#5C1F2E]", ring: "ring-[#5C1F2E]/30", text: "text-[#5C1F2E]", line: "bg-[#5C1F2E]/20" },
-  goldDark:   { bg: "bg-[#B45309]", ring: "ring-[#B45309]/30", text: "text-[#B45309]", line: "bg-[#B45309]/20" },
+  maroon:     { bg: "bg-gradient-to-br from-amber-500 to-rose-600", ring: "ring-amber-500/30", text: "text-amber-600", line: "bg-gradient-to-r from-amber-500 to-rose-500" },
+  gold:       { bg: "bg-gradient-to-br from-cyan-500 to-blue-600", ring: "ring-cyan-500/30", text: "text-cyan-600", line: "bg-gradient-to-r from-cyan-500 to-blue-500" },
+  crimson:    { bg: "bg-gradient-to-br from-violet-500 to-purple-600", ring: "ring-violet-500/30", text: "text-violet-600", line: "bg-gradient-to-r from-violet-500 to-purple-500" },
+  maroonDark: { bg: "bg-gradient-to-br from-green-500 to-emerald-600", ring: "ring-green-500/30", text: "text-green-600", line: "bg-gradient-to-r from-green-500 to-emerald-500" },
+  goldDark:   { bg: "bg-gradient-to-br from-orange-500 to-red-600", ring: "ring-orange-500/30", text: "text-orange-600", line: "bg-gradient-to-r from-orange-500 to-red-500" },
 };
 
 export default function ProcessSection() {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section className="py-24 lg:py-32 bg-[#FAF6F6] relative overflow-hidden">
-      {/* Background radial accent overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_100%,rgba(123,45,62,0.03),transparent)] pointer-events-none" />
+    <section className="py-24 lg:py-32 bg-gradient-to-b from-indigo-50 via-white to-slate-50 relative overflow-hidden">
+      {/* Background radial accent overlay with vibrant colors */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_100%,rgba(99,102,241,0.08),transparent)] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-cyan-300/20 to-transparent rounded-full blur-[100px]" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-rose-300/20 to-transparent rounded-full blur-[120px]" />
       
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16 text-center max-w-3xl mx-auto">
@@ -41,7 +43,7 @@ export default function ProcessSection() {
           <div className="relative mb-16">
             <div className="absolute top-8 left-[10%] right-[10%] h-0.5 bg-slate-200" />
             <motion.div 
-              className="absolute top-8 left-[10%] h-0.5 bg-gradient-to-r from-[#7B2D3E] via-[#D97706] to-[#B45309]"
+              className="absolute top-8 left-[10%] h-1 bg-gradient-to-r from-amber-500 via-rose-500 via-violet-500 to-cyan-500 rounded-full"
               initial={{ width: "0%" }}
               whileInView={{ width: `${(activeStep / (STEPS.length - 1)) * 80}%` }}
               viewport={{ once: false }}
@@ -101,9 +103,9 @@ export default function ProcessSection() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="max-w-2xl mx-auto bg-white rounded-3xl p-10 border border-[#7B2D3E]/10 shadow-lg text-center"
+            className="max-w-2xl mx-auto bg-gradient-to-br from-white to-slate-50 rounded-3xl p-10 border border-slate-200 shadow-2xl text-center"
           >
-            <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${colorMap[STEPS[activeStep].color].bg} text-white mb-6 shadow-lg shadow-[#7B2D3E]/10`}>
+            <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${colorMap[STEPS[activeStep].color].bg} text-white mb-6 shadow-lg`}>
               {(() => { const Icon = activeStep === 3 ? Package : STEPS[activeStep].icon; return <Icon className="w-6 h-6" />; })()}
             </div>
             <h4 className="font-display font-bold text-2xl text-slate-900 mb-4">{STEPS[activeStep].title}</h4>
@@ -116,7 +118,7 @@ export default function ProcessSection() {
           {/* Vertical line */}
           <div className="absolute left-7 top-4 bottom-4 w-0.5 bg-slate-200" />
           <motion.div 
-            className="absolute left-7 top-4 w-0.5 bg-gradient-to-b from-[#7B2D3E] via-[#D97706] to-[#B45309]"
+            className="absolute left-7 top-4 w-1 bg-gradient-to-b from-amber-500 via-rose-500 via-violet-500 to-cyan-500 rounded-full"
             initial={{ height: "0%" }}
             whileInView={{ height: "100%" }}
             viewport={{ once: true }}
