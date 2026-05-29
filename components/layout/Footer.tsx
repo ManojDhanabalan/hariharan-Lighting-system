@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { company } from "@/data/company";
 import { navLinks } from "@/data/nav";
-import { MapPin, Phone, Mail, Zap, ArrowRight, Shield, Clock, CheckCircle2 } from "lucide-react";
+import { MapPin, Phone, Mail, ArrowRight, Shield, Clock, CheckCircle2 } from "lucide-react";
 
 export default function Footer() {
   const year = new Date().getFullYear();

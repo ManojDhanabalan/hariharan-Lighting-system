@@ -65,8 +65,8 @@ export default function ProcessSection() {
           </div>
 
           <div className="flex flex-col gap-12 md:gap-0">
-            {STEPS.map((step, index) => {
-              const isEven = index % 2 === 0;
+            {STEPS.map((step) => {
+
               const colors = colorMap[step.color];
               const Icon = step.icon;
 

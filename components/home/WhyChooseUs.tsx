@@ -1,9 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck } from "lucide-react";
 import SectionHeader from "@/components/shared/SectionHeader";
-import { company } from "@/data/company";
 
 const REASONS = [
   {

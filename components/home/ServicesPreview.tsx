@@ -1,11 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { services } from "@/data/services";
 import ServiceCard from "@/components/shared/ServiceCard";
 import SectionHeader from "@/components/shared/SectionHeader";
-import { ArrowRight } from "lucide-react";
 
 export default function ServicesPreview() {
   return (

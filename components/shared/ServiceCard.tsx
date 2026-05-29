@@ -2,11 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Activity, ShieldCheck, BarChart2, GitBranch, Zap, Layers, PenTool, ShieldAlert, LucideIcon } from "lucide-react";
-
-const IconMap: Record<string, LucideIcon> = {
-  Activity, ShieldCheck, BarChart2, GitBranch, Zap, Layers, PenTool, ShieldAlert,
-};
+import { ArrowRight } from "lucide-react";
 
 interface ServiceCardProps {
   title: string;
@@ -17,8 +13,8 @@ interface ServiceCardProps {
   index?: number;
 }
 
-export default function ServiceCard({ title, subtitle, icon, shortDesc, href, index = 0 }: ServiceCardProps) {
-  const IconComponent = IconMap[icon] || Zap;
+export default function ServiceCard({ title, subtitle, shortDesc, href, index = 0 }: ServiceCardProps) {
+
 
   return (
     <motion.div

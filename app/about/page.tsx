@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { company } from "@/data/company";
 import {
-  CheckCircle2, Target, Eye, Zap, MapPin, Phone, User,
-  Building2, Shield, ArrowRight, Globe, Award,
-  Clock, ArrowUpRight,
+  Target, Eye, Zap, ArrowRight, ArrowUpRight,
 } from "lucide-react";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
