@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import LightningDropsBg from "@/components/ui/LightningDropsBg";
 
 interface Stat {
   icon: "shield" | "factory" | "settings";
@@ -27,11 +28,13 @@ const StatIcon = ({ type }: { type: Stat["icon"] }) => {
 
 export default function PageHero({ title, subtitle, stats }: PageHeroProps) {
   return (
-    <section
-      className="w-full pt-20"
-      style={{ backgroundColor: "#7B2D3E" }}
-    >
-      <div className="container mx-auto px-4 lg:px-8 py-10 text-center">
+    <section className="relative w-full pt-28 pb-12 overflow-hidden bg-[#030712]">
+      {/* Animated Home Page Background */}
+      <LightningDropsBg />
+      
+      {/* Dark gradient overlay to ensure text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030712]/50 to-[#030712] pointer-events-none z-0" />
+      <div className="container mx-auto px-4 lg:px-8 py-10 text-center relative z-10">
         <motion.h1
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

@@ -120,9 +120,11 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                           <span className="font-mono font-bold text-[10px]">{step.step}</span>
                         </div>
                         {/* Card */}
-                        <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 hover:border-maroon-200 hover:shadow-lg transition-all duration-300">
-                          <h4 className="font-display font-bold text-base text-slate-900 mb-2">{step.title}</h4>
-                          <p className="text-slate-600 text-sm leading-relaxed">{step.desc}</p>
+                        <div className={`bg-white border ${config.border} ${config.shadow} shadow-sm rounded-2xl p-6 hover:shadow-md transition-all duration-300 relative overflow-hidden group`}>
+                          {/* subtle background glow */}
+                          <div className={`absolute top-0 right-0 w-32 h-32 ${config.bg} rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-50 group-hover:opacity-100 transition-opacity duration-300`} />
+                          <h4 className="font-display font-bold text-base text-slate-900 mb-2 relative z-10">{step.title}</h4>
+                          <p className="text-slate-600 text-sm leading-relaxed relative z-10">{step.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -137,15 +139,63 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                     <div className="w-8 h-[2px] bg-maroon-600 rounded-full" />
                     <span className="text-maroon-700 font-display font-bold text-xs tracking-[0.2em] uppercase">Our Offerings</span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    {(solution.offerings || solution.productCategories || solution.spdCategories)?.map((item: { name?: string; type?: string; desc: string }, i: number) => (
-                      <div key={i} className="group bg-slate-50 border border-slate-100 rounded-2xl p-6 hover:border-maroon-200 hover:shadow-lg transition-all duration-300">
-                        <h4 className="font-display font-bold text-slate-900 text-base mb-2 group-hover:text-maroon-700 transition-colors">
-                          {item.name || item.type}
-                        </h4>
-                        <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 gap-y-14 mt-4">
+                    {(solution.offerings || solution.productCategories || solution.spdCategories)?.map((item: { name?: string; type?: string; desc: string }, i: number) => {
+                      const cardGradient = [
+                        "from-[#FFD000] to-[#FF7B00]",
+                        "from-[#60EFFF] to-[#0061FF]",
+                        "from-[#E83A59] to-[#4A0E4E]"
+                      ][i % 3];
+                      
+                      const iconColor = [
+                        "text-[#FF7B00]",
+                        "text-[#0061FF]",
+                        "text-[#E83A59]"
+                      ][i % 3];
+
+                      return (
+                        <div key={i} className="relative bg-transparent mb-2 flex flex-col mt-2">
+                          {/* Top half: Colored Gradient */}
+                          <div className={`h-24 rounded-t-[1.5rem] bg-gradient-to-br ${cardGradient} relative overflow-hidden flex-shrink-0 z-10`}>
+                            {/* Decorative Confetti SVG */}
+                            <div className="absolute inset-0 flex items-end justify-center opacity-30">
+                              <svg viewBox="0 0 200 100" className="w-full h-full text-white transform translate-y-4">
+                                <path d="M 50 100 A 50 50 0 0 1 150 100" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" />
+                                <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="2 6" />
+                                <circle cx="30" cy="60" r="1.5" fill="currentColor" />
+                                <circle cx="170" cy="50" r="1.5" fill="currentColor" />
+                                <circle cx="140" cy="30" r="2" fill="none" stroke="currentColor" />
+                                <circle cx="60" cy="40" r="2" fill="none" stroke="currentColor" />
+                                <path d="M 80 40 L 85 50 L 75 50 Z" fill="none" stroke="currentColor" />
+                                <path d="M 120 50 L 125 40 L 135 45 Z" fill="none" stroke="currentColor" />
+                                <path d="M 100 25 L 105 15 L 115 20" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                                <path d="M 15 80 Q 25 70 35 80 T 55 80" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                                <path d="M 145 80 Q 155 90 165 80 T 185 80" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                                <circle cx="100" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                              </svg>
+                            </div>
+                          </div>
+
+                          {/* Floating Icon */}
+                          <div className="absolute top-24 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-[0_5px_15px_rgba(0,0,0,0.08)] border-[4px] border-white">
+                            <Layers className={`w-6 h-6 ${iconColor}`} />
+                          </div>
+
+                          {/* Bottom half: White Background */}
+                          <div className="relative z-20 bg-white rounded-b-[1.5rem] pt-10 pb-6 px-6 text-center flex-grow flex flex-col items-center shadow-[0_15px_30px_rgba(0,0,0,0.06)] border border-t-0 border-slate-100">
+                            <h4 className="font-display font-bold text-slate-800 text-base mb-2">
+                              {item.name || item.type}
+                            </h4>
+                            <p className="text-xs text-slate-500 leading-relaxed">
+                              {item.desc}
+                            </p>
+                          </div>
+
+                          {/* Downward triangle pointer */}
+                          <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-5 h-5 bg-white rotate-45 rounded-sm shadow-[4px_4px_10px_rgba(0,0,0,0.04)] z-10 border-b border-r border-slate-100" />
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -159,9 +209,9 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {solution.valueAdds.map((item, i) => (
-                      <div key={i} className="group flex items-start gap-3 p-5 bg-slate-50 border border-slate-100 rounded-2xl hover:border-maroon-200 hover:shadow-lg transition-all duration-300">
+                      <div key={i} className={`group flex items-start gap-3 p-5 ${config.bg} border ${config.border} rounded-2xl hover:shadow-md transition-all duration-300`}>
                         <CheckCircle2 className={`w-5 h-5 ${config.text} shrink-0 mt-0.5 group-hover:scale-110 transition-transform`} />
-                        <span className="text-slate-600 text-sm leading-relaxed">{item}</span>
+                        <span className="text-slate-700 text-sm leading-relaxed font-medium">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -175,12 +225,12 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                     <div className="w-8 h-[2px] bg-maroon-600 rounded-full" />
                     <span className="text-maroon-700 font-display font-bold text-xs tracking-[0.2em] uppercase">Deliverables</span>
                   </div>
-                  <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8">
+                  <div className={`${config.bg} border ${config.border} rounded-3xl p-8`}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {solution.deliverables.map((item, i) => (
-                        <div key={i} className="flex items-start gap-3 p-4 bg-white border border-slate-200 rounded-xl hover:border-maroon-200 hover:shadow-md transition-all">
-                          <ClipboardCheck className="w-4 h-4 text-maroon-600 shrink-0 mt-0.5" />
-                          <span className="text-sm text-slate-600">{item}</span>
+                        <div key={i} className="flex items-start gap-3 p-4 bg-white border border-slate-100 rounded-xl hover:shadow-sm transition-all">
+                          <ClipboardCheck className={`w-4 h-4 ${config.text} shrink-0 mt-0.5`} />
+                          <span className="text-sm text-slate-700 font-medium">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -189,17 +239,16 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
               )}
 
               {/* Other Solutions */}
-              <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8">
-                <h3 className="font-display font-bold text-xs text-slate-400 uppercase tracking-[0.15em] mb-5">Explore Other Solutions</h3>
+              <div className={`${config.bg} border ${config.border} rounded-3xl p-8`}>
+                <h3 className={`font-display font-bold text-xs ${config.text} uppercase tracking-[0.15em] mb-5`}>Explore Other Solutions</h3>
                 <div className="flex flex-wrap gap-3">
                   {solutions.filter((s) => s.slug !== solution.slug).map((s) => {
                     const OtherIcon = IconMap[s.icon] || Layers;
                     return (
                       <Link key={s.slug} href={`/solutions/${s.slug}`}
-                        className="group flex items-center gap-2.5 px-5 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-600 hover:text-maroon-700 hover:border-maroon-200 hover:shadow-md transition-all">
-                        <OtherIcon className="w-4 h-4 text-slate-400 group-hover:text-maroon-600 transition-colors" />
+                        className={`group flex items-center gap-2.5 px-5 py-3 bg-white border ${config.border} rounded-xl text-sm text-slate-600 hover:${config.text} hover:shadow-sm transition-all`}>
+                        <OtherIcon className={`w-4 h-4 text-slate-400 group-hover:${config.text} transition-colors`} />
                         {s.title}
-                        <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-maroon-600" />
                       </Link>
                     );
                   })}
@@ -213,7 +262,7 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
 
                 {/* Delivery Model */}
                 {solution.deliveryModel && (
-                  <div className="bg-slate-50 border border-slate-100 rounded-3xl p-7">
+                  <div className={`${config.bg} border ${config.border} rounded-3xl p-7`}>
                     <div className="flex items-center gap-3 mb-5">
                       <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${config.gradient} flex items-center justify-center shadow-md`}>
                         <Settings className="w-5 h-5 text-white" />
@@ -223,7 +272,7 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                     <div className="flex flex-col gap-3">
                       {solution.deliveryModel.split("→").map((step, i) => (
                         <div key={i} className="flex items-center gap-3">
-                          <span className={`flex items-center justify-center w-7 h-7 rounded-lg ${config.bg} border ${config.border} text-xs font-mono ${config.text} shrink-0`}>
+                          <span className={`flex items-center justify-center w-7 h-7 rounded-lg bg-white border ${config.border} text-xs font-mono ${config.text} shrink-0 shadow-sm`}>
                             {i + 1}
                           </span>
                           <span className="font-display font-semibold text-slate-700 text-sm uppercase tracking-wide">{step.trim()}</span>
@@ -235,16 +284,16 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
 
                 {/* Application Areas */}
                 {solution.applicationArea && (
-                  <div className="bg-slate-50 border border-slate-100 rounded-3xl p-7">
+                  <div className={`${config.bg} border ${config.border} rounded-3xl p-7`}>
                     <div className="flex items-center gap-3 mb-5">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-maroon-600 to-maroon-700 flex items-center justify-center shadow-md shadow-maroon-600/25">
+                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${config.gradient} flex items-center justify-center shadow-md`}>
                         <Factory className="w-5 h-5 text-white" />
                       </div>
                       <h4 className="font-display font-bold text-sm text-slate-900">Application Areas</h4>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {solution.applicationArea.map((a, i) => (
-                        <span key={i} className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-600 hover:border-maroon-300 hover:text-maroon-700 transition-colors cursor-default">
+                        <span key={i} className={`px-3 py-1.5 bg-white border ${config.border} rounded-lg text-xs text-slate-700 hover:shadow-sm transition-all cursor-default`}>
                           {a}
                         </span>
                       ))}
@@ -254,18 +303,18 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
 
                 {/* Reference Standards */}
                 {solution.standards && (
-                  <div className="bg-slate-50 border border-slate-100 rounded-3xl p-7">
+                  <div className={`${config.bg} border ${config.border} rounded-3xl p-7`}>
                     <div className="flex items-center gap-3 mb-5">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-violet-600 flex items-center justify-center shadow-md shadow-violet-500/25">
+                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${config.gradient} flex items-center justify-center shadow-md`}>
                         <FileText className="w-5 h-5 text-white" />
                       </div>
                       <h4 className="font-display font-bold text-sm text-slate-900">Reference Standards</h4>
                     </div>
                     <ul className="space-y-2">
                       {solution.standards.map((std, i) => (
-                        <li key={i} className="flex items-center gap-3 py-2.5 border-b border-slate-200 last:border-0">
-                          <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
-                          <span className="text-sm font-mono text-slate-600">{std}</span>
+                        <li key={i} className={`flex items-center gap-3 py-2.5 border-b ${config.border} last:border-0`}>
+                          <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-br ${config.gradient} shrink-0`} />
+                          <span className="text-sm font-mono text-slate-700 font-medium">{std}</span>
                         </li>
                       ))}
                     </ul>
@@ -286,7 +335,7 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                       Ready to discuss your {solution.title.toLowerCase()} requirements?
                     </p>
                     <a href={`tel:${company.phone.replace(/[^0-9+]/g, "")}`}
-                      className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-maroon-700 to-maroon-600 hover:from-maroon-600 hover:to-maroon-800 text-white font-display font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-maroon-600/25 hover:shadow-maroon-600/40">
+                      className="flex items-center justify-center gap-2 w-full py-3.5 bg-red-600 hover:bg-red-700 text-white font-display font-bold text-sm uppercase tracking-wider rounded-xl transition-colors">
                       <Phone className="w-4 h-4" />
                       Call Us Now
                     </a>

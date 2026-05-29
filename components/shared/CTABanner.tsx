@@ -79,8 +79,7 @@ export default function CTABanner({ headline, subtext, ctaLabel, ctaHref, second
               {/* Right - CTAs */}
               <div className="flex flex-col sm:flex-row lg:flex-col gap-4">
                 <Link href={ctaHref}
-                  className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-gradient-to-r from-maroon-700 to-maroon-600 text-white font-display font-bold text-base uppercase tracking-wide rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(123,45,62,0.3)] hover:shadow-[0_0_60px_rgba(123,45,62,0.5)] transition-all duration-300 hover:scale-[1.02]">
-                  <div className="absolute inset-0 bg-gradient-to-r from-maroon-600 to-maroon-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-red-600 hover:bg-red-700 text-white font-display font-bold text-base uppercase tracking-wide rounded-2xl transition-colors duration-300">
                   <span className="relative z-10 flex items-center gap-2">
                     {ctaLabel}
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

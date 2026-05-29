@@ -6,6 +6,7 @@ import SolutionsPreview  from "@/components/home/SolutionsPreview";
 import ProcessSection    from "@/components/home/ProcessSection";
 import WhyChooseUs       from "@/components/home/WhyChooseUs";
 import IndustriesSection from "@/components/home/IndustriesSection";
+import CustomerMarquee   from "@/components/home/CustomerMarquee";
 
 
 export const metadata: Metadata = {
@@ -24,7 +25,7 @@ export default function HomePage() {
       <ProcessSection />
       <WhyChooseUs />
       <IndustriesSection />
-
+      <CustomerMarquee />
     </>
   );
 }

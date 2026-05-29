@@ -4,9 +4,9 @@ export const company = {
   founderName: "Hariharan",
   phone: "+91 73737 66689",
   email: "info@aadithya.com",
-  location: "Erode, Tamil Nadu, India",
+  location: "68A/7, Indgra Nagar, Allampalayam, Pallipalayam, Tamil Nadu 638008",
   workingHours: "Mon – Sat, 9:00 AM – 5:30 PM IST",
-  googleMapsLink: "",
+  googleMapsLink: "https://www.google.com/maps/dir/?api=1&destination=68A%2F7%2C+Indgra+Nagar%2C+Allampalayam%2C+Pallipalayam%2C+Tamil+Nadu+638008",
   established: "2017",
   stats: {
     projectsCompleted: "500+",

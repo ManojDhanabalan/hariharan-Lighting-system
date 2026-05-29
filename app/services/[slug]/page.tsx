@@ -284,7 +284,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                       Call our engineering experts directly for a consultation.
                     </p>
                     <a href={`tel:${company.phone.replace(/[^0-9+]/g, "")}`}
-                      className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-maroon-700 to-maroon-600 hover:from-maroon-600 hover:to-maroon-800 text-white font-display font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-maroon-600/25 hover:shadow-maroon-600/40">
+                      className="flex items-center justify-center gap-2 w-full py-3.5 bg-red-600 hover:bg-red-700 text-white font-display font-bold text-sm uppercase tracking-wider rounded-xl transition-colors">
                       <Phone className="w-4 h-4" />
                       {company.phone}
                     </a>

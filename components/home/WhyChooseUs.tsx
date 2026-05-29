@@ -1,27 +1,57 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Eye, Clock, Lightbulb, HardHat, ShieldCheck, FileCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import SectionHeader from "@/components/shared/SectionHeader";
+import { company } from "@/data/company";
 
 const REASONS = [
-  { icon: Eye,        title: "Integrity & Transparency", desc: "We operate with complete transparency in every engagement, ensuring you know exactly what is needed and why.", gradient: "from-[#7B2D3E] to-[#5C1F2E]", bg: "bg-[#FAF6F6]", text: "text-[#7B2D3E]" },
-  { icon: Clock,      title: "Dependability",             desc: "You can count on us to deliver on time, every time. We respect your operational schedules and commitments.", gradient: "from-[#D97706] to-[#B45309]", bg: "bg-[#FFFBEB]", text: "text-[#D97706]" },
-  { icon: Lightbulb,  title: "Innovation",                desc: "We implement cutting-edge, technically superior solutions rather than just standard legacy practices.", gradient: "from-[#9B3D52] to-[#7B2D3E]", bg: "bg-[#FCF5F6]", text: "text-[#9B3D52]" },
-  { icon: HardHat,    title: "Safety First",              desc: "Human and equipment safety is non-negotiable in every project we undertake. Zero compromises.", gradient: "from-[#5C1F2E] to-[#3D1220]", bg: "bg-[#F9F1F3]", text: "text-[#5C1F2E]" },
-  { icon: ShieldCheck,title: "Deep Expertise",            desc: "Over 18 years of hands-on engineering experience in complex industrial and commercial environments.", gradient: "from-[#B45309] to-[#92400E]", bg: "bg-[#FFFBEB]", text: "text-[#B45309]" },
-  { icon: FileCheck,  title: "Standards Compliance",      desc: "Strict adherence to IS, IEEE, IEC, and latest CEA regulations ensuring full compliance and peace of mind.", gradient: "from-[#7B2D3E] to-[#5C1F2E]", bg: "bg-[#FAF6F6]", text: "text-[#7B2D3E]" },
+  {
+    title: "Safety First",
+    desc: "Human and equipment safety is non-negotiable in every project we undertake. Zero compromises.",
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800" // Safety engineer on site with hard hat
+  },
+  {
+    title: "Deep Expertise",
+    desc: "Over 18 years of hands-on engineering experience in complex industrial and commercial environments.",
+    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800" // Advanced technical engineer working on electrical design
+  },
+  {
+    title: "Standards Compliance",
+    desc: "Strict adherence to IS, IEEE, IEC, and CEA regulations ensuring full compliance and peace of mind.",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800" // Professional technical checklists and inspections
+  },
+  {
+    title: "Complete Transparency",
+    desc: "We operate with total transparency in every design, ensuring you know exactly what is required and why.",
+    image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=800" // Clean schematics and transparent project drawings
+  },
+  {
+    title: "Engineering Innovation",
+    desc: "We implement cutting-edge, technically superior solutions rather than just legacy standard practices.",
+    image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800" // High precision modern electrical innovation/circuit testing
+  },
+  {
+    title: "Absolute Dependability",
+    desc: "You can count on us to deliver on time. We respect your operational timelines and constraints.",
+    image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800" // Dedicated engineering team collaborating on site
+  }
 ];
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
+    <section className="py-20 lg:py-28 bg-slate-50/50 relative overflow-hidden">
       {/* Premium subtle backgrounds */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#FAF6F6]/60 rounded-full blur-[150px]" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#FFFBEB]/40 rounded-full blur-[120px]" />
-
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#FAF6F6]/40 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#FFFBEB]/20 rounded-full blur-[120px] pointer-events-none" />
+ 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16 text-center max-w-3xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true }} 
+          className="mb-14 text-center max-w-3xl mx-auto"
+        >
           <SectionHeader 
             overline="Why Choose Us" 
             title="Built on Expertise, Driven by Safety"
@@ -29,61 +59,43 @@ export default function WhyChooseUs() {
             centered 
           />
         </motion.div>
-
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+ 
+        {/* Grid matching the exact reference card styling */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {REASONS.map((r, i) => (
             <motion.div 
               key={r.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
               whileHover={{ y: -6 }}
-              className="group relative bg-white border border-slate-100 rounded-3xl p-8 hover:shadow-2xl hover:border-[#7B2D3E]/15 transition-all duration-500"
+              className="group bg-white border border-slate-100 rounded-[28px] p-4 shadow-[0_8px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.05)] hover:border-slate-200/80 transition-all duration-500"
             >
-              {/* Elegant gradient overlay on hover */}
-              <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${r.gradient} opacity-0 group-hover:opacity-[0.02] transition-opacity duration-500`} />
-              
-              {/* Icon */}
-              <div className={`relative w-14 h-14 rounded-2xl ${r.bg} flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-500`}>
-                <r.icon className={`w-5.5 h-5.5 ${r.text}`} />
+              {/* Image container rounded internally */}
+              <div className="relative w-full aspect-[4/3] rounded-[20px] overflow-hidden mb-4 bg-slate-100">
+                <img 
+                  src={r.image} 
+                  alt={r.title} 
+                  className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
+                  loading="lazy"
+                />
               </div>
-
-              {/* Title */}
-              <h3 className="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-[#7B2D3E] transition-colors">
-                {r.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-slate-600 text-sm leading-relaxed">
-                {r.desc}
-              </p>
-
-              {/* Bottom accent */}
-              <div className={`absolute bottom-0 left-8 right-8 h-0.5 bg-gradient-to-r ${r.gradient} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-full`} />
+ 
+              {/* Text Area */}
+              <div className="px-2 pb-2">
+                <h3 className="font-display font-extrabold text-lg md:text-xl text-slate-900 mb-1.5 group-hover:text-maroon-700 transition-colors">
+                  {r.title}
+                </h3>
+                <p className="text-slate-500 text-sm leading-relaxed font-body">
+                  {r.desc}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>
+ 
 
-        {/* Bottom trust badge */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6 p-8 bg-[#FAF6F6] rounded-3xl border border-[#7B2D3E]/5"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#7B2D3E] to-[#5C1F2E] flex items-center justify-center shadow-lg shadow-[#7B2D3E]/15">
-              <ShieldCheck className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <div className="font-display font-bold text-slate-900">18+ Years of Excellence</div>
-              <div className="text-sm text-slate-500">Trusted by 500+ clients across India</div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

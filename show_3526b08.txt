@@ -1,0 +1,323 @@
+﻿commit 3526b08147093e972f809243edfabf4e262444ef
+Author: ManojDhanabalan <manomk9425@gmail.com>
+Date:   Tue May 19 18:44:25 2026 +0530
+
+    changes
+
+diff --git a/.env b/.env
+new file mode 100644
+index 0000000..936fa0b
+--- /dev/null
++++ b/.env
+@@ -0,0 +1,6 @@
++# Zoho SMTP Configuration for Contact Form
++# DO NOT commit this file if you put real passwords in it (use .env.local instead or add .env to .gitignore)
++
++ZOHO_SMTP_USER="info@aadithyatech.com"
++# You need to generate an App Password in your Zoho account settings for this to work
++ZOHO_SMTP_PASS="vFhJUS5sG1C4"
+diff --git a/app/api/contact/route.ts b/app/api/contact/route.ts
+new file mode 100644
+index 0000000..d6ea915
+--- /dev/null
++++ b/app/api/contact/route.ts
+@@ -0,0 +1,96 @@
++import { NextResponse } from "next/server";
++import nodemailer from "nodemailer";
++
++export async function POST(req: Request) {
++  try {
++    const body = await req.json();
++    const { fullName, email, phone, company, service, message } = body;
++
++    if (!fullName || !email) {
++      return NextResponse.json(
++        { error: "Name and Email are required" },
++        { status: 400 }
++      );
++    }
++
++    const user = process.env.ZOHO_SMTP_USER;
++    const pass = process.env.ZOHO_SMTP_PASS;
++
++    if (!user || !pass) {
++      console.error("Missing Zoho SMTP credentials in environment variables.");
++      return NextResponse.json(
++        { error: "Server configuration error" },
++        { status: 500 }
++      );
++    }
++
++    // Configure the Nodemailer transport for Zoho
++    // Note: If you registered in the US data center, use smtp.zoho.com instead of smtp.zoho.in
++    const transporter = nodemailer.createTransport({
++      host: "smtp.zoho.in", 
++      port: 465,
++      secure: true, // use SSL
++      auth: {
++        user: user,
++        pass: pass,
++      },
++    });
++
++    // 1. Send Notification Email to You (info@aadithyatech.com)
++    const notificationMailOptions = {
++      from: `"${fullName} (via Website)" <${user}>`, // Sent from your authenticated email to avoid spam blocks
++      replyTo: email, // If you hit "Reply", it goes to the customer
++      to: user, // Send to yourself
++      subject: `New Enquiry from ${fullName} - Aadithya Tech`,
++      html: `
++        <h2>New Contact Form Submission</h2>
++        <p><strong>Name:</strong> ${fullName}</p>
++        <p><strong>Email:</strong> ${email}</p>
++        <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
++        <p><strong>Company:</strong> ${company || "Not provided"}</p>
++        <p><strong>Service of Interest:</strong> ${service || "Not provided"}</p>
++        <br />
++        <p><strong>Message:</strong></p>
++        <p>${message ? message.replace(/\n/g, '<br/>') : "No message provided."}</p>
++      `,
++    };
++
++    // 2. Send Auto-Reply Email to the Customer
++    const autoReplyMailOptions = {
++      from: `"Aadithya Tech" <${user}>`,
++      to: email,
++      subject: "Thank you for contacting Aadithya Tech",
++      html: `
++        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
++          <h2 style="color: #800000;">Thank you for reaching out!</h2>
++          <p>Dear ${fullName},</p>
++          <p>We have received your enquiry and our engineering team will review your details shortly. We typically respond within 24 hours.</p>
++          <br/>
++          <p><strong>Your Details:</strong></p>
++          <p>Service of Interest: ${service || "N/A"}</p>
++          <br/>
++          <p>If you have any urgent questions, please feel free to reply directly to this email.</p>
++          <br/>
++          <p>Best Regards,</p>
++          <p><strong>The Aadithya Tech Team</strong></p>
++          <p><a href="https://aadithyatech.com">www.aadithyatech.com</a></p>
++        </div>
++      `,
++    };
++
++    // Send both emails
++    await transporter.sendMail(notificationMailOptions);
++    await transporter.sendMail(autoReplyMailOptions);
++
++    return NextResponse.json(
++      { message: "Emails sent successfully" },
++      { status: 200 }
++    );
++  } catch (error) {
++    console.error("Error sending email:", error);
++    return NextResponse.json(
++      { error: "Failed to send email" },
++      { status: 500 }
++    );
++  }
++}
+diff --git a/app/favicon.ico b/app/favicon.ico
+deleted file mode 100644
+index 718d6fe..0000000
+Binary files a/app/favicon.ico and /dev/null differ
+diff --git a/app/icon.png b/app/icon.png
+deleted file mode 100644
+index e14554b..0000000
+Binary files a/app/icon.png and /dev/null differ
+diff --git a/app/icon.svg b/app/icon.svg
+new file mode 100644
+index 0000000..61dad79
+--- /dev/null
++++ b/app/icon.svg
+@@ -0,0 +1,15 @@
++<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
++  <!-- Gradient Definition -->
++  <defs>
++    <linearGradient id="maroonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
++      <stop offset="0%" stop-color="#b91c1c" /> <!-- maroon-700 -->
++      <stop offset="100%" stop-color="#7f1d1d" /> <!-- maroon-900 -->
++    </linearGradient>
++  </defs>
++  
++  <!-- Background with rounded corners -->
++  <rect width="32" height="32" rx="8" fill="url(#maroonGrad)" />
++  
++  <!-- Zap Icon -->
++  <path d="M18.5 4.5L5.5 18.5H16.5L15.5 28.5L28.5 13.5H16.5L18.5 4.5Z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round" />
++</svg>
+diff --git a/components/contact/ContactForm.tsx b/components/contact/ContactForm.tsx
+index a2d2172..8fc84da 100644
+--- a/components/contact/ContactForm.tsx
++++ b/components/contact/ContactForm.tsx
+@@ -17,12 +17,28 @@ export default function ContactForm() {
+ 
+   const onSubmit = async (data: FormData) => {
+     setIsSubmitting(true);
+-    await new Promise(r => setTimeout(r, 1600));
+-    console.log(data);
+-    setIsSubmitting(false);
+-    setIsSuccess(true);
+-    reset();
+-    setTimeout(() => setIsSuccess(false), 6000);
++    try {
++      const response = await fetch("/api/contact", {
++        method: "POST",
++        headers: {
++          "Content-Type": "application/json",
++        },
++        body: JSON.stringify(data),
++      });
++
++      if (!response.ok) {
++        throw new Error("Failed to send message");
++      }
++
++      setIsSuccess(true);
++      reset();
++      setTimeout(() => setIsSuccess(false), 6000);
++    } catch (error) {
++      console.error(error);
++      alert("Failed to send message. Please try again.");
++    } finally {
++      setIsSubmitting(false);
++    }
+   };
+ 
+   return (
+@@ -96,16 +112,15 @@ export default function ContactForm() {
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+             <div>
+               <label className={`block text-xs font-display font-bold uppercase tracking-[0.12em] mb-2 transition-colors ${focusedField === "phone" ? "text-maroon-700" : "text-slate-500"}`}>
+-                Phone <span className="text-red-500">*</span>
++                Phone
+               </label>
+               <input
+-                {...register("phone", { required: "Phone is required" })}
++                {...register("phone")}
+                 onFocus={() => setFocusedField("phone")}
+                 onBlur={() => setFocusedField(null)}
+                 placeholder="+91 98765 43210"
+-                className={`w-full px-4 py-3.5 bg-slate-50 border rounded-xl text-slate-900 placeholder-slate-400 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-maroon-600/20 focus:bg-white ${errors.phone ? "border-red-300 focus:ring-red-500/20" : "border-slate-200 focus:border-maroon-600"}`}
++                className={`w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-maroon-600/20 focus:bg-white focus:border-maroon-600`}
+               />
+-              {errors.phone && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-red-500" />{errors.phone.message}</p>}
+             </div>
+             <div>
+               <label className={`block text-xs font-display font-bold uppercase tracking-[0.12em] mb-2 transition-colors ${focusedField === "company" ? "text-maroon-700" : "text-slate-500"}`}>
+@@ -139,18 +154,17 @@ export default function ContactForm() {
+ 
+           {/* Message */}
+           <div className="mb-8">
+-            <label className={`block text-xs font-display font-bold uppercase tracking-[0.12em] mb-2 transition-colors ${focusedField === "message" ? "text-maroon-700" : "text-slate-500"}`}>
+-              Your Message <span className="text-red-500">*</span>
+-            </label>
+-            <textarea
+-              {...register("message", { required: "Message is required" })}
+-              onFocus={() => setFocusedField("message")}
+-              onBlur={() => setFocusedField(null)}
+-              rows={5}
+-              placeholder="Describe your project or query..."
+-              className={`w-full px-4 py-3.5 bg-slate-50 border rounded-xl text-slate-900 placeholder-slate-400 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-maroon-600/20 focus:bg-white resize-none ${errors.message ? "border-red-300 focus:ring-red-500/20" : "border-slate-200 focus:border-maroon-600"}`}
+-            />
+-            {errors.message && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-red-500" />{errors.message.message}</p>}
++              <label className={`block text-xs font-display font-bold uppercase tracking-[0.12em] mb-2 transition-colors ${focusedField === "message" ? "text-maroon-700" : "text-slate-500"}`}>
++                Your Message
++              </label>
++              <textarea
++                {...register("message")}
++                onFocus={() => setFocusedField("message")}
++                onBlur={() => setFocusedField(null)}
++                rows={5}
++                placeholder="Describe your project or query..."
++                className={`w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-maroon-600/20 focus:bg-white resize-none focus:border-maroon-600`}
++              />
+           </div>
+ 
+           {/* Submit button */}
+diff --git a/package.json b/package.json
+index 2e76f7a..8470de7 100644
+--- a/package.json
++++ b/package.json
+@@ -12,6 +12,7 @@
+     "framer-motion": "^12.38.0",
+     "lucide-react": "^1.14.0",
+     "next": "14.2.35",
++    "nodemailer": "^8.0.7",
+     "react": "^18",
+     "react-dom": "^18",
+     "react-hook-form": "^7.74.0",
+@@ -19,6 +20,7 @@
+   },
+   "devDependencies": {
+     "@types/node": "^20",
++    "@types/nodemailer": "^8.0.0",
+     "@types/react": "^18",
+     "@types/react-dom": "^18",
+     "eslint": "^8",
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index c677a24..ae3e3ab 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -17,6 +17,9 @@ importers:
+       next:
+         specifier: 14.2.35
+         version: 14.2.35(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
++      nodemailer:
++        specifier: ^8.0.7
++        version: 8.0.7
+       react:
+         specifier: ^18
+         version: 18.3.1
+@@ -33,6 +36,9 @@ importers:
+       '@types/node':
+         specifier: ^20
+         version: 20.19.39
++      '@types/nodemailer':
++        specifier: ^8.0.0
++        version: 8.0.0
+       '@types/react':
+         specifier: ^18
+         version: 18.3.28
+@@ -222,6 +228,9 @@ packages:
+   '@types/node@20.19.39':
+     resolution: {integrity: sha512-orrrD74MBUyK8jOAD/r0+lfa1I2MO6I+vAkmAWzMYbCcgrN4lCrmK52gRFQq/JRxfYPfonkr4b0jcY7Olqdqbw==}
+ 
++  '@types/nodemailer@8.0.0':
++    resolution: {integrity: sha512-fyf8jWULsCo0d0BuoQ75i6IeoHs47qcqxWc7yUdUcV0pOZGjUTTOvwdG1PRXUDqN/8A64yQdQdnA2pZgcdi+cA==}
++
+   '@types/prop-types@15.7.15':
+     resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
+ 
+@@ -1261,6 +1270,10 @@ packages:
+     resolution: {integrity: sha512-pyFS63ptit/P5WqUkt+UUfe+4oevH+bFeIiPPdfb0pFeYEu/1ELnJu5l+5EcTKYL5M7zaAa7S8ddywgXypqKCw==}
+     engines: {node: '>= 0.4'}
+ 
++  nodemailer@8.0.7:
++    resolution: {integrity: sha512-pkjE4mkBzQjdJT4/UmlKl3pX0rC9fZmjh7c6C9o7lv66Ac6w9WCnzPzhbPNxwZAzlF4mdq4CSWB5+FbK6FWCow==}
++    engines: {node: '>=6.0.0'}
++
+   normalize-path@3.0.0:
+     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
+     engines: {node: '>=0.10.0'}
+@@ -1930,6 +1943,10 @@ snapshots:
+     dependencies:
+       undici-types: 6.21.0
+ 
++  '@types/nodemailer@8.0.0':
++    dependencies:
++      '@types/node': 20.19.39
++
+   '@types/prop-types@15.7.15': {}
+ 
+   '@types/react-dom@18.3.7(@types/react@18.3.28)':
+@@ -3135,6 +3152,8 @@ snapshots:
+       object.entries: 1.1.9
+       semver: 6.3.1
+ 
++  nodemailer@8.0.7: {}
++
+   normalize-path@3.0.0: {}
+ 
+   object-assign@4.1.1: {}

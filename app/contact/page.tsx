@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/contact/ContactForm";
-import ContactInfo from "@/components/contact/ContactInfo";
 import { company } from "@/data/company";
-import { MapPin, Shield, Zap, ArrowRight } from "lucide-react";
+import { MapPin, Phone, Mail, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 
@@ -15,50 +14,53 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <PageHero title="Get in Touch" />
+      <PageHero title="Contact Us" subtitle="Any question or remarks? Just write us a message!" />
 
       {/* ── Main Content ───────────────────────────────────── */}
-      <section className="py-16 lg:py-20 bg-white">
+      <section className="py-16 lg:py-24 bg-slate-50 relative overflow-hidden">
+        
+        {/* Massive Orange Background Shape */}
+        <div className="absolute top-0 right-0 w-[50%] h-[70%] bg-[#F97316] rounded-b-[400px] z-0 hidden lg:block translate-x-10 -translate-y-10" />
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 max-w-7xl mx-auto">
+          
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-6xl mx-auto flex flex-col lg:flex-row p-2">
+            
+            {/* Left - Dark Blue Contact Info Panel */}
+            <div className="lg:w-[40%] bg-[#0A192F] rounded-[1.5rem] p-10 text-white relative overflow-hidden flex flex-col justify-between">
+              
+              {/* Overlapping Circles Background */}
+              <div className="absolute -bottom-16 -right-16 w-64 h-64 bg-white/5 rounded-full blur-sm" />
+              <div className="absolute bottom-10 right-10 w-48 h-48 bg-white/5 rounded-full blur-sm" />
 
-            {/* Left - Contact Info (2 cols) */}
-            <div className="lg:col-span-2 space-y-8">
-              <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-8 h-[2px] bg-maroon-600 rounded-full" />
-                  <span className="text-maroon-700 font-display font-bold text-xs tracking-[0.2em] uppercase">Contact Information</span>
-                </div>
-                <h2 className="font-display font-extrabold text-3xl text-slate-900 mb-3">
-                  How Can We Help?
-                </h2>
-                <p className="text-slate-500 leading-relaxed">
-                  Whether you need an earthing audit, lightning protection system, or surge protection solution — we&apos;re here to help.
-                </p>
-              </div>
+              <div className="relative z-10">
+                <h3 className="font-display font-bold text-3xl mb-2">Contact Information</h3>
+                <p className="text-slate-400 text-sm mb-12">Say something to start a live chat!</p>
 
-              <ContactInfo />
-
-              {/* Trust badges */}
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { icon: Shield, label: "IS/IEC Certified", desc: "Full compliance" },
-                  { icon: Zap, label: "24h Response", desc: "Quick turnaround" },
-                ].map((badge) => (
-                  <div key={badge.label} className="p-4 bg-slate-50 border border-slate-100 rounded-2xl">
-                    <badge.icon className="w-5 h-5 text-maroon-600 mb-2" />
-                    <div className="text-sm font-display font-semibold text-slate-900">{badge.label}</div>
-                    <div className="text-xs text-slate-500">{badge.desc}</div>
+                <div className="space-y-8">
+                  <div className="flex items-center gap-6">
+                    <Phone className="w-5 h-5 text-white/80" />
+                    <span className="text-sm">{company.phone}</span>
                   </div>
-                ))}
+                  <div className="flex items-center gap-6">
+                    <Mail className="w-5 h-5 text-white/80" />
+                    <span className="text-sm">{company.email}</span>
+                  </div>
+                  <div className="flex items-start gap-6">
+                    <MapPin className="w-6 h-6 text-white/80 shrink-0 mt-1" />
+                    <span className="text-sm leading-relaxed max-w-[250px]">{company.location}</span>
+                  </div>
+                </div>
               </div>
+
+
             </div>
 
-            {/* Right - Contact Form (3 cols) */}
-            <div className="lg:col-span-3">
+            {/* Right - Contact Form Wrapper */}
+            <div className="lg:w-[60%] p-10 lg:p-14">
               <ContactForm />
             </div>
+
           </div>
         </div>
       </section>
@@ -67,15 +69,15 @@ export default function ContactPage() {
       <section className="relative h-[400px] lg:h-[480px] bg-slate-100 overflow-hidden">
         <iframe
           title="Aadithya Location"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3911.66611382404!2d77.7941225750505!3d11.388062788795556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba966f155555555%3A0xe490d516d131c600!2sAadithya%20Protective%20Systems%20%26%20Technologies!5e0!3m2!1sen!2sin!4v1715873945678!5m2!1sen!2sin"
-          className="absolute inset-0 w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-500"
+          src="https://maps.google.com/maps?q=68A/7,+Indgra+Nagar,+Allampalayam,+Pallipalayam,+Tamil+Nadu+638008&t=&z=16&ie=UTF8&iwloc=&output=embed"
+          className="absolute inset-0 w-full h-full border-0"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
         />
 
         {/* Overlay card */}
         <div className="absolute bottom-6 left-6 right-6 lg:bottom-10 lg:left-10 lg:right-auto lg:w-96">
-          <div className="bg-white/95 backdrop-blur-xl border border-slate-200 rounded-3xl p-7 shadow-2xl">
+          <div className="bg-bg-card/95 backdrop-blur-xl border border-slate-200 rounded-3xl p-7 shadow-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-maroon-600 to-maroon-700 flex items-center justify-center shadow-lg shadow-maroon-600/25">
                 <MapPin className="w-5 h-5 text-white" />
@@ -87,7 +89,7 @@ export default function ContactPage() {
             </div>
             <p className="text-sm text-slate-600 mb-4">{company.location}</p>
             <Link href={company.googleMapsLink || "#"} target="_blank"
-              className="inline-flex items-center gap-2 text-sm text-maroon-700 font-display font-semibold hover:text-maroon-800 transition-colors group">
+              className="inline-flex items-center gap-2 text-sm text-[#F97316] font-display font-semibold hover:text-[#EA580C] transition-colors group">
               Get Directions
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>

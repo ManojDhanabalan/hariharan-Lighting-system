@@ -1,141 +1,181 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Shield, CheckCircle2 } from "lucide-react";
-import { company } from "@/data/company";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import LightningDropsBg from "@/components/ui/LightningDropsBg";
 
-const QUICK_STATS = [
-  { value: company.stats.projectsCompleted, label: "Projects Completed" },
-  { value: company.stats.clientRetention,   label: "Client Retention" },
-  { value: company.stats.statesServed,      label: "States Served" },
+const SLIDES = [
+  {
+    badge: "Lightning Protection",
+    title: "Protecting What Matters",
+    subtitle: "Advanced, IS/IEC 62305 compliant lightning protection systems engineered for industrial facilities.",
+    image: "/images/lightning-1.png"
+  },
+  {
+    badge: "Precision Earthing",
+    title: "Engineered to Never Fail",
+    subtitle: "Expert earthing and grounding design complying with IEEE 80 and IS 3043. Safeguarding heavy machinery.",
+    image: "/images/lightning-2.png"
+  },
+  {
+    badge: "Surge Protection",
+    title: "Absolute Transient Safety",
+    subtitle: "High-capacity transient surge protection networks shielding critical infrastructure from catastrophic impulses.",
+    image: "/images/lightning-3.png"
+  }
 ];
 
 export default function HeroSection() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const getSlidePosition = (index: number) => {
+    const offset = (index - current + SLIDES.length) % SLIDES.length;
+    if (offset === 0) return 0; // Center
+    if (offset === 1) return 1; // Right
+    if (offset === SLIDES.length - 1) return -1; // Left
+    return 2; // Hidden (or further back)
+  };
+
   return (
-    <section className="relative w-full min-h-[92vh] flex items-center bg-slate-950 overflow-hidden pt-32 pb-24">
-      {/* Premium ambient high-tech grid overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
-
-      {/* Stunning luxury-tier ambient glowing blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-[#7B2D3E]/15 rounded-full blur-[150px]" />
-        <div className="absolute top-1/4 right-0 w-[550px] h-[550px] bg-[#D97706]/8 rounded-full blur-[130px]" />
-        <div className="absolute -bottom-20 left-1/3 w-[500px] h-[500px] bg-[#5C1F2E]/10 rounded-full blur-[140px]" />
-      </div>
-
-      <div className="container mx-auto px-4 lg:px-8 z-10 relative">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
-          {/* Left column - Content */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 flex flex-col items-start text-left"
-          >
-            {/* Ultra-premium interactive glass badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md mb-6 hover:border-[#D97706]/40 hover:bg-white/[0.05] transition-all duration-300 group cursor-default"
+    <section className="relative w-full min-h-[100dvh] bg-slate-950 overflow-hidden flex flex-col items-center justify-center pt-32 pb-20">
+      <LightningDropsBg />
+      <div className="container mx-auto px-4 z-10 relative flex flex-col items-center w-full">
+        
+        {/* Top Text Section matching the requested theme */}
+        <div className="text-center mb-6 md:mb-10 max-w-4xl mx-auto w-full h-[130px] md:h-[150px] relative">
+          <AnimatePresence mode="wait">
+            <motion.h1
+              key={`title-${current}`}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-white mb-4 tracking-tight leading-tight absolute w-full left-0 top-0"
             >
-              <div className="w-2 h-2 rounded-full bg-[#D97706] mr-2.5 animate-pulse group-hover:scale-125 transition-transform" />
-              <span className="text-slate-300 text-[10.5px] font-display font-extrabold tracking-[0.25em] uppercase">
-                Lightning Protection & Earthing Safety Experts
-              </span>
-            </motion.div>
-
-            {/* Title with Outfit/Fraunces dynamic styling */}
-            <h1 className="font-display font-extrabold text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-[1.08] mb-6">
-              Protecting
-              <span className="block mt-2">What Matters</span>
-              <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-[#7B2D3E] filter drop-shadow-sm">
-                Most
-              </span>
-            </h1>
-
-            {/* Subtitle - elegant layout with high-readability color */}
+              {SLIDES[current].title}
+            </motion.h1>
+          </AnimatePresence>
+          
+          <AnimatePresence mode="wait">
             <motion.p
+              key={`subtitle-${current}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.35 }}
-              className="text-slate-300 text-lg md:text-xl font-body leading-relaxed mb-8 max-w-xl"
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-base sm:text-lg lg:text-xl text-slate-300 font-medium font-body absolute w-full left-0 top-[80px] sm:top-[70px] lg:top-[85px] px-4"
             >
-              Advanced, standards-compliant engineering solutions for industrial and commercial facilities across India. Engineered for lifetime safety and absolute resilience.
+              {SLIDES[current].subtitle}
             </motion.p>
-
-            {/* Premium action buttons with interactive feedback */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto mb-4"
-            >
-              <Link href="/contact"
-                className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-gradient-to-r from-[#7B2D3E] to-[#9B3D52] hover:from-[#9B3D52] hover:to-[#7B2D3E] text-white font-display font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-[#7B2D3E]/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-[#7B2D3E]/35">
-                <span className="relative z-10 flex items-center gap-2">
-                  Get a Free Consultation
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </Link>
-              <Link href="/services"
-                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 font-display font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 hover:scale-[1.02] backdrop-blur-md">
-                Explore Services
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* Right column - Luxury Glassmorphic Stats Card */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden lg:flex lg:col-span-5 flex-col items-center justify-center relative"
-          >
-            <div className="relative w-full max-w-md">
-              {/* Golden-amber glowing backlight */}
-              <div className="absolute inset-0 bg-[#D97706]/10 rounded-3xl blur-[32px] transform translate-y-4" />
-              
-              {/* Main glass card with custom border highlights */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.45 }}
-                className="relative z-10 bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-3xl p-8 shadow-2xl shadow-black/40"
-              >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#7B2D3E] to-[#5C1F2E] flex items-center justify-center shadow-lg shadow-[#7B2D3E]/30">
-                    <Shield className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-white font-display font-bold text-lg">Trusted Engineering</div>
-                    <div className="text-slate-400 text-sm">Established in {company.established}</div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  {QUICK_STATS.map((s, idx) => (
-                    <div key={s.label} className={`bg-white/[0.02] rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors ${idx === 2 ? 'col-span-2' : ''}`}>
-                      <div className="font-display font-extrabold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-[#D97706] to-[#F59E0B]">{s.value}</div>
-                      <div className="text-[10px] text-slate-400 uppercase tracking-widest font-body mt-1">{s.label}</div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  {["IS/IEC 62305 Compliant", "IEEE 80 Certified", "18+ Years Experience"].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-sm text-slate-300 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-[#D97706] flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
+          </AnimatePresence>
         </div>
+
+        {/* 3D Curved Carousel */}
+        <div className="relative w-full max-w-[1400px] mx-auto h-[300px] sm:h-[400px] md:h-[500px] [perspective:1200px] flex items-center justify-center mt-6">
+          <AnimatePresence initial={false}>
+            {SLIDES.map((slide, index) => {
+              const position = getSlidePosition(index);
+              
+              if (Math.abs(position) > 1) return null;
+
+              const isCenter = position === 0;
+
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ 
+                    opacity: 0, 
+                    x: `${position * 100}%`, 
+                    z: -300,
+                    rotateY: position * -45
+                  }}
+                  animate={{ 
+                    opacity: isCenter ? 1 : 0.85,
+                    x: `${position * 90}%`, // Places left/right items 90% of width away from center
+                    z: isCenter ? 0 : -150,
+                    rotateY: position * -25, // Creates the inward curved panoramic effect
+                    scale: isCenter ? 1 : 0.85
+                  }}
+                  exit={{ 
+                    opacity: 0, 
+                    x: `${position * 100}%`, 
+                    z: -300,
+                    rotateY: position * -45
+                  }}
+                  transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+                  style={{ zIndex: isCenter ? 20 : 10 }}
+                  className={`absolute w-[280px] sm:w-[500px] md:w-[700px] lg:w-[800px] h-[220px] sm:h-[350px] md:h-[450px] rounded-2xl overflow-hidden cursor-pointer shadow-[0_30px_60px_rgba(0,0,0,0.15)] border-[6px] border-white bg-white ${isCenter ? '' : 'pointer-events-none'}`}
+                  onClick={() => {
+                    if (!isCenter) {
+                       setCurrent(index);
+                    }
+                  }}
+                >
+                  <Image 
+                    src={slide.image} 
+                    alt={slide.title} 
+                    fill 
+                    className={`object-cover transition-transform duration-1000 ${isCenter ? 'hover:scale-105' : ''}`} 
+                    priority={isCenter}
+                  />
+                  
+                  {/* Subtle white overlay for side images to give depth */}
+                  {!isCenter && (
+                    <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px]" />
+                  )}
+                  
+                  {/* Content for the center slide */}
+                  <AnimatePresence>
+                    {isCenter && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ delay: 0.3 }}
+                        className="absolute inset-x-0 bottom-0 p-6 sm:p-8 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent flex flex-col items-start"
+                      >
+                        <span className="inline-block px-4 py-1.5 bg-amber-500 text-white text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-full shadow-lg mb-3">
+                          {slide.badge}
+                        </span>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+
+        {/* Carousel Navigation Indicators */}
+        <div className="flex items-center gap-3 mt-12 z-20">
+          {SLIDES.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrent(idx)}
+              className="group relative h-2.5 rounded-full overflow-hidden transition-all duration-500 bg-slate-700 hover:bg-slate-600"
+              style={{ width: current === idx ? "48px" : "12px" }}
+              aria-label={`Go to slide ${idx + 1}`}
+            >
+              {current === idx && (
+                <motion.div 
+                  layoutId="activeCarouselDot"
+                  className="absolute inset-0 bg-blue-500 rounded-full"
+                />
+              )}
+            </button>
+          ))}
+        </div>
+
       </div>
     </section>
   );

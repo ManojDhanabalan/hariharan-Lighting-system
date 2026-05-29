@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { company } from "@/data/company";
 import { navLinks } from "@/data/nav";
 import { MapPin, Phone, Mail, Zap, ArrowRight, Shield, Clock, CheckCircle2 } from "lucide-react";
@@ -39,11 +40,16 @@ export default function Footer() {
 
           {/* Brand col - spans 4 cols */}
           <div className="lg:col-span-4 flex flex-col gap-6">
-            <Link href="/" className="flex items-center gap-3 w-fit group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-maroon-600 to-maroon-700 flex items-center justify-center shadow-lg shadow-maroon-600/25 group-hover:shadow-maroon-600/40 transition-shadow">
-                <Zap className="w-5 h-5 text-white" fill="white" />
+            <Link href="/" className="flex items-center w-fit group">
+              <div className="bg-white px-3 py-2 rounded-xl shadow-lg group-hover:shadow-white/10 transition-shadow">
+                <Image 
+                  src="/logo.svg" 
+                  alt={`${company.name} Logo`} 
+                  width={200} 
+                  height={80} 
+                  className="h-12 w-auto object-contain"
+                />
               </div>
-              <span className="font-display font-bold text-white text-xl tracking-tight">{company.name}</span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">{company.tagline}</p>
             
@@ -136,7 +142,7 @@ export default function Footer() {
               </div>
               <p className="text-xs text-slate-400 mb-4 leading-relaxed">Professional lightning protection & earthing solutions for your facility.</p>
               <Link href="/contact"
-                className="block text-center py-3 bg-gradient-to-r from-maroon-700 to-maroon-600 hover:from-maroon-600 hover:to-violet-500 text-white font-display font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-maroon-600/25 hover:shadow-maroon-600/40">
+                className="block text-center py-3 bg-red-600 hover:bg-red-700 text-white font-display font-bold text-xs uppercase tracking-wider rounded-xl transition-colors">
                 Request a Free Quote
               </Link>
             </div>

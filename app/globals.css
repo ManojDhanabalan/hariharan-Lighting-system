@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary:     #FFFFFF;
-  --bg-secondary:   #F8FAFC;
+  --bg-primary:     #FFFFFF;   /* clean white */
+  --bg-secondary:   #F8FAFC;   /* slate-50 */
   --bg-card:        #FFFFFF;
-  --bg-elevated:    #F1F5F9;
+  --bg-elevated:    #F1F5F9;   /* slate-100 */
   --accent-volt:    #7B2D3E;   /* dark maroon */
   --accent-glow:    #5C1F2E;   /* deeper maroon */
   --accent-light:   #9B3D52;   /* medium maroon */

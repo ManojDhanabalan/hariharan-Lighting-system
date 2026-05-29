@@ -3,7 +3,7 @@ export const navLinks = [
   { label: "About Us", href: "/about" },
   {
     label: "Services",
-    href: "/services",
+    href: "/services/earthing-audit",
     children: [
       { label: "Earthing Audit", href: "/services/earthing-audit" },
       { label: "LPS Adequacy Audit", href: "/services/lps-adequacy-audit" },

@@ -51,7 +51,7 @@ export default function ContactInfo() {
 
       {/* Quick call CTA */}
       <a href={`tel:${company.phone.replace(/[^0-9+]/g, "")}`}
-        className="group flex items-center justify-center gap-3 py-4 bg-gradient-to-r from-maroon-700 to-maroon-600 hover:from-maroon-600 hover:to-maroon-800 text-white font-display font-bold text-sm uppercase tracking-wider rounded-2xl transition-all duration-300 shadow-lg shadow-maroon-600/25 hover:shadow-xl hover:shadow-maroon-600/40 hover:-translate-y-0.5 overflow-hidden relative">
+        className="group flex items-center justify-center gap-3 py-4 bg-red-600 hover:bg-red-700 text-white font-display font-bold text-sm uppercase tracking-wider rounded-2xl transition-colors duration-300 relative">
         {/* Shimmer */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
         <Phone className="w-4 h-4 relative z-10" />

@@ -25,10 +25,10 @@ const config: Config = {
           900: '#3D1220',
         },
         /* Surfaces */
-        'bg-primary':  '#FFFFFF',
-        'bg-secondary':'#F8FAFC',
-        'bg-card':     '#FFFFFF',
-        'bg-elevated': '#F1F5F9',
+        'bg-primary':  'var(--bg-primary)',
+        'bg-secondary':'var(--bg-secondary)',
+        'bg-card':     'var(--bg-card)',
+        'bg-elevated': 'var(--bg-elevated)',
         /* Text */
         'text-primary':   '#0F172A',
         'text-secondary': '#475569',

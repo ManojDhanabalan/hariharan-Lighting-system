@@ -7,6 +7,8 @@ interface AnimatedCounterProps {
   label: string;
   icon?: React.ReactNode;
   delay?: number;
+  numberClassName?: string;
+  labelClassName?: string;
 }
 
 function parseValue(raw: string): { num: number; suffix: string } {
@@ -15,7 +17,7 @@ function parseValue(raw: string): { num: number; suffix: string } {
   return { num: parseInt(match[1], 10), suffix: match[2] };
 }
 
-export default function AnimatedCounter({ value, label, icon, delay = 0 }: AnimatedCounterProps) {
+export default function AnimatedCounter({ value, label, icon, delay = 0, numberClassName = "text-[#7B2D3E]", labelClassName = "text-slate-500" }: AnimatedCounterProps) {
   const { num, suffix } = parseValue(value);
   const [display, setDisplay] = useState(0);
   const [inView, setInView]   = useState(false);
@@ -49,11 +51,11 @@ export default function AnimatedCounter({ value, label, icon, delay = 0 }: Anima
 
   return (
     <div ref={ref} className="flex flex-col items-center text-center">
-      {icon && <div className="mb-3">{icon}</div>}
-      <div className="font-display font-extrabold text-3xl md:text-4xl text-volt tracking-tight mb-1.5">
+      {icon && <div className="mb-2">{icon}</div>}
+      <div className={`font-display font-black text-3xl md:text-4xl tracking-tight mb-1 ${numberClassName}`}>
         {display}{suffix}
       </div>
-      <div className="font-body text-xs text-text-secondary uppercase tracking-[0.15em] font-medium">
+      <div className={`font-body text-[10px] md:text-[11px] uppercase tracking-[0.2em] font-bold ${labelClassName}`}>
         {label}
       </div>
     </div>

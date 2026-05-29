@@ -73,7 +73,7 @@ export default function PrivacyPage() {
         subtitle={`This policy explains how ${company.name} handles your personal information.`}
       />
 
-      <section className="py-16 lg:py-20 bg-white">
+      <section className="py-16 lg:py-20 bg-bg-primary">
         <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
           <div className="space-y-10">
             {sections.map((section, i) => (
