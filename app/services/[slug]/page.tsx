@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { services } from "@/data/services";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   CheckCircle2, Factory, FileText, BarChart2, Shield, 
   TrendingUp, ArrowRight, Zap, Target, Award, Lightbulb, Settings, Hexagon
@@ -15,7 +16,22 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const s = services.find((s) => s.slug === params.slug);
   if (!s) return {};
-  return { title: s.title, description: s.shortDesc, alternates: { canonical: `/services/${s.slug}` } };
+  return {
+    title: s.title,
+    description: s.shortDesc,
+    alternates: { canonical: `/services/${s.slug}` },
+    openGraph: {
+      title: `${s.title} | Aadithya`,
+      description: s.shortDesc,
+      url: `/services/${s.slug}`,
+      type: "article",
+    },
+    twitter: {
+      card: "summary",
+      title: `${s.title} | Aadithya`,
+      description: s.shortDesc,
+    },
+  };
 }
 
 const ICONS = [Target, Zap, Shield, Award, Lightbulb, Settings, BarChart2, TrendingUp];
@@ -29,25 +45,42 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: service.title,
+            description: service.shortDesc,
+            provider: {
+              "@type": "Organization",
+              name: "Aadithya",
+              url: "https://aadithyatech.com"
+            },
+            areaServed: "IN"
+          }),
+        }}
+      />
       <PageHero 
         title={service.title} 
         subtitle={service.subtitle} 
       />
 
       {/* ── 1. Overview Section (Inspired by Image 1 & 5) ──────── */}
-      <section className="py-20 bg-[#FDFBF7] overflow-hidden">
+      <section className="py-20 bg-slate-50 overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             
             {/* Left: Text Content */}
             <div className="space-y-8">
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-orange-100 border border-orange-200">
-                <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-                <span className="text-orange-700 font-display font-bold text-xs tracking-widest uppercase">Overview</span>
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-maroon-600 animate-pulse" />
+                <span className="text-slate-700 font-display font-bold text-xs tracking-widest uppercase">Overview</span>
               </div>
               <h2 className="font-display font-extrabold text-4xl lg:text-5xl text-slate-900 leading-tight">
                 Comprehensive <br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] to-[#EAB308]">
+                <span className="text-maroon-700">
                   Solutions
                 </span> in One Place
               </h2>
@@ -61,26 +94,28 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             {/* Right: Masonry / Stats Layout */}
             <div className="grid grid-cols-2 gap-4 h-[500px]">
               <div className="col-span-1 rounded-3xl overflow-hidden shadow-2xl relative h-full">
-                <img 
+                <Image 
                   src={isEarthing ? "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80" : "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&q=80"} 
                   alt="Engineering Team" 
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               </div>
               <div className="col-span-1 grid grid-rows-2 gap-4 h-full">
-                <div className="rounded-3xl bg-[#DEF7E5] p-8 flex flex-col justify-center shadow-lg relative overflow-hidden">
-                  <div className="absolute -right-10 -top-10 w-32 h-32 bg-green-200 rounded-full blur-2xl" />
-                  <h3 className="text-green-800 font-display font-medium text-lg mb-2 relative z-10">Application Areas</h3>
-                  <p className="text-5xl font-display font-extrabold text-green-900 relative z-10">
-                    {service.applicationArea?.length || 10}<span className="text-3xl">+</span>
+                <div className="rounded-3xl bg-slate-900 p-8 flex flex-col justify-center shadow-lg relative overflow-hidden">
+                  <div className="absolute -right-10 -top-10 w-32 h-32 bg-maroon-600/40 rounded-full blur-3xl" />
+                  <h3 className="text-slate-300 font-display font-medium text-lg mb-2 relative z-10">Application Areas</h3>
+                  <p className="text-5xl font-display font-extrabold text-white relative z-10">
+                    {service.applicationArea?.length || 10}<span className="text-3xl text-orange-500">+</span>
                   </p>
                 </div>
                 <div className="rounded-3xl overflow-hidden shadow-xl relative">
-                  <img 
+                  <Image 
                     src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80" 
                     alt="Audit Process" 
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                 </div>
               </div>
@@ -89,9 +124,9 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         </div>
       </section>
 
-      {/* ── 2. Why It Matters (Inspired by Image 2 - Icon Grid) ──────── */}
+      {/* ── 2. Why It Matters ──────── */}
       {service.whySection && (
-        <section className="py-24 bg-white relative">
+        <section className="py-24 bg-slate-50 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl text-center mb-16">
             <h2 className="font-display font-extrabold text-3xl lg:text-4xl text-slate-900 mb-4">Why It Matters</h2>
             <p className="text-slate-500 max-w-2xl mx-auto">Understanding the critical importance of a properly maintained and audited system to ensure ultimate safety and reliability.</p>
@@ -101,15 +136,43 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
               {service.whySection.map((item, i) => {
                 const Icon = ICONS[i % ICONS.length];
+                const bgImages = [
+                  "1581092160562-40aa08e78837", // Engineering
+                  "1504328345606-18bbc8c9d7d1", // Blueprint/Architecture
+                  "1513828583688-c52646db42da", // Abstract Architecture
+                  "1530893609608-32a9af3aa95c", // Tech/Circuit
+                  "1605810230434-7631ac76ec81", // Industrial
+                  "1581091226825-a6a2a5aee158"  // Tech lab
+                ];
+                const bgId = bgImages[i % bgImages.length];
+
                 return (
-                  <div key={i} className="group bg-white rounded-2xl p-8 border border-slate-100 hover:border-transparent hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-300 relative overflow-hidden">
-                    {/* Hover Top Border Accent */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F97316] to-[#EAB308] opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div key={i} className="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 relative min-h-[320px] flex flex-col justify-end border border-slate-200 hover:border-transparent">
                     
-                    <div className="w-14 h-14 rounded-full bg-slate-50 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-orange-50 transition-all duration-300">
-                      <Icon className="w-7 h-7 text-slate-700 group-hover:text-orange-600 transition-colors" />
+                    {/* Background Image */}
+                    <Image 
+                      src={`https://images.unsplash.com/photo-${bgId}?auto=format&fit=crop&w=600&q=80`} 
+                      alt="Why it matters" 
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale opacity-80"
+                    />
+                    
+                    {/* Gradient Overlay for Readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/90 to-slate-900/40 group-hover:via-slate-900/70 transition-colors duration-500" />
+
+                    {/* Top Accent Line */}
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-maroon-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+
+                    {/* Content */}
+                    <div className="relative z-10 p-8 pt-12">
+                      <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center mb-6 group-hover:bg-orange-500 group-hover:border-transparent transition-all duration-500 transform group-hover:-translate-y-2">
+                        <Icon className="w-6 h-6 text-white" />
+                      </div>
+                      <p className="text-slate-300 text-sm leading-relaxed group-hover:text-white transition-colors duration-300 font-medium">
+                        {item}
+                      </p>
                     </div>
-                    <p className="text-slate-600 text-sm leading-relaxed">{item}</p>
+
                   </div>
                 );
               })}
@@ -118,47 +181,50 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         </section>
       )}
 
-      {/* ── 3. Value Proposition / Benefits (Inspired by Image 4 - Dark Panel) ──────── */}
+      {/* ── 3. Value Proposition / Benefits ──────── */}
       <section className="py-24 bg-[#0A192F] relative overflow-hidden">
-        {/* Abstract Background Shapes */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-blue-900/40 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-orange-600/20 to-transparent rounded-full blur-3xl translate-y-1/3 -translate-x-1/4" />
-
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
           
           {/* Top Stats Row */}
-          <div className="flex flex-wrap justify-center gap-12 lg:gap-24 mb-20 border-b border-white/10 pb-16">
-            <div className="text-center">
+          <div className="flex flex-wrap justify-center gap-12 lg:gap-24 mb-20 border-b border-white/10 pb-16 relative z-10">
+            <div className="text-center group">
               <p className="font-display font-extrabold text-5xl text-white mb-2">{service.standards?.length || 5}+</p>
-              <p className="text-slate-400 text-sm tracking-widest uppercase font-bold">Standards <br/>Compliant</p>
+              <p className="text-slate-400 text-sm tracking-widest uppercase font-bold group-hover:text-white transition-colors">Standards <br/>Compliant</p>
             </div>
-            <div className="text-center">
+            <div className="text-center group">
               <p className="font-display font-extrabold text-5xl text-white mb-2">{service.valueAdds?.length || 10}+</p>
-              <p className="text-slate-400 text-sm tracking-widest uppercase font-bold">Value <br/>Additions</p>
+              <p className="text-slate-400 text-sm tracking-widest uppercase font-bold group-hover:text-white transition-colors">Value <br/>Additions</p>
             </div>
-            <div className="text-center">
+            <div className="text-center group">
               <p className="font-display font-extrabold text-5xl text-white mb-2">100%</p>
-              <p className="text-slate-400 text-sm tracking-widest uppercase font-bold">Safety <br/>Assured</p>
+              <p className="text-slate-400 text-sm tracking-widest uppercase font-bold group-hover:text-white transition-colors">Safety <br/>Assured</p>
             </div>
           </div>
 
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 relative z-10">
              <h2 className="font-display font-extrabold text-3xl lg:text-4xl text-white">Our Value Proposition</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {service.valueAdds?.map((item, i) => (
-              <div key={i} className="flex flex-col items-center text-center p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-sm group">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transform group-hover:-translate-y-2 transition-transform duration-300 ${
-                  i % 3 === 0 ? "bg-gradient-to-br from-blue-400 to-blue-600" : 
-                  i % 3 === 1 ? "bg-gradient-to-br from-purple-400 to-purple-600" : 
-                  "bg-gradient-to-br from-orange-400 to-orange-600"
-                }`}>
-                  <Hexagon className="w-8 h-8 text-white fill-white/20" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+            {service.valueAdds?.map((item, i) => {
+              const bgColors = [
+                "bg-blue-50", "bg-orange-50", "bg-purple-50", 
+                "bg-emerald-50", "bg-rose-50", "bg-amber-50"
+              ];
+              const textColors = [
+                "text-blue-600", "text-orange-600", "text-purple-600", 
+                "text-emerald-600", "text-rose-600", "text-amber-600"
+              ];
+
+              return (
+                <div key={i} className="flex flex-col items-center text-center p-8 rounded-3xl bg-white border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 ${bgColors[i % bgColors.length]}`}>
+                    <Hexagon className={`w-8 h-8 ${textColors[i % textColors.length]}`} strokeWidth={2} />
+                  </div>
+                  <p className="text-slate-700 text-sm leading-relaxed font-medium">{item}</p>
                 </div>
-                <p className="text-slate-300 text-sm leading-relaxed">{item}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>
@@ -180,22 +246,14 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                   
                   {/* Map over activities or deliverables */}
                   {(((isEarthing ? (service as Record<string, unknown>).auditActivitiesEHV : service.deliverables) as string[]) || []).map((item: string, i: number) => {
-                    const colors = [
-                      "from-emerald-400 to-emerald-600",
-                      "from-blue-400 to-blue-600",
-                      "from-orange-400 to-orange-600",
-                      "from-purple-400 to-purple-600"
-                    ];
-                    const color = colors[i % colors.length];
-
                     return (
                       <div key={i} className="relative pl-10 group">
                         {/* Diamond Icon */}
-                        <div className={`absolute -left-[17px] top-1 w-8 h-8 rounded bg-gradient-to-br ${color} rotate-45 flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform`}>
-                          <div className="w-3 h-3 bg-white rounded-sm -rotate-45" />
+                        <div className="absolute -left-[17px] top-1 w-8 h-8 rounded bg-slate-800 rotate-45 flex items-center justify-center shadow-md transform group-hover:scale-110 transition-transform">
+                          <div className="w-3 h-3 bg-orange-500 rounded-sm -rotate-45" />
                         </div>
                         
-                        <h4 className={`font-display font-bold text-lg mb-2 bg-clip-text text-transparent bg-gradient-to-r ${color}`}>
+                        <h4 className="font-display font-bold text-lg mb-2 text-slate-800">
                           Step {i + 1}
                         </h4>
                         <p className="text-slate-600 leading-relaxed text-sm bg-white p-4 rounded-xl border border-slate-100 shadow-sm group-hover:shadow-md transition-shadow">
@@ -230,17 +288,18 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
                 {/* Industries */}
                 {service.applicationArea && (
-                  <div className="bg-gradient-to-br from-[#F97316] to-[#EA580C] rounded-3xl p-8 text-white shadow-2xl shadow-orange-600/30">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-                        <Factory className="w-6 h-6 text-white" />
+                  <div className="bg-slate-900 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
+                    <div className="absolute -right-10 -top-10 w-32 h-32 bg-maroon-600/30 rounded-full blur-3xl" />
+                    <div className="relative z-10 flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                        <Factory className="w-6 h-6 text-orange-500" />
                       </div>
                       <h3 className="font-display font-bold text-xl">Industries Served</h3>
                     </div>
-                    <ul className="space-y-3">
+                    <ul className="relative z-10 space-y-3">
                       {service.applicationArea.map((area, i) => (
-                        <li key={i} className="flex items-center gap-3 text-sm">
-                          <CheckCircle2 className="w-4 h-4 text-orange-200" />
+                        <li key={i} className="flex items-center gap-3 text-sm text-slate-300">
+                          <CheckCircle2 className="w-4 h-4 text-orange-500" />
                           {area}
                         </li>
                       ))}

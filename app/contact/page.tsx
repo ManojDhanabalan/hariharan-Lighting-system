@@ -6,14 +6,48 @@ import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
-  description: "Get in touch with Aadithya for lightning protection and earthing audits. Call or email us today.",
+  title: "Contact Us | Lightning Protection Services in Tamil Nadu",
+  description: "Get in touch with Aadithya for lightning protection and earthing audits in Erode, Coimbatore, and Tamil Nadu. Call or email us today.",
   alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contact Us | Aadithya - Tamil Nadu",
+    description: "Get in touch with Aadithya for lightning protection and earthing audits in Erode, Coimbatore, and Tamil Nadu. Call or email us today.",
+    url: "/contact",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Contact Us | Aadithya - Tamil Nadu",
+    description: "Get in touch with Aadithya for lightning protection and earthing audits in Erode & Coimbatore.",
+  },
 };
 
 export default function ContactPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            mainEntity: {
+              "@type": "Organization",
+              name: company.name,
+              telephone: company.phone,
+              email: company.email,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "68A/7, Indgra Nagar, Allampalayam",
+                addressLocality: "Pallipalayam",
+                addressRegion: "Tamil Nadu",
+                postalCode: "638008",
+                addressCountry: "IN"
+              }
+            }
+          }),
+        }}
+      />
       <PageHero title="Contact Us" subtitle="Any question or remarks? Just write us a message!" />
 
       {/* ── Main Content ───────────────────────────────────── */}

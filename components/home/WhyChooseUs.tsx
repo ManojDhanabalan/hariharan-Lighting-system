@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import SectionHeader from "@/components/shared/SectionHeader";
 
 const REASONS = [
@@ -72,11 +73,11 @@ export default function WhyChooseUs() {
             >
               {/* Image container rounded internally */}
               <div className="relative w-full aspect-[4/3] rounded-[20px] overflow-hidden mb-4 bg-slate-100">
-                <img 
+                <Image 
                   src={r.image} 
                   alt={r.title} 
-                  className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
-                  loading="lazy"
+                  fill
+                  className="object-cover group-hover:scale-103 transition-transform duration-700"
                 />
               </div>
  

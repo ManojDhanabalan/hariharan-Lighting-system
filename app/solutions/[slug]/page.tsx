@@ -1,29 +1,13 @@
-import type { Metadata } from "next";
-
+ import type { Metadata } from "next";
 import { solutions } from "@/data/solutions";
-import { company } from "@/data/company";
 import { notFound } from "next/navigation";
 import {
-  CheckCircle2, Factory, FileText, Phone, Settings,
-  Layers, Zap, PenTool, ShieldAlert, LucideIcon,
-  Shield, ArrowRight, ClipboardCheck,
+  CheckCircle2, Factory, FileText, Settings,
+  Layers, Zap, ArrowRight, Shield
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import PageHero from "@/components/shared/PageHero";
-
-const IconMap: Record<string, LucideIcon> = {
-  Layers,
-  Zap,
-  PenTool,
-  ShieldAlert,
-};
-
-const solutionConfig: Record<string, { gradient: string; bg: string; text: string; border: string; shadow: string; iconBg: string; accent: string }> = {
-  "earthing-system": { gradient: "from-[#7B2D3E] to-[#5C1F2E]", bg: "bg-[#FAF6F6]", text: "text-[#7B2D3E]", border: "border-[#7B2D3E]/10", shadow: "shadow-[#7B2D3E]/15", iconBg: "bg-[#7B2D3E]/10", accent: "maroon" },
-  "lightning-system": { gradient: "from-[#D97706] to-[#B45309]", bg: "bg-[#FFFBEB]", text: "text-[#D97706]", border: "border-[#D97706]/10", shadow: "shadow-[#D97706]/15", iconBg: "bg-[#D97706]/10", accent: "amber" },
-  "ground-design": { gradient: "from-[#9B3D52] to-[#7B2D3E]", bg: "bg-[#FCF5F6]", text: "text-[#9B3D52]", border: "border-[#9B3D52]/10", shadow: "shadow-[#9B3D52]/15", iconBg: "bg-[#9B3D52]/10", accent: "crimson" },
-  "surge-protection": { gradient: "from-[#5C1F2E] to-[#3D1220]", bg: "bg-[#F9F1F3]", text: "text-[#5C1F2E]", border: "border-[#5C1F2E]/10", shadow: "shadow-[#5C1F2E]/15", iconBg: "bg-[#5C1F2E]/10", accent: "maroonDark" },
-};
 
 export function generateStaticParams() {
   return solutions.map((s) => ({ slug: s.slug }));
@@ -32,17 +16,45 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const s = solutions.find((s) => s.slug === params.slug);
   if (!s) return {};
-  return { title: s.title, description: s.shortDesc, alternates: { canonical: `/solutions/${s.slug}` } };
+  return {
+    title: s.title,
+    description: s.shortDesc,
+    alternates: { canonical: `/solutions/${s.slug}` },
+    openGraph: {
+      title: `${s.title} | Aadithya`,
+      description: s.shortDesc,
+      url: `/solutions/${s.slug}`,
+      type: "article",
+    },
+    twitter: {
+      card: "summary",
+      title: `${s.title} | Aadithya`,
+      description: s.shortDesc,
+    },
+  };
 }
 
 export default function SolutionDetailPage({ params }: { params: { slug: string } }) {
   const solution = solutions.find((s) => s.slug === params.slug);
   if (!solution) notFound();
 
-  const config = solutionConfig[solution.slug] || solutionConfig["earthing-system"];
-
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: solution.title,
+            description: solution.shortDesc,
+            brand: {
+              "@type": "Brand",
+              name: "Aadithya"
+            }
+          }),
+        }}
+      />
       <PageHero
         title={solution.title}
         subtitle={solution.subtitle}
@@ -53,146 +65,131 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
         ]}
       />
 
-      {/* ── Main Content + Sidebar ─────────────────────────── */}
-      <section className="py-20 lg:py-28 bg-white relative">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
-
-            {/* ── Main Content ─────────────────────────────── */}
-            <div className="lg:col-span-2 space-y-16">
-
+      <section className="py-24 bg-slate-50 relative overflow-hidden">
+        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+          <div className="grid lg:grid-cols-12 gap-16">
+            
+            {/* ── Main Content (Col Span 8) ── */}
+            <div className="lg:col-span-8 space-y-20">
+              
               {/* Overview */}
               <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-8 h-[2px] bg-maroon-600 rounded-full" />
-                  <span className="text-maroon-700 font-display font-bold text-xs tracking-[0.2em] uppercase">Overview</span>
+                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-8">
+                  <span className="w-2 h-2 rounded-full bg-maroon-600 animate-pulse" />
+                  <span className="text-slate-700 font-display font-bold text-xs tracking-widest uppercase">Overview</span>
                 </div>
-                <div className="space-y-4 text-slate-600 leading-relaxed text-base">
+                <h2 className="font-display font-extrabold text-4xl text-slate-900 mb-6 leading-tight">
+                  Advanced <span className="text-maroon-700">Engineering</span> Solutions
+                </h2>
+                <div className="space-y-6 text-slate-600 leading-relaxed text-lg font-body bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
                   {solution.overview.split("\n\n").map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
               </div>
 
-              {/* What Are Surges (Surge Protection only) */}
+              {/* What Are Surges (Dynamic Block) */}
               {solution.whatAreSurges && (
-                <div className={`p-7 ${config.bg} border ${config.border} rounded-3xl`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${config.gradient} flex items-center justify-center shadow-md`}>
-                      <Zap className="w-5 h-5 text-white" />
+                <div className="relative flex items-start gap-6 p-8 bg-[#F8FAFC] rounded-3xl overflow-hidden group border border-slate-200 shadow-md">
+                  
+                  {/* Faded Watermark on the Right */}
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-300 pointer-events-none">
+                    <Zap className="w-64 h-64" />
+                  </div>
+
+                  {/* Medal Badge */}
+                  <div className="relative shrink-0 flex flex-col items-center justify-start w-16 h-20 pt-1">
+                    {/* Hexagon Ring */}
+                    <div className="absolute top-0 w-14 h-14 bg-white border-[3px] border-[#D98743] flex items-center justify-center z-10 shadow-sm" 
+                         style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
+                      <Zap className="w-6 h-6 text-[#D98743]" strokeWidth={2.5} />
                     </div>
-                    <h3 className="font-display font-bold text-lg text-slate-900">Understanding Transient Overvoltages</h3>
+                    {/* Ribbon Tail */}
+                    <div className="absolute bottom-0 w-8 h-8 bg-[#C57635] z-0" 
+                         style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 70%, 0 100%)' }} />
                   </div>
-                  <p className="text-slate-600 leading-relaxed text-sm">{solution.whatAreSurges}</p>
+
+                  {/* Text Content */}
+                  <div className="relative z-10 flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
+                       <h3 className="font-display font-bold text-slate-900 text-2xl leading-tight">
+                         Understanding Transients
+                       </h3>
+                       <div className="flex items-center gap-1.5 sm:border-l sm:border-slate-300 sm:pl-4">
+                         {/* Star icon */}
+                         <svg className="w-4 h-4 text-[#E6C35C] fill-[#E6C35C]" viewBox="0 0 24 24">
+                           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                         </svg>
+                         <span className="text-[11px] sm:text-xs font-black text-[#D3B454] tracking-wide uppercase">
+                           FUNDAMENTAL
+                         </span>
+                         <span className="text-[11px] sm:text-xs font-bold text-slate-500 tracking-wide uppercase ml-1">
+                           CONCEPT
+                         </span>
+                       </div>
+                    </div>
+                    <p className="text-slate-600 text-base leading-relaxed pr-8">
+                      {solution.whatAreSurges}
+                    </p>
+                  </div>
+
                 </div>
               )}
 
-              {/* Why Good Grounding Matters (Earthing System only) */}
+              {/* Why Good Grounding Matters (Dynamic Block) */}
               {solution.goodGroundingImportance && (
-                <div className={`p-7 ${config.bg} border ${config.border} rounded-3xl`}>
-                  <h3 className={`font-display font-bold text-base ${config.text} uppercase tracking-wide mb-5`}>Why Good Grounding Matters</h3>
-                  <ul className="space-y-4">
-                    {solution.goodGroundingImportance.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
-                        <CheckCircle2 className={`w-5 h-5 ${config.text} shrink-0 mt-0.5`} />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Design Process (Ground Design only) */}
-              {solution.designProcess && (
                 <div>
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-8 h-[2px] bg-maroon-600 rounded-full" />
-                    <span className="text-maroon-700 font-display font-bold text-xs tracking-[0.2em] uppercase">Our Engineering Process</span>
-                  </div>
-                  <div className="relative pl-8 space-y-6">
-                    {/* Vertical line */}
-                    <div className="absolute left-[15px] top-4 bottom-4 w-0.5 bg-slate-200" />
-
-                    {solution.designProcess.map((step, i) => (
-                      <div key={i} className="relative">
-                        {/* Step number */}
-                        <div className={`absolute -left-[2.5rem] top-0 w-8 h-8 rounded-full bg-gradient-to-br ${config.gradient} text-white flex items-center justify-center shadow-md z-10`}>
-                          <span className="font-mono font-bold text-[10px]">{step.step}</span>
-                        </div>
-                        {/* Card */}
-                        <div className={`bg-white border ${config.border} ${config.shadow} shadow-sm rounded-2xl p-6 hover:shadow-md transition-all duration-300 relative overflow-hidden group`}>
-                          {/* subtle background glow */}
-                          <div className={`absolute top-0 right-0 w-32 h-32 ${config.bg} rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-50 group-hover:opacity-100 transition-opacity duration-300`} />
-                          <h4 className="font-display font-bold text-base text-slate-900 mb-2 relative z-10">{step.title}</h4>
-                          <p className="text-slate-600 text-sm leading-relaxed relative z-10">{step.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Offerings / Product Categories / SPD Categories */}
-              {(solution.offerings || solution.productCategories || solution.spdCategories) && (
-                <div>
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-8 h-[2px] bg-maroon-600 rounded-full" />
-                    <span className="text-maroon-700 font-display font-bold text-xs tracking-[0.2em] uppercase">Our Offerings</span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 gap-y-14 mt-4">
-                    {(solution.offerings || solution.productCategories || solution.spdCategories)?.map((item: { name?: string; type?: string; desc: string }, i: number) => {
-                      const cardGradient = [
-                        "from-[#FFD000] to-[#FF7B00]",
-                        "from-[#60EFFF] to-[#0061FF]",
-                        "from-[#E83A59] to-[#4A0E4E]"
-                      ][i % 3];
-                      
-                      const iconColor = [
-                        "text-[#FF7B00]",
-                        "text-[#0061FF]",
-                        "text-[#E83A59]"
-                      ][i % 3];
+                  <h3 className="font-display font-extrabold text-3xl text-slate-900 mb-8">Why Good Grounding Matters</h3>
+                  
+                  <div className="flex flex-col gap-4">
+                    {solution.goodGroundingImportance.map((item, i) => {
+                      const badgeStyles = [
+                        { border: 'border-[#D98743]', tail: 'bg-[#C57635]', icon: 'text-[#D98743]' }, // Orange/Bronze
+                        { border: 'border-[#2D73D5]', tail: 'bg-[#225BB0]', icon: 'text-[#2D73D5]' }, // Blue
+                        { border: 'border-[#43B87A]', tail: 'bg-[#329861]', icon: 'text-[#43B87A]' }, // Green
+                        { border: 'border-[#D52D58]', tail: 'bg-[#B02246]', icon: 'text-[#D52D58]' }, // Red
+                      ];
+                      const b = badgeStyles[i % badgeStyles.length];
 
                       return (
-                        <div key={i} className="relative bg-transparent mb-2 flex flex-col mt-2">
-                          {/* Top half: Colored Gradient */}
-                          <div className={`h-24 rounded-t-[1.5rem] bg-gradient-to-br ${cardGradient} relative overflow-hidden flex-shrink-0 z-10`}>
-                            {/* Decorative Confetti SVG */}
-                            <div className="absolute inset-0 flex items-end justify-center opacity-30">
-                              <svg viewBox="0 0 200 100" className="w-full h-full text-white transform translate-y-4">
-                                <path d="M 50 100 A 50 50 0 0 1 150 100" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" />
-                                <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="2 6" />
-                                <circle cx="30" cy="60" r="1.5" fill="currentColor" />
-                                <circle cx="170" cy="50" r="1.5" fill="currentColor" />
-                                <circle cx="140" cy="30" r="2" fill="none" stroke="currentColor" />
-                                <circle cx="60" cy="40" r="2" fill="none" stroke="currentColor" />
-                                <path d="M 80 40 L 85 50 L 75 50 Z" fill="none" stroke="currentColor" />
-                                <path d="M 120 50 L 125 40 L 135 45 Z" fill="none" stroke="currentColor" />
-                                <path d="M 100 25 L 105 15 L 115 20" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                                <path d="M 15 80 Q 25 70 35 80 T 55 80" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                                <path d="M 145 80 Q 155 90 165 80 T 185 80" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                                <circle cx="100" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                        <div key={i} className="relative flex items-center gap-6 p-5 sm:p-6 bg-[#F8FAFC] rounded-2xl overflow-hidden group border border-slate-100 hover:border-slate-200 transition-colors">
+                          
+                          {/* Faded Watermark on the Right */}
+                          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-[0.04] group-hover:opacity-[0.07] transition-opacity duration-300 pointer-events-none">
+                            <Shield className="w-48 h-48" />
+                          </div>
+
+                          {/* Medal Badge */}
+                          <div className="relative shrink-0 flex flex-col items-center justify-start w-16 h-20">
+                            {/* Hexagon Ring */}
+                            <div className={`absolute top-0 w-14 h-14 bg-white border-[3px] ${b.border} flex items-center justify-center z-10 shadow-sm`} 
+                                 style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
+                              <Layers className={`w-6 h-6 ${b.icon}`} strokeWidth={2.5} />
+                            </div>
+                            {/* Ribbon Tail */}
+                            <div className={`absolute bottom-0 w-8 h-8 ${b.tail} z-0`} 
+                                 style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 70%, 0 100%)' }} />
+                          </div>
+
+                          {/* Text Content */}
+                          <div className="relative z-10 flex-1">
+                            <h4 className="font-display font-bold text-slate-800 text-lg sm:text-xl leading-tight mb-2 pr-12">
+                              {item}
+                            </h4>
+                            <div className="flex items-center gap-1.5">
+                              {/* Star icon */}
+                              <svg className="w-4 h-4 text-[#E6C35C] fill-[#E6C35C]" viewBox="0 0 24 24">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                               </svg>
+                              <span className="text-[11px] sm:text-xs font-black text-[#D3B454] tracking-wide uppercase">
+                                ESSENTIAL
+                              </span>
+                              <span className="text-[11px] sm:text-xs font-bold text-slate-500 tracking-wide uppercase ml-1">
+                                {100 - (i * 10)} POINTS
+                              </span>
                             </div>
                           </div>
 
-                          {/* Floating Icon */}
-                          <div className="absolute top-24 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-[0_5px_15px_rgba(0,0,0,0.08)] border-[4px] border-white">
-                            <Layers className={`w-6 h-6 ${iconColor}`} />
-                          </div>
-
-                          {/* Bottom half: White Background */}
-                          <div className="relative z-20 bg-white rounded-b-[1.5rem] pt-10 pb-6 px-6 text-center flex-grow flex flex-col items-center shadow-[0_15px_30px_rgba(0,0,0,0.06)] border border-t-0 border-slate-100">
-                            <h4 className="font-display font-bold text-slate-800 text-base mb-2">
-                              {item.name || item.type}
-                            </h4>
-                            <p className="text-xs text-slate-500 leading-relaxed">
-                              {item.desc}
-                            </p>
-                          </div>
-
-                          {/* Downward triangle pointer */}
-                          <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-5 h-5 bg-white rotate-45 rounded-sm shadow-[4px_4px_10px_rgba(0,0,0,0.04)] z-10 border-b border-r border-slate-100" />
                         </div>
                       );
                     })}
@@ -200,168 +197,329 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                 </div>
               )}
 
-              {/* Key Advantages / Value Adds */}
+              {/* Our Offerings */}
+              {(solution.offerings || solution.productCategories || solution.spdCategories) && (
+                <div>
+                  <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-8">
+                    <span className="w-2 h-2 rounded-full bg-red-600" />
+                    <span className="text-slate-700 font-display font-bold text-xs tracking-widest uppercase">Our Offerings</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {(solution.offerings || solution.productCategories || solution.spdCategories)?.map((item: { name?: string; type?: string; desc?: string }, i: number) => {
+                      const bgImages = [
+                        "1581092160562-40aa08e78837", // Engineering
+                        "1504328345606-18bbc8c9d7d1", // Blueprint/Architecture
+                        "1513828583688-c52646db42da", // Abstract Architecture
+                        "1530893609608-32a9af3aa95c", // Tech/Circuit
+                      ];
+                      const bgId = bgImages[i % bgImages.length];
+
+                      return (
+                        <div key={i} className="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 relative min-h-[340px] flex flex-col justify-end border border-slate-200 hover:border-slate-300">
+                          
+                          {/* Background Image */}
+                          <Image 
+                            src={`https://images.unsplash.com/photo-${bgId}?auto=format&fit=crop&w=600&q=80`} 
+                            alt="Offering feature" 
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale opacity-80"
+                          />
+                          
+                          {/* Gradient Overlay for Readability */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/90 to-slate-900/40 group-hover:via-slate-900/70 transition-colors duration-500" />
+
+                          {/* Content */}
+                          <div className="relative z-10 p-8 pt-12">
+                            <div className="w-14 h-14 rounded-2xl bg-white border border-transparent flex items-center justify-center mb-6 transition-transform duration-500 transform group-hover:-translate-y-2">
+                              <Layers className="w-6 h-6 text-red-600" />
+                            </div>
+                            <h4 className="font-display font-bold text-xl text-white mb-3">{item.name || item.type}</h4>
+                            <p className="text-slate-300 text-sm leading-relaxed group-hover:text-white transition-colors duration-300 font-medium">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Design Process - Responsive Timeline */}
+              {solution.designProcess && (
+                <div className="pt-8">
+                  <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-10">
+                    <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+                    <span className="text-slate-700 font-display font-bold text-xs tracking-widest uppercase">Engineering Process</span>
+                  </div>
+
+                  {/* ── MOBILE: left-aligned single column ── */}
+                  <div className="md:hidden relative pl-10">
+                    {/* Left vertical track */}
+                    <div className="absolute left-4 top-0 bottom-0 w-[2px] bg-slate-200" />
+                    <div className="space-y-6">
+                      {solution.designProcess.map((step, i) => (
+                        <div key={i} className="relative">
+                          {/* Dot on track */}
+                          <div className="absolute -left-[26px] top-5 w-4 h-4 rounded-full bg-red-600 border-[3px] border-white shadow z-10" />
+                          <div className="bg-yellow-50 border border-red-100 border-b-[3px] border-b-red-600 border-r-[3px] border-r-red-600 rounded-2xl p-4 shadow-sm">
+                            <span className="block font-mono font-black text-red-600 text-[10px] tracking-widest mb-1">
+                              STEP {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <h4 className="font-display font-bold text-slate-900 text-base leading-tight mb-1">{step.title}</h4>
+                            <p className="text-slate-600 text-xs leading-relaxed">{step.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* ── DESKTOP md+: center alternating layout ── */}
+                  <div className="hidden md:block relative py-4">
+                    {/* Center Vertical Track */}
+                    <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-slate-200 -translate-x-1/2" />
+
+                    <div className="space-y-0">
+                      {solution.designProcess.map((step, i) => {
+                        const isLeft = i % 2 === 0;
+                        return (
+                          <div key={i} className="relative flex items-center min-h-[120px]">
+
+                            {/* Center dot node */}
+                            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                              <div className="w-4 h-4 rounded-full bg-red-600 border-[3px] border-white shadow-md" />
+                            </div>
+
+                            {isLeft ? (
+                              <>
+                                {/* LEFT: text label */}
+                                <div className="w-[42%] pr-16 text-right">
+                                  <span className="block font-mono font-black text-red-600 text-xs tracking-widest mb-1">
+                                    STEP {String(i + 1).padStart(2, "00")}
+                                  </span>
+                                  <span className="block font-display font-bold text-slate-900 text-sm leading-tight">
+                                    {step.title}
+                                  </span>
+                                  <span className="block text-slate-500 text-xs mt-1 leading-snug">
+                                    {step.desc}
+                                  </span>
+                                </div>
+
+                                {/* Dashed connector */}
+                                <div className="absolute left-[42%] right-[calc(50%+22px)] top-1/2 -translate-y-1/2 border-t-2 border-dashed border-slate-300" />
+
+                                {/* Icon box left of center */}
+                                <div className="absolute left-[calc(50%-54px)] top-1/2 -translate-y-1/2">
+                                  <div className="w-11 h-11 rounded-xl bg-yellow-50 border border-red-100 border-b-[3px] border-b-red-600 border-r-[3px] border-r-red-600 flex items-center justify-center shadow-sm">
+                                    <span className="font-mono font-black text-red-600 text-sm">{String(i + 1).padStart(2, "0")}</span>
+                                  </div>
+                                </div>
+
+                                <div className="w-[58%] ml-auto" />
+                              </>
+                            ) : (
+                              <>
+                                <div className="w-[42%]" />
+
+                                {/* Icon box right of center */}
+                                <div className="absolute right-[calc(50%-54px)] top-1/2 -translate-y-1/2">
+                                  <div className="w-11 h-11 rounded-xl bg-yellow-50 border border-red-100 border-b-[3px] border-b-red-600 border-r-[3px] border-r-red-600 flex items-center justify-center shadow-sm">
+                                    <span className="font-mono font-black text-red-600 text-sm">{String(i + 1).padStart(2, "0")}</span>
+                                  </div>
+                                </div>
+
+                                {/* Dashed connector */}
+                                <div className="absolute right-[42%] left-[calc(50%+22px)] top-1/2 -translate-y-1/2 border-t-2 border-dashed border-slate-300" />
+
+                                {/* RIGHT: text label */}
+                                <div className="w-[42%] ml-auto pl-16 text-left">
+                                  <span className="block font-mono font-black text-red-600 text-xs tracking-widest mb-1">
+                                    STEP {String(i + 1).padStart(2, "0")}
+                                  </span>
+                                  <span className="block font-display font-bold text-slate-900 text-sm leading-tight">
+                                    {step.title}
+                                  </span>
+                                  <span className="block text-slate-500 text-xs mt-1 leading-snug">
+                                    {step.desc}
+                                  </span>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Key Advantages */}
               {solution.valueAdds && (
                 <div>
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-8 h-[2px] bg-maroon-600 rounded-full" />
-                    <span className="text-maroon-700 font-display font-bold text-xs tracking-[0.2em] uppercase">Key Advantages</span>
+                  <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-8">
+                    <span className="w-2 h-2 rounded-full bg-green-500" />
+                    <span className="text-slate-700 font-display font-bold text-xs tracking-widest uppercase">Key Advantages</span>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {solution.valueAdds.map((item, i) => (
-                      <div key={i} className={`group flex items-start gap-3 p-5 ${config.bg} border ${config.border} rounded-2xl hover:shadow-md transition-all duration-300`}>
-                        <CheckCircle2 className={`w-5 h-5 ${config.text} shrink-0 mt-0.5 group-hover:scale-110 transition-transform`} />
-                        <span className="text-slate-700 text-sm leading-relaxed font-medium">{item}</span>
+                      <div key={i} className="drop-shadow-sm hover:drop-shadow-xl transition-all duration-500 h-full">
+                        <div className="group relative p-[1px] h-full" 
+                             style={{ clipPath: "polygon(32px 0, 100% 0, 100% 100%, 0 100%, 0 32px)" }}>
+                          
+                          {/* Outer Border Layer */}
+                          <div className="absolute inset-0 bg-slate-800 group-hover:bg-gradient-to-br group-hover:from-maroon-500 group-hover:to-orange-500 transition-all duration-500" />
+                          
+                          {/* Inner Card */}
+                          <div className="relative h-full w-full bg-[#0A192F] p-6 sm:p-8 flex items-start gap-5 overflow-hidden"
+                               style={{ clipPath: "polygon(31px 0, 100% 0, 100% 100%, 0 100%, 0 31px)" }}>
+                            
+                            {/* Background Watermark Number */}
+                            <div className="absolute -right-4 -bottom-6 text-8xl font-display font-black text-white/[0.03] group-hover:text-white/[0.07] transition-colors duration-500 pointer-events-none select-none">
+                              {String(i + 1).padStart(2, "0")}
+                            </div>
+
+                            <div className="relative z-10 w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-maroon-500/20 group-hover:border-maroon-500/50 transition-all duration-500">
+                              <CheckCircle2 className="w-6 h-6 text-slate-400 group-hover:text-maroon-400 transition-colors duration-500" />
+                            </div>
+                            <span className="relative z-10 text-slate-300 text-sm leading-relaxed font-medium mt-1.5 group-hover:text-white transition-colors duration-500">
+                              {item}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Deliverables */}
-              {solution.deliverables && (
-                <div>
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-8 h-[2px] bg-maroon-600 rounded-full" />
-                    <span className="text-maroon-700 font-display font-bold text-xs tracking-[0.2em] uppercase">Deliverables</span>
-                  </div>
-                  <div className={`${config.bg} border ${config.border} rounded-3xl p-8`}>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {solution.deliverables.map((item, i) => (
-                        <div key={i} className="flex items-start gap-3 p-4 bg-white border border-slate-100 rounded-xl hover:shadow-sm transition-all">
-                          <ClipboardCheck className={`w-4 h-4 ${config.text} shrink-0 mt-0.5`} />
-                          <span className="text-sm text-slate-700 font-medium">{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Other Solutions */}
-              <div className={`${config.bg} border ${config.border} rounded-3xl p-8`}>
-                <h3 className={`font-display font-bold text-xs ${config.text} uppercase tracking-[0.15em] mb-5`}>Explore Other Solutions</h3>
-                <div className="flex flex-wrap gap-3">
-                  {solutions.filter((s) => s.slug !== solution.slug).map((s) => {
-                    const OtherIcon = IconMap[s.icon] || Layers;
-                    return (
-                      <Link key={s.slug} href={`/solutions/${s.slug}`}
-                        className={`group flex items-center gap-2.5 px-5 py-3 bg-white border ${config.border} rounded-xl text-sm text-slate-600 hover:${config.text} hover:shadow-sm transition-all`}>
-                        <OtherIcon className={`w-4 h-4 text-slate-400 group-hover:${config.text} transition-colors`} />
-                        {s.title}
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
             </div>
 
-            {/* ── Sidebar ──────────────────────────────────── */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-24 space-y-6">
+            {/* ── Sidebar (Col Span 4) ── */}
+            <div className="lg:col-span-4">
+              <div className="sticky top-24 space-y-8">
 
-                {/* Delivery Model */}
-                {solution.deliveryModel && (
-                  <div className={`${config.bg} border ${config.border} rounded-3xl p-7`}>
-                    <div className="flex items-center gap-3 mb-5">
-                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${config.gradient} flex items-center justify-center shadow-md`}>
-                        <Settings className="w-5 h-5 text-white" />
+                {/* Reference Standards - Orbital Animation */}
+                {solution.standards && (
+                  <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-xl shadow-slate-200/50 flex flex-col overflow-hidden">
+                    <h3 className="font-display font-bold text-xl text-slate-900 mb-10 w-full text-left">Standards</h3>
+                    
+                    <div className="relative flex items-center justify-center w-full h-[260px]">
+                      
+                      {/* Outer Orbit */}
+                      <div className="absolute w-[220px] h-[220px] rounded-full border border-dashed border-red-200 flex items-center justify-center"
+                           style={{ animation: 'spin 40s linear infinite' }}>
+                         {solution.standards.map((std, i) => {
+                           const angle = (i * 360) / solution.standards.length;
+                           return (
+                             <div 
+                               key={i} 
+                               className="absolute w-full h-full"
+                               style={{ transform: `rotate(${angle}deg)` }}
+                             >
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                     style={{ transform: `rotate(-${angle}deg)` }}>
+                                  <div style={{ animation: 'spin 40s linear infinite reverse' }}>
+                                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-maroon-100 shadow-md rounded-full text-[10px] sm:text-[11px] font-mono font-bold text-maroon-700 whitespace-nowrap hover:border-red-500 hover:bg-red-50 hover:text-red-700 transition-colors cursor-default">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                                      {std}
+                                    </div>
+                                  </div>
+                                </div>
+                             </div>
+                           )
+                         })}
                       </div>
-                      <h4 className="font-display font-bold text-sm text-slate-900">Delivery Model</h4>
-                    </div>
-                    <div className="flex flex-col gap-3">
-                      {solution.deliveryModel.split("→").map((step, i) => (
-                        <div key={i} className="flex items-center gap-3">
-                          <span className={`flex items-center justify-center w-7 h-7 rounded-lg bg-white border ${config.border} text-xs font-mono ${config.text} shrink-0 shadow-sm`}>
-                            {i + 1}
-                          </span>
-                          <span className="font-display font-semibold text-slate-700 text-sm uppercase tracking-wide">{step.trim()}</span>
-                        </div>
-                      ))}
+
+                      {/* Inner Orbit (Decorative) */}
+                      <div className="absolute w-[130px] h-[130px] rounded-full border border-dashed border-maroon-100/50" 
+                           style={{ animation: 'spin 20s linear infinite reverse' }} />
+
+                      {/* Central Icon */}
+                      <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-[#0A192F] to-maroon-900 flex items-center justify-center shadow-2xl z-10 border-[6px] border-white group cursor-default hover:scale-110 transition-transform duration-500">
+                         {/* Pulse effect */}
+                         <div className="absolute inset-0 bg-red-500 rounded-full opacity-0 group-hover:opacity-40 group-hover:animate-ping transition-opacity duration-300" />
+                         <FileText className="w-7 h-7 text-white relative z-10 group-hover:text-red-400 transition-colors" />
+                      </div>
+
                     </div>
                   </div>
                 )}
 
                 {/* Application Areas */}
                 {solution.applicationArea && (
-                  <div className={`${config.bg} border ${config.border} rounded-3xl p-7`}>
-                    <div className="flex items-center gap-3 mb-5">
-                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${config.gradient} flex items-center justify-center shadow-md`}>
-                        <Factory className="w-5 h-5 text-white" />
+                  <div className="bg-[#0A192F] rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
+                    <div className="absolute -right-10 -top-10 w-32 h-32 bg-orange-500/20 rounded-full blur-3xl" />
+                    <div className="relative z-10 flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center border border-white/10">
+                        <Factory className="w-6 h-6 text-orange-400" />
                       </div>
-                      <h4 className="font-display font-bold text-sm text-slate-900">Application Areas</h4>
+                      <h3 className="font-display font-bold text-xl">Industries</h3>
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      {solution.applicationArea.map((a, i) => (
-                        <span key={i} className={`px-3 py-1.5 bg-white border ${config.border} rounded-lg text-xs text-slate-700 hover:shadow-sm transition-all cursor-default`}>
-                          {a}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Reference Standards */}
-                {solution.standards && (
-                  <div className={`${config.bg} border ${config.border} rounded-3xl p-7`}>
-                    <div className="flex items-center gap-3 mb-5">
-                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${config.gradient} flex items-center justify-center shadow-md`}>
-                        <FileText className="w-5 h-5 text-white" />
-                      </div>
-                      <h4 className="font-display font-bold text-sm text-slate-900">Reference Standards</h4>
-                    </div>
-                    <ul className="space-y-2">
-                      {solution.standards.map((std, i) => (
-                        <li key={i} className={`flex items-center gap-3 py-2.5 border-b ${config.border} last:border-0`}>
-                          <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-br ${config.gradient} shrink-0`} />
-                          <span className="text-sm font-mono text-slate-700 font-medium">{std}</span>
+                    <ul className="relative z-10 space-y-3">
+                      {solution.applicationArea.map((area, i) => (
+                        <li key={i} className="flex items-center gap-3 text-sm text-slate-300">
+                          <CheckCircle2 className="w-4 h-4 text-orange-500 shrink-0" />
+                          {area}
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
 
-                {/* CTA Card */}
-                <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-7 relative overflow-hidden">
-                  {/* Background glow */}
-                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-maroon-700/20 rounded-full blur-[40px]" />
-
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-2 mb-4">
-                      <Phone className="w-4 h-4 text-maroon-500" />
-                      <h4 className="font-display font-bold text-xs text-white uppercase tracking-[0.15em]">Get a Quote</h4>
+                {/* Delivery Model */}
+                {solution.deliveryModel && (
+                  <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-xl shadow-slate-200/50">
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className="w-12 h-12 rounded-2xl bg-[#F1F5F9] flex items-center justify-center">
+                        <Settings className="w-6 h-6 text-slate-700" />
+                      </div>
+                      <h3 className="font-display font-bold text-2xl text-slate-900">Delivery Model</h3>
                     </div>
-                    <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                      Ready to discuss your {solution.title.toLowerCase()} requirements?
+                    <div className="space-y-3">
+                      {solution.deliveryModel.split("→").map((item, i) => (
+                        <div key={i} className="flex items-center gap-5 p-4 rounded-2xl bg-slate-50 border border-slate-100 cursor-default">
+                          <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center shrink-0 shadow-sm">
+                            <span className="text-[13px] font-bold text-white">{i + 1}</span>
+                          </div>
+                          <span className="text-slate-800 text-[15px] font-medium tracking-tight">{item.trim()}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* CTA Card */}
+                <div className="bg-maroon-700 rounded-3xl p-8 relative overflow-hidden text-white shadow-xl">
+                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-orange-500/30 rounded-full blur-[40px]" />
+                  <div className="relative z-10">
+                    <h4 className="font-display font-bold text-2xl mb-4">Need Expert Help?</h4>
+                    <p className="text-maroon-100 text-sm mb-8 leading-relaxed">
+                      Our engineers are ready to design a robust {solution.title.toLowerCase()} tailored to your needs.
                     </p>
-                    <a href={`tel:${company.phone.replace(/[^0-9+]/g, "")}`}
-                      className="flex items-center justify-center gap-2 w-full py-3.5 bg-red-600 hover:bg-red-700 text-white font-display font-bold text-sm uppercase tracking-wider rounded-xl transition-colors">
-                      <Phone className="w-4 h-4" />
-                      Call Us Now
-                    </a>
-                    <Link href="/contact"
-                      className="mt-3 flex items-center justify-center gap-2 w-full py-3 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 font-display font-bold text-sm uppercase tracking-wider rounded-xl transition-all">
-                      Request a Quote
-                      <ArrowRight className="w-3.5 h-3.5" />
+                    <Link href="/contact" className="flex items-center justify-center gap-2 w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-colors shadow-lg">
+                      Request Consultation
+                      <ArrowRight className="w-4 h-4" />
                     </Link>
                   </div>
                 </div>
 
-                {/* Quick trust badge */}
-                <div className="flex items-center gap-3 p-4 bg-maroon-50 border border-maroon-100 rounded-2xl">
-                  <Shield className="w-5 h-5 text-maroon-700 shrink-0" />
-                  <div>
-                    <p className="text-sm font-display font-semibold text-slate-900">IS/IEC Certified</p>
-                    <p className="text-xs text-slate-500">Full compliance guaranteed</p>
-                  </div>
-                </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
-
+      {/* ── Bottom CTA ──────── */}
+      <section className="py-20 bg-white border-t border-slate-100">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-display font-extrabold text-3xl text-slate-900 mb-6">Ready to secure your infrastructure?</h2>
+          <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-red-600 text-white rounded-xl font-bold uppercase tracking-wider hover:bg-red-700 transition-colors shadow-lg shadow-red-600/30">
+            Contact Engineering Team
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
+      </section>
     </>
   );
 }

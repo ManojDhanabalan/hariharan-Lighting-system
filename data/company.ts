@@ -3,7 +3,7 @@ export const company = {
   tagline: "Trusted Partner in Lightning Protection & Electrical Safety",
   founderName: "Hariharan",
   phone: "+91 73737 66689",
-  email: "info@aadithya.com",
+  email: "info@aadithyatech.com",
   location: "68A/7, Indgra Nagar, Allampalayam, Pallipalayam, Tamil Nadu 638008",
   workingHours: "Mon – Sat, 9:00 AM – 5:30 PM IST",
   googleMapsLink: "https://www.google.com/maps/dir/?api=1&destination=68A%2F7%2C+Indgra+Nagar%2C+Allampalayam%2C+Pallipalayam%2C+Tamil+Nadu+638008",

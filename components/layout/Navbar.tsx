@@ -14,6 +14,8 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen]         = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const pathname = usePathname();
+  // Normalize trailing slashes so /about/ === /about
+  const cleanPath = pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
 
   useEffect(() => {
     const fn = () => setIsScrolled(window.scrollY > 10);
@@ -52,53 +54,74 @@ export default function Navbar() {
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <div key={link.label} className="relative"
-                  onMouseEnter={() => link.children && setActiveDropdown(link.label)}
-                  onMouseLeave={() => setActiveDropdown(null)}>
-                  {link.children ? (
-                    <button className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      pathname.startsWith(link.href) 
-                        ? "text-blue-400"
-                        : "text-slate-300 hover:text-white"
-                    }`}>
-                      {link.label}
-                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === link.label ? "rotate-180" : ""}`} />
-                    </button>
-                  ) : (
-                    <Link href={link.href} className={`block px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      pathname === link.href 
-                        ? "text-blue-400"
-                        : "text-slate-300 hover:text-white"
-                    }`}>
-                      {link.label}
-                    </Link>
-                  )}
-
-                  <AnimatePresence>
-                    {link.children && activeDropdown === link.label && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 8 }}
-                        transition={{ duration: 0.15 }}
-                        className="absolute top-full left-0 mt-2 w-56 bg-slate-900 border border-slate-800 rounded-xl shadow-xl overflow-hidden"
-                      >
-                        <div className="p-2">
-                          {link.children.map((child) => (
-                            <Link key={child.label} href={child.href}
-                              className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors ${
-                                pathname === child.href ? "bg-white/5 text-blue-400" : "text-slate-300 hover:bg-white/5 hover:text-white"
-                              }`}>
-                              {child.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
+              {navLinks.map((link) => {
+                const isParentActive = link.children
+                  ? link.children.some(c => cleanPath === c.href || cleanPath.startsWith(c.href + "/"))
+                  : cleanPath === link.href;
+                const activeChild = link.children?.find(c => cleanPath === c.href || cleanPath.startsWith(c.href + "/"));
+                return (
+                  <div key={link.label} className="relative"
+                    onMouseEnter={() => link.children && setActiveDropdown(link.label)}
+                    onMouseLeave={() => setActiveDropdown(null)}>
+                    {link.children ? (
+                      <button className={`relative flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        isParentActive
+                          ? "text-red-400"
+                          : "text-slate-300 hover:text-white"
+                      }`}>
+                        <span>{link.label}</span>
+                        {activeChild && (
+                          <span className="ml-1 text-[10px] font-bold text-red-300 bg-red-500/20 px-1.5 py-0.5 rounded-full truncate max-w-[90px]">
+                            {activeChild.label}
+                          </span>
+                        )}
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === link.label ? "rotate-180" : ""}`} />
+                        {isParentActive && (
+                          <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-red-500 rounded-full" />
+                        )}
+                      </button>
+                    ) : (
+                      <Link href={link.href} className={`relative block px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                        cleanPath === link.href
+                          ? "text-red-400 bg-red-500/10 border border-red-500/20"
+                          : "text-slate-300 hover:text-white"
+                      }`}>
+                        {link.label}
+                        {cleanPath === link.href && (
+                          <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-red-500 rounded-full" />
+                        )}
+                      </Link>
                     )}
-                  </AnimatePresence>
-                </div>
-              ))}
+
+                    <AnimatePresence>
+                      {link.children && activeDropdown === link.label && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 8 }}
+                          transition={{ duration: 0.15 }}
+                          className="absolute top-full left-0 mt-2 w-60 bg-slate-900 border border-slate-800 rounded-xl shadow-xl overflow-hidden"
+                        >
+                          <div className="p-2">
+                            {link.children.map((child) => {
+                              const isChildActive = cleanPath === child.href || cleanPath.startsWith(child.href + "/");
+                              return (
+                                <Link key={child.label} href={child.href}
+                                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors ${
+                                    isChildActive ? "bg-red-500/10 text-red-400 font-semibold" : "text-slate-300 hover:bg-white/5 hover:text-white"
+                                  }`}>
+                                  {isChildActive && <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />}
+                                  {child.label}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </nav>
 
             {/* Desktop Right */}
@@ -143,36 +166,50 @@ export default function Navbar() {
             className="fixed inset-0 z-40 bg-white overflow-y-auto pt-20 pb-10 px-6"
           >
             <div className="flex flex-col gap-2 max-w-sm mx-auto">
-              {navLinks.map((link) => (
-                <div key={link.label}>
-                  {link.children ? (
-                    <div className="mb-4">
-                      <div className={`text-xs font-bold uppercase tracking-wider mb-3 px-2 ${
-                        isScrolled ? "text-slate-400" : "text-slate-500"
-                      }`}>
+              {navLinks.map((link) => {
+                const isGroupActive = link.children
+                  ? link.children.some(c => cleanPath === c.href || cleanPath.startsWith(c.href + "/"))
+                  : false;
+                return (
+                  <div key={link.label}>
+                    {link.children ? (
+                      <div className="mb-4">
+                        <div className={`text-xs font-bold uppercase tracking-wider mb-3 px-2 flex items-center gap-2 ${
+                          isGroupActive ? "text-red-600" : "text-slate-400"
+                        }`}>
+                          {link.label}
+                          {isGroupActive && <span className="w-1.5 h-1.5 rounded-full bg-red-500" />}
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          {link.children.map((child) => {
+                            const isChildActive = cleanPath === child.href || cleanPath.startsWith(child.href + "/");
+                            return (
+                              <Link key={child.label} href={child.href}
+                                className={`flex items-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold transition-colors ${
+                                  isChildActive
+                                    ? "bg-red-600 text-white shadow-sm shadow-red-200"
+                                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                                }`}>
+                                {isChildActive && <span className="w-2 h-2 rounded-full bg-white shrink-0" />}
+                                {child.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ) : (
+                      <Link href={link.href}
+                        className={`block py-3 px-4 rounded-xl text-base font-semibold transition-colors ${
+                          cleanPath === link.href
+                            ? "bg-red-600 text-white shadow-sm shadow-red-200"
+                            : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                        }`}>
                         {link.label}
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        {link.children.map((child) => (
-                          <Link key={child.label} href={child.href}
-                            className={`flex items-center gap-3 py-3 px-4 rounded-lg text-sm font-medium transition-colors ${
-                              pathname === child.href ? "bg-maroon-50 text-maroon-700" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                            }`}>
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <Link href={link.href}
-                      className={`block py-3 px-4 rounded-lg text-base font-semibold transition-colors ${
-                        pathname === link.href ? "bg-maroon-50 text-maroon-700" : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
-                      }`}>
-                      {link.label}
-                    </Link>
-                  )}
-                </div>
-              ))}
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
               <div className="mt-6 flex flex-col gap-3 pt-6 border-t border-slate-100">
                 <a href={`tel:${company.phone.replace(/[^0-9+]/g, "")}`}
                   className="flex items-center justify-center gap-3 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 font-medium text-sm hover:bg-slate-100 transition-colors">

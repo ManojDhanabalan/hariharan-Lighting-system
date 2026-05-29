@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { company } from "@/data/company";
 
 export default function OurStorySection() {
@@ -34,14 +35,14 @@ export default function OurStorySection() {
                 transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
                 className="absolute -top-6 sm:-top-8 w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-[4px] border-white shadow-xl"
               >
-                 <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=150&h=150" alt="Engineer" className="w-full h-full object-cover" />
+                 <Image src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=150&h=150" width={150} height={150} alt="Engineer" className="w-full h-full object-cover" />
               </motion.div>
               <motion.div 
                 animate={{ rotate: -360 }} 
                 transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
                 className="absolute -bottom-6 sm:-bottom-8 w-14 h-14 sm:w-20 sm:h-20 rounded-full overflow-hidden border-[4px] border-white shadow-xl"
               >
-                 <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=150&h=150" alt="Team" className="w-full h-full object-cover" />
+                 <Image src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=150&h=150" width={150} height={150} alt="Team" className="w-full h-full object-cover" />
               </motion.div>
             </motion.div>
 
@@ -56,20 +57,20 @@ export default function OurStorySection() {
                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                 className="absolute -left-4 sm:-left-6 w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-[3px] border-white shadow-lg"
               >
-                 <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=150&h=150" alt="Work" className="w-full h-full object-cover" />
+                 <Image src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=150&h=150" width={150} height={150} alt="Work" className="w-full h-full object-cover" />
               </motion.div>
               <motion.div 
                 animate={{ rotate: 360 }} 
                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                 className="absolute -right-4 sm:-right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden border-[3px] border-white shadow-lg"
               >
-                 <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=150&h=150" alt="Industrial" className="w-full h-full object-cover" />
+                 <Image src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=150&h=150" width={150} height={150} alt="Industrial" className="w-full h-full object-cover" />
               </motion.div>
             </motion.div>
 
             {/* Central Sun/Image */}
             <div className="relative w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] rounded-full overflow-hidden border-[8px] border-white shadow-2xl z-10">
-              <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&q=80&w=400&h=400" alt="Core Industrial" className="w-full h-full object-cover" />
+              <Image src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&q=80&w=400&h=400" width={400} height={400} alt="Core Industrial" className="w-full h-full object-cover" />
             </div>
           </div>
 

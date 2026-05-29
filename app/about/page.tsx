@@ -4,19 +4,50 @@ import {
   Target, Eye, Zap, ArrowRight, ArrowUpRight,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import PageHero from "@/components/shared/PageHero";
 import OurStorySection from "@/components/about/OurStorySection";
 
 export const metadata: Metadata = {
-  title: "About Us | Aadithya – Lightning Protection & Earthing Experts",
+  title: "About Us | Lightning Protection Experts in Tamil Nadu",
   description:
-    "Aadithya is a trusted name in lightning protection, earthing systems, and surge protection solutions backed by 18+ years of field experience.",
+    "Aadithya is a trusted name in lightning protection and earthing systems. Based in Erode, we serve industries in Coimbatore and across Tamil Nadu with 18+ years of field experience.",
   alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About Us | Aadithya - Tamil Nadu",
+    description: "Aadithya is a trusted name in lightning protection and earthing systems. Based in Erode, we serve industries in Coimbatore and across Tamil Nadu with 18+ years of field experience.",
+    url: "/about",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "About Us | Aadithya - Tamil Nadu",
+    description: "Trusted lightning protection and earthing systems experts in Erode and Coimbatore.",
+  },
 };
 
 export default function AboutPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            mainEntity: {
+              "@type": "Organization",
+              name: company.name,
+              description: company.tagline,
+              foundingDate: company.established,
+              founder: {
+                "@type": "Person",
+                name: company.founderName
+              }
+            }
+          }),
+        }}
+      />
       <PageHero
         title="About Aadithya"
         subtitle="A knowledge-driven engineering company specialising in lightning protection, earthing systems, and surge safety across India."
@@ -116,14 +147,14 @@ export default function AboutPage() {
             <div className="grid grid-cols-2 gap-4">
               {/* Left Column */}
               <div className="flex flex-col gap-4">
-                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=400&h=300" alt="Industrial Safety" className="w-full h-40 object-cover shadow-sm" />
-                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=400&h=400" alt="Engineering Team" className="w-full h-64 object-cover shadow-sm" />
+                <Image src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=400&h=300" width={400} height={300} alt="Industrial Safety" className="w-full h-40 object-cover shadow-sm" />
+                <Image src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=400&h=400" width={400} height={400} alt="Engineering Team" className="w-full h-64 object-cover shadow-sm" />
               </div>
               
               {/* Right Column */}
               <div className="flex flex-col gap-4">
-                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=400&h=600" alt="Project Execution" className="w-full h-64 object-cover shadow-sm" />
-                <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&q=80&w=400&h=300" alt="Site Inspection" className="w-full h-40 object-cover shadow-sm" />
+                <Image src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=400&h=600" width={400} height={600} alt="Project Execution" className="w-full h-64 object-cover shadow-sm" />
+                <Image src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&q=80&w=400&h=300" width={400} height={300} alt="Site Inspection" className="w-full h-40 object-cover shadow-sm" />
               </div>
             </div>
             
