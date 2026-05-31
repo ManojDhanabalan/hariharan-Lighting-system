@@ -43,11 +43,11 @@ export default function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center group z-50">
               <Image 
-                src="/logo.svg" 
+                src="/logo.png" 
                 alt={`${company.name} Logo`} 
-                width={200} 
-                height={80} 
-                className="h-12 sm:h-14 w-auto object-contain"
+                width={220} 
+                height={100} 
+                className="h-20 sm:h-22 w-auto object-contain"
                 priority
               />
             </Link>

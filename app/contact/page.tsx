@@ -38,10 +38,10 @@ export default function ContactPage() {
               email: company.email,
               address: {
                 "@type": "PostalAddress",
-                streetAddress: "68A/7, Indgra Nagar, Allampalayam",
+                streetAddress: "No-09, Pillayar Kovil Street",
                 addressLocality: "Pallipalayam",
                 addressRegion: "Tamil Nadu",
-                postalCode: "638008",
+                postalCode: "638006",
                 addressCountry: "IN"
               }
             }
@@ -103,7 +103,7 @@ export default function ContactPage() {
       <section className="relative h-[400px] lg:h-[480px] bg-slate-100 overflow-hidden">
         <iframe
           title="Aadithya Location"
-          src="https://maps.google.com/maps?q=68A/7,+Indgra+Nagar,+Allampalayam,+Pallipalayam,+Tamil+Nadu+638008&t=&z=16&ie=UTF8&iwloc=&output=embed"
+          src="https://maps.google.com/maps?q=No-09,+Pillayar+Kovil+Street,+Pallipalayam,+Namakkal+District,+Tamil+Nadu+638006&t=&z=16&ie=UTF8&iwloc=&output=embed"
           className="absolute inset-0 w-full h-full border-0"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"

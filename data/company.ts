@@ -4,9 +4,9 @@ export const company = {
   founderName: "Hariharan",
   phone: "+91 73737 66689",
   email: "info@aadithyatech.com",
-  location: "68A/7, Indgra Nagar, Allampalayam, Pallipalayam, Tamil Nadu 638008",
+  location: "No-09, Pillayar Kovil Street, Pallipalayam, Namakkal District - 638006",
   workingHours: "Mon – Sat, 9:00 AM – 5:30 PM IST",
-  googleMapsLink: "https://www.google.com/maps/dir/?api=1&destination=68A%2F7%2C+Indgra+Nagar%2C+Allampalayam%2C+Pallipalayam%2C+Tamil+Nadu+638008",
+  googleMapsLink: "https://www.google.com/maps/dir/?api=1&destination=No-09%2C+Pillayar+Kovil+Street%2C+Pallipalayam%2C+Namakkal+District%2C+Tamil+Nadu+638006",
   established: "2017",
   stats: {
     projectsCompleted: "500+",

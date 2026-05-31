@@ -80,7 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               description: company.tagline,
               telephone: company.phone,
               email: company.email,
-              address: { "@type": "PostalAddress", streetAddress: "68A/7, Indgra Nagar, Allampalayam", addressLocality: "Pallipalayam", addressRegion: "Tamil Nadu", postalCode: "638008", addressCountry: "IN" },
+              address: { "@type": "PostalAddress", streetAddress: "No-09, Pillayar Kovil Street", addressLocality: "Pallipalayam", addressRegion: "Tamil Nadu", postalCode: "638006", addressCountry: "IN" },
               foundingDate: company.established,
               founder: { "@type": "Person", name: company.founderName },
               areaServed: "India",

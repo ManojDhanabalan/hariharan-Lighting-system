@@ -41,13 +41,13 @@ export default function Footer() {
           {/* Brand col - spans 4 cols */}
           <div className="lg:col-span-4 flex flex-col gap-6">
             <Link href="/" className="flex items-center w-fit group">
-              <div className="bg-white px-3 py-2 rounded-xl shadow-lg group-hover:shadow-white/10 transition-shadow">
+              <div className="bg-white px-4 py-3 rounded-xl shadow-lg group-hover:shadow-white/10 transition-shadow">
                 <Image 
-                  src="/logo.svg" 
+                  src="/logo.png" 
                   alt={`${company.name} Logo`} 
-                  width={200} 
-                  height={80} 
-                  className="h-12 w-auto object-contain"
+                  width={220} 
+                  height={88} 
+                  className="h-16 w-auto object-contain"
                 />
               </div>
             </Link>
