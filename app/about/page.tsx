@@ -9,20 +9,29 @@ import PageHero from "@/components/shared/PageHero";
 import OurStorySection from "@/components/about/OurStorySection";
 
 export const metadata: Metadata = {
-  title: "About Us | Lightning Protection Experts in Tamil Nadu",
+  title: "About Us | Aadithya Protective Systems & Technologies – Lightning Protection Experts, Namakkal",
   description:
-    "Aadithya is a trusted name in lightning protection and earthing systems. Based in Erode, we serve industries in Coimbatore and across Tamil Nadu with 18+ years of field experience.",
+    "Aadithya Protective Systems & Technologies – trusted lightning protection & earthing system experts based at Pallipalayam, Namakkal District. Serving industries across Tamil Nadu & India with 18+ years of field experience since 2017.",
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "About Us | Aadithya - Tamil Nadu",
-    description: "Aadithya is a trusted name in lightning protection and earthing systems. Based in Erode, we serve industries in Coimbatore and across Tamil Nadu with 18+ years of field experience.",
+    title: "About Us | Aadithya Protective Systems & Technologies – Pallipalayam, Namakkal",
+    description: "Aadithya Protective Systems & Technologies – trusted lightning protection & earthing system experts based at Pallipalayam, Namakkal District. Serving industries across Tamil Nadu & India since 2017.",
     url: "/about",
     type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        width: 560,
+        height: 240,
+        alt: "Aadithya Protective Systems & Technologies",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
-    title: "About Us | Aadithya - Tamil Nadu",
-    description: "Trusted lightning protection and earthing systems experts in Erode and Coimbatore.",
+    card: "summary_large_image",
+    title: "About Us | Aadithya Protective Systems & Technologies – Namakkal",
+    description: "Trusted lightning protection and earthing systems experts in Pallipalayam, Namakkal District. 18+ years of experience.",
+    images: ["/logo.png"],
   },
 };
 
@@ -37,9 +46,19 @@ export default function AboutPage() {
             "@type": "AboutPage",
             mainEntity: {
               "@type": "Organization",
-              name: company.name,
+              name: "Aadithya Protective Systems & Technologies",
               description: company.tagline,
               foundingDate: company.established,
+              telephone: company.phone,
+              email: company.email,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "No-09, Pillayar Kovil Street",
+                addressLocality: "Pallipalayam",
+                addressRegion: "Tamil Nadu",
+                postalCode: "638006",
+                addressCountry: "IN"
+              },
               founder: {
                 "@type": "Person",
                 name: company.founderName

@@ -6,19 +6,28 @@ import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Lightning Protection Services in Tamil Nadu",
-  description: "Get in touch with Aadithya for lightning protection and earthing audits in Erode, Coimbatore, and Tamil Nadu. Call or email us today.",
+  title: "Contact Us | Aadithya Protective Systems & Technologies – Pallipalayam, Namakkal",
+  description: "Get in touch with Aadithya Protective Systems & Technologies for lightning protection and earthing audits. Located at No-09, Pillayar Kovil Street, Pallipalayam, Namakkal District – 638006. Call or email us today.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Contact Us | Aadithya - Tamil Nadu",
-    description: "Get in touch with Aadithya for lightning protection and earthing audits in Erode, Coimbatore, and Tamil Nadu. Call or email us today.",
+    title: "Contact Us | Aadithya Protective Systems & Technologies – Namakkal",
+    description: "Get in touch with Aadithya Protective Systems & Technologies for lightning protection & earthing audits. Based at Pallipalayam, Namakkal District (638006). Call or email us today.",
     url: "/contact",
     type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        width: 560,
+        height: 240,
+        alt: "Aadithya Protective Systems & Technologies",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
-    title: "Contact Us | Aadithya - Tamil Nadu",
-    description: "Get in touch with Aadithya for lightning protection and earthing audits in Erode & Coimbatore.",
+    card: "summary_large_image",
+    title: "Contact Us | Aadithya Protective Systems & Technologies – Namakkal",
+    description: "Reach our experts for lightning protection & earthing audits in Pallipalayam, Namakkal District.",
+    images: ["/logo.png"],
   },
 };
 

@@ -11,21 +11,30 @@ import CustomerMarquee   from "@/components/home/CustomerMarquee";
 import { company } from "@/data/company";
 
 export const metadata: Metadata = {
-  title: "Aadithya | Lightning Protection & Earthing Experts in Tamil Nadu",
-  description: "Aadithya delivers trusted Lightning Protection, Earthing Systems & Surge Protection Solutions. Headquartered in Erode, proudly serving Coimbatore and Tamil Nadu.",
+  title: "Aadithya Protective Systems & Technologies | Lightning Protection & Earthing Experts – Pallipalayam, Namakkal",
+  description: "Aadithya Protective Systems & Technologies delivers IS/IEC-certified Lightning Protection, Earthing Systems & Surge Protection. Based at Pallipalayam, Namakkal District (638006). Serving Tamil Nadu & India since 2017.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Aadithya | Lightning Protection & Earthing Experts in Tamil Nadu",
-    description: "Aadithya delivers trusted Lightning Protection, Earthing Systems & Surge Protection Solutions. Headquartered in Erode, proudly serving Coimbatore and Tamil Nadu.",
+    title: "Aadithya Protective Systems & Technologies | Lightning Protection – Pallipalayam, Namakkal",
+    description: "Expert Lightning Protection, Earthing Audits & Surge Protection solutions. Headquartered at No-09, Pillayar Kovil Street, Pallipalayam, Namakkal District – 638006. Serving industries across Tamil Nadu & India.",
     url: "/",
     siteName: company.name,
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        width: 560,
+        height: 240,
+        alt: "Aadithya Protective Systems & Technologies Logo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aadithya | Lightning Protection & Earthing Experts in Tamil Nadu",
-    description: "Trusted Lightning Protection & Earthing Solutions in Erode, Coimbatore, and across Tamil Nadu.",
+    title: "Aadithya Protective Systems & Technologies | Lightning Protection – Namakkal",
+    description: "IS/IEC-certified Lightning Protection & Earthing Systems. Based in Pallipalayam, Namakkal District. Serving Tamil Nadu & India since 2017.",
+    images: ["/logo.png"],
   },
 };
 
@@ -39,7 +48,9 @@ export default function HomePage() {
             "@context": "https://schema.org",
             "@type": "WebSite",
             name: company.name,
+            alternateName: "Aadithya Protective Systems & Technologies",
             url: "https://aadithyatech.com",
+            description: company.tagline,
             potentialAction: {
               "@type": "SearchAction",
               target: "https://aadithyatech.com/services/{search_term_string}",
