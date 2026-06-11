@@ -133,46 +133,38 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
           </div>
 
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10">
               {service.whySection.map((item, i) => {
                 const Icon = ICONS[i % ICONS.length];
-                const bgImages = [
-                  "1581092160562-40aa08e78837", // Engineering
-                  "1504328345606-18bbc8c9d7d1", // Blueprint/Architecture
-                  "1513828583688-c52646db42da", // Abstract Architecture
-                  "1530893609608-32a9af3aa95c", // Tech/Circuit
-                  "1605810230434-7631ac76ec81", // Industrial
-                  "1581091226825-a6a2a5aee158"  // Tech lab
+                
+                // Different color pairs for each card
+                const bgPairs = [
+                  { left: "#fff1f2", right: "#ffe4e6" }, // Rose
+                  { left: "#eff6ff", right: "#dbeafe" }, // Blue
+                  { left: "#f0fdf4", right: "#dcfce7" }, // Green
+                  { left: "#fffbeb", right: "#fef3c7" }, // Amber
+                  { left: "#f5f3ff", right: "#ede9fe" }, // Violet
+                  { left: "#fdf4ff", right: "#fae8ff" }, // Fuchsia
                 ];
-                const bgId = bgImages[i % bgImages.length];
+                const activePair = bgPairs[i % bgPairs.length];
 
                 return (
-                  <div key={i} className="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 relative min-h-[320px] flex flex-col justify-end border border-slate-200 hover:border-transparent">
+                  <div 
+                    key={i} 
+                    className="group rounded-3xl p-8 lg:p-10 flex flex-col items-center text-center shadow-sm border border-slate-100 hover:shadow-xl hover:border-slate-300 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
+                    style={{ background: `linear-gradient(to bottom right, ${activePair.left} 50%, ${activePair.right} 50%)` }}
+                  >
                     
-                    {/* Background Image */}
-                    <Image 
-                      src={`https://images.unsplash.com/photo-${bgId}?auto=format&fit=crop&w=600&q=80`} 
-                      alt="Why it matters" 
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale opacity-80"
-                    />
-                    
-                    {/* Gradient Overlay for Readability */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/90 to-slate-900/40 group-hover:via-slate-900/70 transition-colors duration-500" />
-
-                    {/* Top Accent Line */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-maroon-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-
-                    {/* Content */}
-                    <div className="relative z-10 p-8 pt-12">
-                      <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center mb-6 group-hover:bg-orange-500 group-hover:border-transparent transition-all duration-500 transform group-hover:-translate-y-2">
-                        <Icon className="w-6 h-6 text-white" />
-                      </div>
-                      <p className="text-slate-300 text-sm leading-relaxed group-hover:text-white transition-colors duration-300 font-medium">
-                        {item}
-                      </p>
+                    {/* Rounded Icon Container with Red Border */}
+                    <div className="w-20 h-20 rounded-full border-2 border-red-600 flex items-center justify-center mb-6 bg-white group-hover:bg-red-600 transition-colors duration-300 relative z-10 shadow-sm">
+                      <Icon className="w-8 h-8 text-red-600 group-hover:text-white transition-colors duration-300 relative z-10" />
                     </div>
-
+                    
+                    {/* Content Below */}
+                    <p className="text-slate-700 text-base leading-relaxed font-body font-medium relative z-10">
+                      {item}
+                    </p>
+                    
                   </div>
                 );
               })}

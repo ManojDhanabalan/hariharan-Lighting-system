@@ -14,11 +14,11 @@ export const solutions = [
       "Correct operation of electricity supply networks.",
     ],
     productCategories: [
-      { name: "Earth Electrodes", desc: "UL-listed electrodes type-tested as per IEC 62561-7, IS 3043-2018 & IEEE 80." },
-      { name: "Backfill Compounds", desc: "Indigenized earthing compound for a permanent maintenance-free grounding solution." },
-      { name: "Earthpit Chambers", desc: "Inspection chambers for accessible monitoring of earth electrode condition." },
-      { name: "Earthing Clamps", desc: "High-conductivity clamps ensuring reliable bonding connections." },
-      { name: "Exothermic Welding", desc: "Permanent molecular-bonded connections for underground and critical joints." },
+      { name: "Earth Electrodes", desc: "High-quality copper-bonded steel or solid copper electrodes designed to safely dissipate high fault currents into the ground, ensuring extremely low earth resistance and long-term defense against soil corrosion.", image: "/images/Earth-electrode.jpg" },
+      { name: "Backfill Compounds", desc: "Highly conductive, moisture-retaining ground enhancement material (GEM) that drastically lowers earth resistance in challenging rocky or sandy soils, providing a permanent and maintenance-free grounding environment.", image: "/images/back-fill-earthing-compound.webp" },
+      { name: "Earthpit Chambers", desc: "Heavy-duty, load-bearing inspection pits installed over the earth electrode to provide a secure, easily accessible point for routine testing, inspection, and long-term maintenance of the earthing connections.", image: "/images/earthpit-chambers-hq.png" },
+      { name: "Earthing Clamps", desc: "High-strength copper alloy clamps that establish secure, extremely low-resistance mechanical connections between electrodes and grounding conductors, capable of withstanding severe fault currents without degrading.", image: "/images/earthing-clamp.jpg" },
+      { name: "Exothermic Welding", desc: "A highly reliable welding process that creates a permanent, molecular bond between copper conductors. These joints will not loosen or corrode over time, making them the superior choice for critical underground connections.", image: "/images/exothermic-welding-hq.png" },
     ],
     valueAdds: [
       "Cost-effective solution for reliable and robust grounding.",
@@ -45,10 +45,10 @@ export const solutions = [
     heroTag: "SOLUTIONS / LIGHTNING SYSTEM",
     overview: `Lightning is an act of God that risks life and assets. There is no method to prevent lightning strikes. A prudent approach is to measure and manage lightning risk for adequate protection.\n\nIEC 62305 emphasizes the need to protect structures and people from direct lightning, and also protect electrical and electronic equipment from conducted surges (via SPDs) and radiated surges (via Faraday cage-type LPS). Aadithya offers comprehensive lightning protection systems — from risk assessment to design, supply, installation, testing, and commissioning.`,
     offerings: [
-      { name: "ESE Lightning Protection", desc: "Early Streamer Emission (ESE) air terminals providing an extended protection radius." },
-      { name: "CLPS Products", desc: "Conventional LPS components — air terminals, down conductors, earth termination, bonding, and shielding." },
-      { name: "Surge Protection Devices (SPDs)", desc: "Wide range of SPDs for Power, Signal, Instrumentation, Ethernet, and Telecom lines, tested to IS/IEC 61643." },
-      { name: "Risk Assessment Tool", desc: "Software-assisted lightning risk assessment as per IS/IEC 62305-2." },
+      { name: "ESE Lightning Protection", desc: "Advanced Early Streamer Emission (ESE) active air terminals designed to proactively intercept lightning strikes earlier than conventional rods, offering a significantly larger radius of protection for expansive facilities.", image: "/images/ese-lightning-arrester.jpg" },
+      { name: "CLPS Products", desc: "Conventional Lightning Protection Systems comprising Franklin rods, down conductors, and earth termination networks that form a Faraday cage to safely capture and route lightning currents to the ground.", image: "/images/clps.png" },
+      { name: "Surge Protection Devices (SPDs)", desc: "High-performance transient voltage surge suppressors essential for clamping overvoltages and diverting dangerous surge currents away from critical power panels and sensitive communication lines.", image: "/images/surge-protection-device-hq.png" },
+      { name: "Risk Assessment Tool", desc: "A comprehensive, software-driven quantitative lightning risk analysis conducted strictly in accordance with IS/IEC 62305-2 to evaluate vulnerability and determine the exact class of protection required.", image: "/images/risk-assessment-tool.png" },
     ],
     valueAdds: [
       "Cost-effective, reliable, and customized solutions.",
@@ -109,10 +109,10 @@ export const solutions = [
     overview: `Transient overvoltages caused by lightning strikes, switching operations, and other electrical disturbances pose a serious threat to sensitive electronic equipment and electrical infrastructure. A properly designed and installed Surge Protection System is essential to mitigate these risks.\n\nAadithya offers end-to-end surge protection solutions — from risk assessment and system design to supply, installation, and commissioning of SPDs across power, data, signal, and instrumentation lines.`,
     whatAreSurges: `A transient overvoltage (surge) is a short-duration spike in electrical voltage that can reach thousands of volts above normal operating levels. Sources include direct or nearby lightning strikes, utility grid switching, motor start/stop events, and capacitor bank switching. These surges can destroy equipment instantly or degrade it over time, causing unplanned downtime and costly replacements.`,
     spdCategories: [
-      { type: "Type 1 SPD", desc: "Primary protection at main distribution boards; handles direct lightning current (10/350µs waveform). Required when a lightning protection system is installed." },
-      { type: "Type 2 SPD", desc: "Secondary protection at sub-distribution boards; limits residual surges (8/20µs waveform). Standard protection for all installations." },
-      { type: "Type 3 SPD", desc: "Point-of-use protection at sensitive equipment terminals; fine protection for electronics and instrumentation." },
-      { type: "Signal & Data SPD", desc: "Protection for data lines, Ethernet, RS-485, instrumentation, and telecom lines." },
+      { type: "Type 1 SPD", desc: "Installed at the main distribution board, Type 1 SPDs safely discharge high-energy, direct lightning currents (10/350µs waveform). They are a mandatory requirement for facilities equipped with an external lightning protection system.", image: "/images/Type-1-spd.png" },
+      { type: "Type 2 SPD", desc: "Deployed at sub-distribution panels, Type 2 SPDs serve as the primary defense against indirect lightning strikes and internal switching surges (8/20µs waveform), effectively clamping residual overvoltages to safe levels.", image: "/images/type-2-spd.webp" },
+      { type: "Type 3 SPD", desc: "Installed directly at the point of use, Type 3 SPDs provide highly sensitive, fine-tuned protection for delicate electronic equipment, computers, and instrumentation, neutralizing any minor transients that bypass upstream protection.", image: "/images/type-3spd-hq.png" },
+      { type: "Signal & Data SPD", desc: "Specialized surge arresters engineered to protect sensitive, low-voltage communication networks. They ensure data integrity and prevent catastrophic hardware damage across Ethernet, RS-485, telecom, and critical instrumentation lines.", image: "/images/Data-and-Signal-Surge-Protector-Device-SPD-.webp" },
     ],
     valueAdds: [
       "SPDs designed in compliance with IS/IEC 61643-11 (Power) and IS/IEC 61643-21 (Data & Signal).",

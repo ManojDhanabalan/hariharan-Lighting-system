@@ -24,10 +24,9 @@ export async function POST(req: Request) {
       );
     }
 
-    // Configure the Nodemailer transport for Zoho
-    // Note: If you registered in the US data center, use smtp.zoho.com instead of smtp.zoho.in
+    // Configure the Nodemailer transport for Zoho (India data center)
     const transporter = nodemailer.createTransport({
-      host: "smtp.zoho.in", 
+      host: "smtp.zoho.in", // India data center — use smtp.zoho.com for US/EU
       port: 465,
       secure: true, // use SSL
       auth: {

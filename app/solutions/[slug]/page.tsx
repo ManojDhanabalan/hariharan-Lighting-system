@@ -205,7 +205,7 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                     <span className="text-slate-700 font-display font-bold text-xs tracking-widest uppercase">Our Offerings</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {(solution.offerings || solution.productCategories || solution.spdCategories)?.map((item: { name?: string; type?: string; desc?: string }, i: number) => {
+                    {(solution.offerings || solution.productCategories || solution.spdCategories)?.map((item: { name?: string; type?: string; desc?: string; image?: string }, i: number) => {
                       const bgImages = [
                         "1581092160562-40aa08e78837", // Engineering
                         "1504328345606-18bbc8c9d7d1", // Blueprint/Architecture
@@ -213,28 +213,27 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                         "1530893609608-32a9af3aa95c", // Tech/Circuit
                       ];
                       const bgId = bgImages[i % bgImages.length];
+                      const finalImage = item.image || `https://images.unsplash.com/photo-${bgId}?auto=format&fit=crop&w=600&q=80`;
 
                       return (
-                        <div key={i} className="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 relative min-h-[340px] flex flex-col justify-end border border-slate-200 hover:border-slate-300">
+                        <div key={i} className="group rounded-3xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-red-900/5 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full bg-white border border-slate-200 hover:border-red-500">
                           
-                          {/* Background Image */}
-                          <Image 
-                            src={`https://images.unsplash.com/photo-${bgId}?auto=format&fit=crop&w=600&q=80`} 
-                            alt="Offering feature" 
-                            fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale opacity-80"
-                          />
-                          
-                          {/* Gradient Overlay for Readability */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/90 to-slate-900/40 group-hover:via-slate-900/70 transition-colors duration-500" />
+                          {/* Top: Image */}
+                          <div className="relative h-56 w-full overflow-hidden border-b border-slate-100">
+                            <Image 
+                              src={finalImage} 
+                              alt={item.name || item.type || "Offering feature"} 
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            {/* Subtle overlay on hover */}
+                            <div className="absolute inset-0 bg-red-900/0 group-hover:bg-red-900/10 transition-colors duration-500" />
+                          </div>
 
-                          {/* Content */}
-                          <div className="relative z-10 p-8 pt-12">
-                            <div className="w-14 h-14 rounded-2xl bg-white border border-transparent flex items-center justify-center mb-6 transition-transform duration-500 transform group-hover:-translate-y-2">
-                              <Layers className="w-6 h-6 text-red-600" />
-                            </div>
-                            <h4 className="font-display font-bold text-xl text-white mb-3">{item.name || item.type}</h4>
-                            <p className="text-slate-300 text-sm leading-relaxed group-hover:text-white transition-colors duration-300 font-medium">
+                          {/* Bottom: Content */}
+                          <div className="relative p-8 flex-1 flex flex-col bg-white">
+                            <h4 className="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-red-600 transition-colors duration-300">{item.name || item.type}</h4>
+                            <p className="text-slate-600 text-sm leading-relaxed font-medium">
                               {item.desc}
                             </p>
                           </div>
