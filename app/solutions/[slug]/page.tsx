@@ -205,6 +205,25 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                     <span className="text-slate-700 font-display font-bold text-xs tracking-widest uppercase">Our Offerings</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Inject Floating Animation Styles */}
+                    <style dangerouslySetInnerHTML={{ __html: `
+                      @keyframes blob {
+                        0% { transform: translate(0px, 0px) scale(1); }
+                        33% { transform: translate(30px, -50px) scale(1.1); }
+                        66% { transform: translate(-20px, 20px) scale(0.9); }
+                        100% { transform: translate(0px, 0px) scale(1); }
+                      }
+                      .animate-blob {
+                        animation: blob 15s infinite ease-in-out;
+                      }
+                      .animation-delay-2000 {
+                        animation-delay: 2s;
+                      }
+                      .animation-delay-4000 {
+                        animation-delay: 4s;
+                      }
+                    `}} />
+
                     {(solution.offerings || solution.productCategories || solution.spdCategories)?.map((item: { name?: string; type?: string; desc?: string; image?: string }, i: number) => {
                       const bgImages = [
                         "1581092160562-40aa08e78837", // Engineering
@@ -216,24 +235,33 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                       const finalImage = item.image || `https://images.unsplash.com/photo-${bgId}?auto=format&fit=crop&w=600&q=80`;
 
                       return (
-                        <div key={i} className="group rounded-3xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-red-900/5 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full bg-white border border-slate-200 hover:border-red-500">
+                        <div key={i} className="group rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-red-900/10 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full bg-white border border-slate-200 hover:border-red-400 relative">
                           
                           {/* Top: Image */}
-                          <div className="relative h-56 w-full overflow-hidden border-b border-slate-100">
+                          <div className="relative h-56 w-full overflow-hidden border-b border-slate-100 z-10 bg-white">
                             <Image 
                               src={finalImage} 
                               alt={item.name || item.type || "Offering feature"} 
                               fill
-                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                              className="object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                             {/* Subtle overlay on hover */}
-                            <div className="absolute inset-0 bg-red-900/0 group-hover:bg-red-900/10 transition-colors duration-500" />
+                            <div className="absolute inset-0 bg-red-900/0 group-hover:bg-red-900/5 transition-colors duration-500" />
                           </div>
 
                           {/* Bottom: Content */}
-                          <div className="relative p-8 flex-1 flex flex-col bg-white">
-                            <h4 className="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-red-600 transition-colors duration-300">{item.name || item.type}</h4>
-                            <p className="text-slate-600 text-sm leading-relaxed font-medium">
+                          <div className="relative p-8 flex-1 flex flex-col overflow-hidden z-10 bg-white">
+                            
+                            {/* Premium Soft Blob Animation Background */}
+                            <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden opacity-100">
+                              <div className="absolute top-[-10%] left-[-10%] w-32 h-32 bg-red-100 rounded-full mix-blend-multiply filter blur-2xl animate-blob"></div>
+                              <div className="absolute top-[-10%] right-[-10%] w-32 h-32 bg-rose-100 rounded-full mix-blend-multiply filter blur-2xl animate-blob animation-delay-2000"></div>
+                              <div className="absolute bottom-[-20%] left-[20%] w-40 h-40 bg-slate-100 rounded-full mix-blend-multiply filter blur-2xl animate-blob animation-delay-4000"></div>
+                            </div>
+
+                            {/* Text Content */}
+                            <h4 className="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-red-600 transition-colors duration-300 relative z-10">{item.name || item.type}</h4>
+                            <p className="text-slate-600 text-sm leading-relaxed font-medium relative z-10 group-hover:text-slate-700 transition-colors duration-300">
                               {item.desc}
                             </p>
                           </div>
