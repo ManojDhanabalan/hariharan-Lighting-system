@@ -161,7 +161,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                     </div>
                     
                     {/* Content Below */}
-                    <p className="text-slate-700 text-base leading-relaxed font-body font-medium relative z-10">
+                    <p className="text-[#0A192F] text-lg leading-relaxed font-body font-semibold relative z-10">
                       {item}
                     </p>
                     

@@ -81,7 +81,7 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                 <h2 className="font-display font-extrabold text-4xl text-slate-900 mb-6 leading-tight">
                   Advanced <span className="text-maroon-700">Engineering</span> Solutions
                 </h2>
-                <div className="space-y-6 text-slate-600 leading-relaxed text-lg font-body bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                <div className="space-y-6 text-slate-600 leading-relaxed text-base sm:text-lg font-body bg-white p-5 sm:p-8 rounded-3xl border border-slate-100 shadow-sm">
                   {solution.overview.split("\n\n").map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
@@ -90,29 +90,29 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
 
               {/* What Are Surges (Dynamic Block) */}
               {solution.whatAreSurges && (
-                <div className="relative flex items-start gap-6 p-8 bg-[#F8FAFC] rounded-3xl overflow-hidden group border border-slate-200 shadow-md">
+                <div className="relative flex flex-col sm:flex-row items-start gap-4 sm:gap-6 p-5 sm:p-8 bg-[#F8FAFC] rounded-3xl overflow-hidden group border border-slate-200 shadow-md">
                   
                   {/* Faded Watermark on the Right */}
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-300 pointer-events-none">
-                    <Zap className="w-64 h-64" />
+                    <Zap className="w-48 h-48 sm:w-64 sm:h-64" />
                   </div>
 
                   {/* Medal Badge */}
-                  <div className="relative shrink-0 flex flex-col items-center justify-start w-16 h-20 pt-1">
+                  <div className="relative shrink-0 flex flex-col items-center justify-start w-14 sm:w-16 h-16 sm:h-20 pt-1">
                     {/* Hexagon Ring */}
-                    <div className="absolute top-0 w-14 h-14 bg-white border-[3px] border-[#D98743] flex items-center justify-center z-10 shadow-sm" 
+                    <div className="absolute top-0 w-12 h-12 sm:w-14 sm:h-14 bg-white border-[3px] border-[#D98743] flex items-center justify-center z-10 shadow-sm" 
                          style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
-                      <Zap className="w-6 h-6 text-[#D98743]" strokeWidth={2.5} />
+                      <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#D98743]" strokeWidth={2.5} />
                     </div>
                     {/* Ribbon Tail */}
-                    <div className="absolute bottom-0 w-8 h-8 bg-[#C57635] z-0" 
+                    <div className="absolute bottom-0 w-6 h-6 sm:w-8 sm:h-8 bg-[#C57635] z-0" 
                          style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 70%, 0 100%)' }} />
                   </div>
 
                   {/* Text Content */}
-                  <div className="relative z-10 flex-1">
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
-                       <h3 className="font-display font-bold text-slate-900 text-2xl leading-tight">
+                  <div className="relative z-10 flex-1 w-full">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3 sm:mb-4">
+                       <h3 className="font-display font-bold text-slate-900 text-xl sm:text-2xl leading-tight">
                          Understanding Transients
                        </h3>
                        <div className="flex items-center gap-1.5 sm:border-l sm:border-slate-300 sm:pl-4">
@@ -128,7 +128,7 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                          </span>
                        </div>
                     </div>
-                    <p className="text-slate-600 text-base leading-relaxed pr-8">
+                    <p className="text-slate-600 text-sm sm:text-base leading-relaxed sm:pr-8">
                       {solution.whatAreSurges}
                     </p>
                   </div>
@@ -173,18 +173,18 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
 
                           {/* Text Content */}
                           <div className="relative z-10 flex-1">
-                            <h4 className="font-display font-bold text-slate-800 text-lg sm:text-xl leading-tight mb-2 pr-12">
+                            <h4 className="font-display font-bold text-slate-900 text-lg sm:text-xl leading-tight mb-2 pr-12">
                               {item}
                             </h4>
                             <div className="flex items-center gap-1.5">
                               {/* Star icon */}
-                              <svg className="w-4 h-4 text-[#E6C35C] fill-[#E6C35C]" viewBox="0 0 24 24">
+                              <svg className={`w-4 h-4 ${b.icon} fill-current`} viewBox="0 0 24 24">
                                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                               </svg>
-                              <span className="text-[11px] sm:text-xs font-black text-[#D3B454] tracking-wide uppercase">
+                              <span className={`text-[11px] sm:text-xs font-black ${b.icon} tracking-wide uppercase`}>
                                 ESSENTIAL
                               </span>
-                              <span className="text-[11px] sm:text-xs font-bold text-slate-500 tracking-wide uppercase ml-1">
+                              <span className="text-[11px] sm:text-xs font-bold text-slate-600 tracking-wide uppercase ml-1">
                                 {100 - (i * 10)} POINTS
                               </span>
                             </div>
