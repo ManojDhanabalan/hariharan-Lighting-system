@@ -34,13 +34,6 @@ const CARDS_DATA = [
     shadow: "shadow-[#F59E0B]/20",
     watermark: "GRD",
     features: ["Soil Resistivity Surveys", "Grid Modelling & Simulation", "Touch & Step Potential Analysis", "Full CAD Design Drawings"]
-  },
-  {
-    ...solutions[3],
-    gradient: "from-[#6366F1] to-[#4F46E5]", // Electric Indigo
-    shadow: "shadow-[#6366F1]/20",
-    watermark: "SPD",
-    features: ["Type 1, 2 & 3 SPDs", "Power, Signal & Data Shield", "Coordinated Transient Network", "IS/IEC 61643 Testing"]
   }
 ];
 

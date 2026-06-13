@@ -198,7 +198,7 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
               )}
 
               {/* Our Offerings */}
-              {(solution.offerings || solution.productCategories || solution.spdCategories) && (
+              {(solution.offerings || solution.productCategories) && (
                 <div>
                   <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-8">
                     <span className="w-2 h-2 rounded-full bg-red-600" />
@@ -228,8 +228,9 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                   `}} />
 
                   {(() => {
-                    const allItems = solution.offerings || solution.productCategories || solution.spdCategories || [];
-                    const withImage = allItems.filter((item: any) => item.image);
+                    type OfferingItem = { name?: string; type?: string; desc?: string; image?: string };
+                    const allItems: OfferingItem[] = solution.offerings || solution.productCategories || [];
+                    const withImage = allItems.filter((item) => item.image);
 
                     return (
                       <div className="space-y-12">
@@ -238,12 +239,12 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                         {withImage.length > 0 && (
                           <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
                             <div className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory hide-scrollbar">
-                              {withImage.map((item: any, i: number) => (
+                              {withImage.map((item, i: number) => (
                                 <div key={i} className="snap-start shrink-0 w-[85vw] sm:w-[400px] md:w-[450px] flex flex-col group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-200">
                                   {/* Just the Image with a title overlay */}
                                   <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-white shrink-0">
                                     <Image 
-                                      src={item.image} 
+                                      src={item.image!} 
                                       alt={item.name || item.type || "Offering feature"} 
                                       fill
                                       className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -264,7 +265,7 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                         {/* Grid for ALL Items (Text Only Pattern) */}
                         {allItems.length > 0 && (
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {allItems.map((item: any, i: number) => (
+                            {allItems.map((item, i: number) => (
                               <div key={i} className="group rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-red-900/10 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full bg-white border border-slate-200 hover:border-red-400 relative">
                                 {/* Inner Content */}
                                 <div className="relative p-8 flex-1 flex flex-col overflow-hidden z-10 bg-white">
