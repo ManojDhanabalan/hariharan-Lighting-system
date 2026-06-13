@@ -16,7 +16,6 @@ export const navLinks = [
       { label: "Earthing System", href: "/solutions/earthing-system" },
       { label: "Lightning System", href: "/solutions/lightning-system" },
       { label: "Ground Design", href: "/solutions/ground-design" },
-      { label: "Surge Protection System", href: "/solutions/surge-protection" },
     ],
   },
   { label: "Contact Us", href: "/contact" },

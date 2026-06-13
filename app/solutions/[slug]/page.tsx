@@ -204,71 +204,89 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                     <span className="w-2 h-2 rounded-full bg-red-600" />
                     <span className="text-slate-700 font-display font-bold text-xs tracking-widest uppercase">Our Offerings</span>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Inject Floating Animation Styles */}
-                    <style dangerouslySetInnerHTML={{ __html: `
-                      @keyframes blob {
-                        0% { transform: translate(0px, 0px) scale(1); }
-                        33% { transform: translate(30px, -50px) scale(1.1); }
-                        66% { transform: translate(-20px, 20px) scale(0.9); }
-                        100% { transform: translate(0px, 0px) scale(1); }
-                      }
-                      .animate-blob {
-                        animation: blob 15s infinite ease-in-out;
-                      }
-                      .animation-delay-2000 {
-                        animation-delay: 2s;
-                      }
-                      .animation-delay-4000 {
-                        animation-delay: 4s;
-                      }
-                    `}} />
 
-                    {(solution.offerings || solution.productCategories || solution.spdCategories)?.map((item: { name?: string; type?: string; desc?: string; image?: string }, i: number) => {
-                      const bgImages = [
-                        "1581092160562-40aa08e78837", // Engineering
-                        "1504328345606-18bbc8c9d7d1", // Blueprint/Architecture
-                        "1513828583688-c52646db42da", // Abstract Architecture
-                        "1530893609608-32a9af3aa95c", // Tech/Circuit
-                      ];
-                      const bgId = bgImages[i % bgImages.length];
-                      const finalImage = item.image || `https://images.unsplash.com/photo-${bgId}?auto=format&fit=crop&w=600&q=80`;
+                  {/* Inject Styles */}
+                  <style dangerouslySetInnerHTML={{ __html: `
+                    @keyframes blob {
+                      0% { transform: translate(0px, 0px) scale(1); }
+                      33% { transform: translate(30px, -50px) scale(1.1); }
+                      66% { transform: translate(-20px, 20px) scale(0.9); }
+                      100% { transform: translate(0px, 0px) scale(1); }
+                    }
+                    .animate-blob { animation: blob 15s infinite ease-in-out; }
+                    .animation-delay-2000 { animation-delay: 2s; }
+                    .animation-delay-4000 { animation-delay: 4s; }
+                    
+                    @keyframes hue-cycle {
+                      0% { filter: hue-rotate(0deg); }
+                      100% { filter: hue-rotate(360deg); }
+                    }
+                    .animate-hue-cycle { animation: hue-cycle 10s linear infinite; }
+                    
+                    .hide-scrollbar::-webkit-scrollbar { display: none; }
+                    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+                  `}} />
 
-                      return (
-                        <div key={i} className="group rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-red-900/10 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full bg-white border border-slate-200 hover:border-red-400 relative">
-                          
-                          {/* Top: Image */}
-                          <div className="relative h-56 w-full overflow-hidden border-b border-slate-100 z-10 bg-white">
-                            <Image 
-                              src={finalImage} 
-                              alt={item.name || item.type || "Offering feature"} 
-                              fill
-                              className="object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
-                            {/* Subtle overlay on hover */}
-                            <div className="absolute inset-0 bg-red-900/0 group-hover:bg-red-900/5 transition-colors duration-500" />
-                          </div>
+                  {(() => {
+                    const allItems = solution.offerings || solution.productCategories || solution.spdCategories || [];
+                    const withImage = allItems.filter((item: any) => item.image);
 
-                          {/* Bottom: Content */}
-                          <div className="relative p-8 flex-1 flex flex-col overflow-hidden z-10 bg-white">
-                            
-                            {/* Premium Soft Blob Animation Background */}
-                            <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden opacity-100">
-                              <div className="absolute top-[-10%] left-[-10%] w-32 h-32 bg-red-100 rounded-full mix-blend-multiply filter blur-2xl animate-blob"></div>
-                              <div className="absolute top-[-10%] right-[-10%] w-32 h-32 bg-rose-100 rounded-full mix-blend-multiply filter blur-2xl animate-blob animation-delay-2000"></div>
-                              <div className="absolute bottom-[-20%] left-[20%] w-40 h-40 bg-slate-100 rounded-full mix-blend-multiply filter blur-2xl animate-blob animation-delay-4000"></div>
+                    return (
+                      <div className="space-y-12">
+                        
+                        {/* Carousel for Images ONLY */}
+                        {withImage.length > 0 && (
+                          <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
+                            <div className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory hide-scrollbar">
+                              {withImage.map((item: any, i: number) => (
+                                <div key={i} className="snap-start shrink-0 w-[85vw] sm:w-[400px] md:w-[450px] flex flex-col group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-200">
+                                  {/* Just the Image with a title overlay */}
+                                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-white shrink-0">
+                                    <Image 
+                                      src={item.image} 
+                                      alt={item.name || item.type || "Offering feature"} 
+                                      fill
+                                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                    {/* Gradient overlay for text visibility */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
+                                    {/* Title Overlay */}
+                                    <div className="absolute bottom-6 left-6 right-6">
+                                      <h4 className="font-display font-bold text-xl sm:text-2xl text-white drop-shadow-md">{item.name || item.type}</h4>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
                             </div>
-
-                            {/* Text Content */}
-                            <h4 className="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-red-600 transition-colors duration-300 relative z-10">{item.name || item.type}</h4>
-                            <p className="text-slate-600 text-sm leading-relaxed font-medium relative z-10 group-hover:text-slate-700 transition-colors duration-300">
-                              {item.desc}
-                            </p>
                           </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                        )}
+
+                        {/* Grid for ALL Items (Text Only Pattern) */}
+                        {allItems.length > 0 && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {allItems.map((item: any, i: number) => (
+                              <div key={i} className="group rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-red-900/10 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full bg-white border border-slate-200 hover:border-red-400 relative">
+                                {/* Inner Content */}
+                                <div className="relative p-8 flex-1 flex flex-col overflow-hidden z-10 bg-white">
+                                  {/* Blobs Container (Hue Shifting synchronously with border) */}
+                                  <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden opacity-100 animate-hue-cycle">
+                                    <div className="absolute top-[-10%] left-[-10%] w-32 h-32 bg-red-100 rounded-full mix-blend-multiply filter blur-2xl animate-blob"></div>
+                                    <div className="absolute top-[-10%] right-[-10%] w-32 h-32 bg-rose-100 rounded-full mix-blend-multiply filter blur-2xl animate-blob animation-delay-2000"></div>
+                                    <div className="absolute bottom-[-20%] left-[20%] w-40 h-40 bg-slate-100 rounded-full mix-blend-multiply filter blur-2xl animate-blob animation-delay-4000"></div>
+                                  </div>
+                                  <h4 className="font-display font-bold text-xl text-slate-900 mb-3 transition-colors duration-300 relative z-10">{item.name || item.type}</h4>
+                                  <p className="text-slate-600 text-sm leading-relaxed font-medium relative z-10 transition-colors duration-300">
+                                    {item.desc}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
 
