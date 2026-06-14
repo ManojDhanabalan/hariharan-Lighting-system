@@ -83,7 +83,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ overflowX: 'clip' }}>
       <head>
         <script
           type="application/ld+json"
@@ -125,7 +125,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`${jakartaSans.variable} ${inter.variable} font-body antialiased min-h-screen flex flex-col bg-bg-primary text-text-primary`}>
+      <body className={`${jakartaSans.variable} ${inter.variable} font-body antialiased min-h-screen flex flex-col bg-bg-primary text-text-primary`} style={{ overflowX: 'clip' }}>
         <Navbar />
         <main className="flex-grow flex flex-col">{children}</main>
         <Footer />

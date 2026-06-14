@@ -65,12 +65,12 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
         ]}
       />
 
-      <section className="py-24 bg-slate-50 relative overflow-hidden">
+      <section className="py-12 sm:py-24 bg-slate-50 relative">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <div className="grid lg:grid-cols-12 gap-16">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-16">
             
             {/* ── Main Content (Col Span 8) ── */}
-            <div className="lg:col-span-8 space-y-20">
+            <div className="lg:col-span-8 space-y-12 sm:space-y-16 lg:space-y-20 min-w-0">
               
               {/* Overview */}
               <div>
@@ -90,19 +90,21 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
 
               {/* What Are Surges (Dynamic Block) */}
               {solution.whatAreSurges && (
-                <div className="relative flex flex-col sm:flex-row items-start gap-4 sm:gap-6 p-5 sm:p-8 bg-[#F8FAFC] rounded-3xl overflow-hidden group border border-slate-200 shadow-md">
+                <div className="relative flex flex-col sm:flex-row items-start gap-4 sm:gap-6 p-5 sm:p-8 bg-[#F8FAFC] rounded-3xl group border border-slate-200 shadow-md">
                   
-                  {/* Faded Watermark on the Right */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-300 pointer-events-none">
-                    <Zap className="w-48 h-48 sm:w-64 sm:h-64" />
+                  {/* Faded Watermark on the Right — contained in its own overflow clip */}
+                  <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-300">
+                      <Zap className="w-48 h-48 sm:w-64 sm:h-64" />
+                    </div>
                   </div>
 
                   {/* Medal Badge */}
-                  <div className="relative shrink-0 flex flex-col items-center justify-start w-14 sm:w-16 h-16 sm:h-20 pt-1">
+                  <div className="relative shrink-0 flex flex-col items-center justify-start w-12 sm:w-16 h-16 sm:h-20">
                     {/* Hexagon Ring */}
-                    <div className="absolute top-0 w-12 h-12 sm:w-14 sm:h-14 bg-white border-[3px] border-[#D98743] flex items-center justify-center z-10 shadow-sm" 
+                    <div className="absolute top-0 w-10 h-10 sm:w-14 sm:h-14 bg-white border-[3px] border-[#D98743] flex items-center justify-center z-10 shadow-sm" 
                          style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
-                      <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#D98743]" strokeWidth={2.5} />
+                      <Zap className="w-4 h-4 sm:w-6 sm:h-6 text-[#D98743]" strokeWidth={2.5} />
                     </div>
                     {/* Ribbon Tail */}
                     <div className="absolute bottom-0 w-6 h-6 sm:w-8 sm:h-8 bg-[#C57635] z-0" 
@@ -110,25 +112,24 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                   </div>
 
                   {/* Text Content */}
-                  <div className="relative z-10 flex-1 w-full">
+                  <div className="relative z-10 flex-1 w-full min-w-0">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3 sm:mb-4">
-                       <h3 className="font-display font-bold text-slate-900 text-xl sm:text-2xl leading-tight">
+                       <h3 className="font-display font-bold text-slate-900 text-lg sm:text-2xl leading-tight">
                          Understanding Transients
                        </h3>
                        <div className="flex items-center gap-1.5 sm:border-l sm:border-slate-300 sm:pl-4">
-                         {/* Star icon */}
-                         <svg className="w-4 h-4 text-[#E6C35C] fill-[#E6C35C]" viewBox="0 0 24 24">
+                         <svg className="w-4 h-4 text-[#E6C35C] fill-[#E6C35C] shrink-0" viewBox="0 0 24 24">
                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                          </svg>
-                         <span className="text-[11px] sm:text-xs font-black text-[#D3B454] tracking-wide uppercase">
+                         <span className="text-[10px] sm:text-xs font-black text-[#D3B454] tracking-wide uppercase">
                            FUNDAMENTAL
                          </span>
-                         <span className="text-[11px] sm:text-xs font-bold text-slate-500 tracking-wide uppercase ml-1">
+                         <span className="text-[10px] sm:text-xs font-bold text-slate-500 tracking-wide uppercase ml-1">
                            CONCEPT
                          </span>
                        </div>
                     </div>
-                    <p className="text-slate-600 text-sm sm:text-base leading-relaxed sm:pr-8">
+                    <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                       {solution.whatAreSurges}
                     </p>
                   </div>
@@ -139,52 +140,51 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
               {/* Why Good Grounding Matters (Dynamic Block) */}
               {solution.goodGroundingImportance && (
                 <div>
-                  <h3 className="font-display font-extrabold text-3xl text-slate-900 mb-8">Why Good Grounding Matters</h3>
+                  <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 mb-6 sm:mb-8">Why Good Grounding Matters</h3>
                   
                   <div className="flex flex-col gap-4">
                     {solution.goodGroundingImportance.map((item, i) => {
                       const badgeStyles = [
-                        { border: 'border-[#D98743]', tail: 'bg-[#C57635]', icon: 'text-[#D98743]' }, // Orange/Bronze
-                        { border: 'border-[#2D73D5]', tail: 'bg-[#225BB0]', icon: 'text-[#2D73D5]' }, // Blue
-                        { border: 'border-[#43B87A]', tail: 'bg-[#329861]', icon: 'text-[#43B87A]' }, // Green
-                        { border: 'border-[#D52D58]', tail: 'bg-[#B02246]', icon: 'text-[#D52D58]' }, // Red
+                        { border: 'border-[#D98743]', tail: 'bg-[#C57635]', icon: 'text-[#D98743]' },
+                        { border: 'border-[#2D73D5]', tail: 'bg-[#225BB0]', icon: 'text-[#2D73D5]' },
+                        { border: 'border-[#43B87A]', tail: 'bg-[#329861]', icon: 'text-[#43B87A]' },
+                        { border: 'border-[#D52D58]', tail: 'bg-[#B02246]', icon: 'text-[#D52D58]' },
                       ];
                       const b = badgeStyles[i % badgeStyles.length];
 
                       return (
-                        <div key={i} className="relative flex items-center gap-6 p-5 sm:p-6 bg-[#F8FAFC] rounded-2xl overflow-hidden group border border-slate-100 hover:border-slate-200 transition-colors">
+                        <div key={i} className="relative flex items-start sm:items-center gap-4 sm:gap-6 p-4 sm:p-6 bg-[#F8FAFC] rounded-2xl group border border-slate-100 hover:border-slate-200 transition-colors">
                           
                           {/* Faded Watermark on the Right */}
-                          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-[0.04] group-hover:opacity-[0.07] transition-opacity duration-300 pointer-events-none">
+                          <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-[0.04] group-hover:opacity-[0.07] transition-opacity duration-300 pointer-events-none">
                             <Shield className="w-48 h-48" />
                           </div>
 
-                          {/* Medal Badge */}
-                          <div className="relative shrink-0 flex flex-col items-center justify-start w-16 h-20">
+                          {/* Medal Badge — smaller on mobile */}
+                          <div className="relative shrink-0 flex flex-col items-center justify-start w-12 h-16 sm:w-16 sm:h-20">
                             {/* Hexagon Ring */}
-                            <div className={`absolute top-0 w-14 h-14 bg-white border-[3px] ${b.border} flex items-center justify-center z-10 shadow-sm`} 
+                            <div className={`absolute top-0 w-10 h-10 sm:w-14 sm:h-14 bg-white border-[3px] ${b.border} flex items-center justify-center z-10 shadow-sm`} 
                                  style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
-                              <Layers className={`w-6 h-6 ${b.icon}`} strokeWidth={2.5} />
+                              <Layers className={`w-4 h-4 sm:w-6 sm:h-6 ${b.icon}`} strokeWidth={2.5} />
                             </div>
                             {/* Ribbon Tail */}
-                            <div className={`absolute bottom-0 w-8 h-8 ${b.tail} z-0`} 
+                            <div className={`absolute bottom-0 w-6 h-6 sm:w-8 sm:h-8 ${b.tail} z-0`} 
                                  style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 70%, 0 100%)' }} />
                           </div>
 
                           {/* Text Content */}
-                          <div className="relative z-10 flex-1">
-                            <h4 className="font-display font-bold text-slate-900 text-lg sm:text-xl leading-tight mb-2 pr-12">
+                          <div className="relative z-10 flex-1 min-w-0">
+                            <h4 className="font-display font-bold text-slate-900 text-base sm:text-xl leading-tight mb-2">
                               {item}
                             </h4>
                             <div className="flex items-center gap-1.5">
-                              {/* Star icon */}
-                              <svg className={`w-4 h-4 ${b.icon} fill-current`} viewBox="0 0 24 24">
+                              <svg className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${b.icon} fill-current shrink-0`} viewBox="0 0 24 24">
                                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                               </svg>
-                              <span className={`text-[11px] sm:text-xs font-black ${b.icon} tracking-wide uppercase`}>
+                              <span className={`text-[10px] sm:text-xs font-black ${b.icon} tracking-wide uppercase`}>
                                 ESSENTIAL
                               </span>
-                              <span className="text-[11px] sm:text-xs font-bold text-slate-600 tracking-wide uppercase ml-1">
+                              <span className="text-[10px] sm:text-xs font-bold text-slate-600 tracking-wide uppercase ml-1">
                                 {100 - (i * 10)} POINTS
                               </span>
                             </div>
@@ -223,8 +223,8 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                     }
                     .animate-hue-cycle { animation: hue-cycle 10s linear infinite; }
                     
-                    .hide-scrollbar::-webkit-scrollbar { display: none; }
-                    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+                    .sol-carousel::-webkit-scrollbar { display: none; }
+                    .sol-carousel { -ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
                   `}} />
 
                   {(() => {
@@ -237,23 +237,26 @@ export default function SolutionDetailPage({ params }: { params: { slug: string 
                         
                         {/* Carousel for Images ONLY */}
                         {withImage.length > 0 && (
-                          <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
-                            <div className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory hide-scrollbar">
+                          <div className="relative -mx-4 sm:mx-0 overflow-hidden">
+                            <div
+                              className="sol-carousel flex overflow-x-auto gap-4 sm:gap-5 pb-4 px-4 sm:px-0 snap-x snap-mandatory"
+                              style={{ touchAction: 'pan-x', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+                            >
                               {withImage.map((item, i: number) => (
-                                <div key={i} className="snap-start shrink-0 w-[85vw] sm:w-[400px] md:w-[450px] flex flex-col group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-200">
-                                  {/* Just the Image with a title overlay */}
-                                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-white shrink-0">
+                                <div key={i} className="snap-start shrink-0 w-[78vw] sm:w-[360px] md:w-[420px] flex flex-col group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-200">
+                                  {/* Image with title overlay */}
+                                  <div className="relative h-52 sm:h-72 w-full overflow-hidden bg-white">
                                     <Image 
                                       src={item.image!} 
                                       alt={item.name || item.type || "Offering feature"} 
                                       fill
                                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
-                                    {/* Gradient overlay for text visibility */}
+                                    {/* Gradient overlay */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
                                     {/* Title Overlay */}
-                                    <div className="absolute bottom-6 left-6 right-6">
-                                      <h4 className="font-display font-bold text-xl sm:text-2xl text-white drop-shadow-md">{item.name || item.type}</h4>
+                                    <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6">
+                                      <h4 className="font-display font-bold text-base sm:text-2xl text-white drop-shadow-md leading-tight">{item.name || item.type}</h4>
                                     </div>
                                   </div>
                                 </div>
