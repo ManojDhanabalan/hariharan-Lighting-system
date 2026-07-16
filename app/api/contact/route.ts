@@ -1,10 +1,39 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+// In-memory rate limiter
+const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
+const MAX_REQUESTS = 5; // max 5 requests per hour per IP
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { fullName, email, phone, company, service, message } = body;
+    const { fullName, email, phone, company, service, message, website } = body;
+
+    // 1. Check Rate Limit
+    const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "unknown";
+    if (ip !== "unknown") {
+      const now = Date.now();
+      const ipData = rateLimitMap.get(ip);
+
+      if (ipData && now - ipData.timestamp < RATE_LIMIT_WINDOW) {
+        if (ipData.count >= MAX_REQUESTS) {
+          return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+        }
+        ipData.count += 1;
+      } else {
+        rateLimitMap.set(ip, { count: 1, timestamp: now });
+      }
+    }
+
+    // 2. Check Honeypot
+    // If the hidden 'website' field is filled out, it's almost certainly a bot.
+    // We return a fake 200 OK so the bot thinks it succeeded.
+    if (website) {
+      console.log(`Bot blocked (Honeypot filled). IP: ${ip}`);
+      return NextResponse.json({ message: "Emails sent successfully" }, { status: 200 });
+    }
 
     if (!fullName || !email) {
       return NextResponse.json(

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-type FormData = { fullName: string; email: string; phone: string; subject: string; message: string };
+type FormData = { fullName: string; email: string; phone: string; company: string; subject: string; message: string; website: string };
 
 const SUBJECTS = ["General Inquiry", "Earthing Audit", "Lightning System"];
 
@@ -64,6 +64,11 @@ export default function ContactForm() {
           onSubmit={handleSubmit(onSubmit)} className="bg-transparent h-full flex flex-col justify-between" noValidate>
 
           <div className="space-y-10">
+            {/* Honeypot Field - Hidden from users, traps bots */}
+            <div className="absolute opacity-0 -z-10 w-0 h-0 overflow-hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input type="text" id="website" tabIndex={-1} autoComplete="off" {...register("website")} />
+            </div>
             {/* Name & Email Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8">
               <div className="relative group">
@@ -90,8 +95,9 @@ export default function ContactForm() {
               </div>
             </div>
 
-            {/* Phone */}
-            <div className="relative group w-full md:w-[calc(50%-1rem)]">
+            {/* Phone & Company */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8">
+              <div className="relative group">
                 <label className="text-xs font-display font-bold text-slate-500 group-focus-within:text-slate-800 transition-colors">
                   Phone
                 </label>
@@ -99,6 +105,17 @@ export default function ContactForm() {
                   {...register("phone")}
                   className={inputStyles}
                 />
+              </div>
+
+              <div className="relative group">
+                <label className="text-xs font-display font-bold text-slate-500 group-focus-within:text-slate-800 transition-colors">
+                  Company
+                </label>
+                <input
+                  {...register("company")}
+                  className={inputStyles}
+                />
+              </div>
             </div>
 
             {/* Subject Radios */}
